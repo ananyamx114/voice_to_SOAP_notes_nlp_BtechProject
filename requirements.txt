@@ -1,0 +1,50 @@
+# Voice-to-SOAP research pipeline dependencies.
+# On the V100 server, install matching CUDA builds of torch and torchaudio first
+# using the official PyTorch selector, then install this file.
+torch>=2.2
+torchaudio>=2.2
+
+# Audio preparation, voice activity detection, ASR, diarization, and alignment.
+numpy>=1.26
+scipy>=1.13
+soundfile>=0.12
+librosa>=0.10
+silero-vad>=5
+pyannote.audio>=3.3
+transformers>=4.45
+sentencepiece>=0.2
+sacremoses>=0.1
+
+# Local LLM inference and LoRA/QLoRA fine-tuning.
+accelerate>=0.34
+peft>=0.13
+bitsandbytes>=0.44
+datasets>=3
+pyarrow>=17
+
+# Transcript normalization, structured data, configuration, and API.
+pandas>=2.2
+rapidfuzz>=3
+pydantic>=2.8
+PyYAML>=6
+fastapi>=0.115
+uvicorn[standard]>=0.30
+
+# Evaluation: ASR, NER, translation, and generated notes.
+jiwer>=3
+seqeval>=1.2
+scikit-learn>=1.5
+evaluate>=0.4
+rouge-score>=0.1.2
+bert-score>=0.3
+sacrebleu>=2.4
+
+# Development and tests.
+pytest>=8
+
+# Optional: use only if serving the local model through Ollama or another
+# OpenAI-compatible inference server instead of loading it with Transformers.
+# openai>=1.50,<2
+
+# A database driver and review-UI framework are intentionally not selected yet.
+# Add them after choosing the storage and clinician-review design.

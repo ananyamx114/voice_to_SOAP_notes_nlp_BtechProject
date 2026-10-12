@@ -1,0 +1,55 @@
+audio:
+  target_sample_rate: 16000
+  vad:
+    enabled: true
+    threshold: 0.5
+    min_speech_duration_ms: 250
+    min_silence_duration_ms: 100
+    speech_pad_ms: 100
+  asr_model_id: openai/whisper-small
+  asr_device: auto
+  asr_language: null # Leave blank for detection, or set e.g. "marathi" or "hindi".
+  asr_chunk_length_s: 30
+  asr_stride_length_s: 5
+  diarization_model_id: pyannote/speaker-diarization-community-1
+  diarization_device: auto
+  diarization_token_env: HF_TOKEN
+  diarization:
+    enabled: false # Accept the model terms and set HF_TOKEN before enabling.
+    num_speakers: null
+    min_speakers: null
+    max_speakers: null
+  role_assignment:
+    enabled: true # Uses the local LLM after diarization; uncertain roles stay unknown.
+
+llm:
+  base_url_env: LLM_BASE_URL
+  api_key_env: LLM_API_KEY
+  model_env: LLM_MODEL
+  default_base_url: http://localhost:11434/v1
+  default_model: qwen2.5:7b
+  temperature: 0
+  max_tokens: 1800
+
+normalization:
+  lookup_dir: data/lookup_tables
+
+entity_linking:
+  enabled: true
+  terminology_path: data/terminology/concepts.csv
+
+soap_generation:
+  backend: local_llm # Use "lora" after training an adapter for the exact base_model below.
+  base_model: null # e.g. an open-weight Hugging Face checkpoint; keep identical to training.
+  adapter_path: null # Output directory created by `python -m voice_to_soap.soap_lora`.
+  max_new_tokens: 512
+
+verification:
+  max_attempts: 2 # Total SOAP drafts, including the initial attempt.
+
+translation:
+  enabled: false
+  target_language: null # hi or mr; translation uses the configured local LLM.
+
+pipeline:
+  stop_on_error: false
