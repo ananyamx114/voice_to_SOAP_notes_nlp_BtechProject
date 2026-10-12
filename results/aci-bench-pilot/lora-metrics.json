@@ -1,0 +1,34 @@
+{
+  "base_model": "Qwen/Qwen2.5-0.5B-Instruct",
+  "adapter_dir": "data/models/aci-qwen25-05b-soap-lora",
+  "model_stage": "lora_adapter",
+  "split": "test",
+  "examples": 120,
+  "valid_predictions": 110,
+  "invalid_predictions": 10,
+  "device": "mps",
+  "metric": "mean section-level ROUGE-L F-measure",
+  "by_section": {
+    "subjective": {
+      "examples": 110,
+      "rougeL_fmeasure": 0.09788775777679656
+    },
+    "objective": {
+      "examples": 110,
+      "rougeL_fmeasure": 0.0657284660629784
+    },
+    "assessment": {
+      "examples": 110,
+      "rougeL_fmeasure": 0.12919772693419324
+    },
+    "plan": {
+      "examples": 110,
+      "rougeL_fmeasure": 0.10268699249214067
+    }
+  },
+  "overall_mean_section_rougeL_fmeasure": 0.09887523581652721,
+  "limitations": [
+    "Scores measure overlap with automatically mapped reference notes, not clinical correctness.",
+    "ACI-Bench test dialogues and notes are English."
+  ]
+}

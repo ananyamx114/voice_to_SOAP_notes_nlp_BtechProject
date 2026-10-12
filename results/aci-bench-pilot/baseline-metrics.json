@@ -1,0 +1,34 @@
+{
+  "base_model": "Qwen/Qwen2.5-0.5B-Instruct",
+  "adapter_dir": null,
+  "model_stage": "base_model",
+  "split": "test",
+  "examples": 120,
+  "valid_predictions": 112,
+  "invalid_predictions": 8,
+  "device": "mps",
+  "metric": "mean section-level ROUGE-L F-measure",
+  "by_section": {
+    "subjective": {
+      "examples": 112,
+      "rougeL_fmeasure": 0.10008168780472274
+    },
+    "objective": {
+      "examples": 112,
+      "rougeL_fmeasure": 0.07544410468662369
+    },
+    "assessment": {
+      "examples": 112,
+      "rougeL_fmeasure": 0.12171813306464606
+    },
+    "plan": {
+      "examples": 112,
+      "rougeL_fmeasure": 0.12084070988772462
+    }
+  },
+  "overall_mean_section_rougeL_fmeasure": 0.10452115886092928,
+  "limitations": [
+    "Scores measure overlap with automatically mapped reference notes, not clinical correctness.",
+    "ACI-Bench test dialogues and notes are English."
+  ]
+}

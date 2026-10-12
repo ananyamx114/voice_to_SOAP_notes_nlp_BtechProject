@@ -1,0 +1,22 @@
+{
+  "splits": {
+    "train": {
+      "examples": 67,
+      "examples_with_mapping_warnings": 39
+    },
+    "validation": {
+      "examples": 20,
+      "examples_with_mapping_warnings": 10
+    },
+    "test": {
+      "examples": 120,
+      "examples_with_mapping_warnings": 57
+    }
+  },
+  "mapping_method": "heading_rules_v1",
+  "important_limitations": [
+    "SOAP targets are heuristic mappings from reference-note headings, not clinician-reviewed labels.",
+    "Combined assessment-and-plan text is divided heuristically using action-language cues.",
+    "ACI-Bench dialogues are English; these files do not train or evaluate Hindi-input-to-English-SOAP."
+  ]
+}

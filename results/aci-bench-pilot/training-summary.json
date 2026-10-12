@@ -1,0 +1,17 @@
+{
+  "base_model": "Qwen/Qwen2.5-0.5B-Instruct",
+  "adapter_type": "LoRA",
+  "task": "aci_bench_dialogue_to_heuristic_soap",
+  "epochs": 1,
+  "max_seq_length": 2048,
+  "lora_rank": 8,
+  "target_modules": ["q_proj", "k_proj", "v_proj", "o_proj"],
+  "training_device": "mps",
+  "train_examples_available": 67,
+  "train_examples_used": 26,
+  "train_examples_skipped_as_too_long": 41,
+  "validation_examples_available": 20,
+  "validation_examples_used": 8,
+  "validation_examples_skipped_as_too_long": 12,
+  "reference_targets": "Heuristic note-heading mapping; not clinician-reviewed."
+}

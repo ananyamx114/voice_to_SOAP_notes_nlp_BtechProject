@@ -1,0 +1,57 @@
+{
+  "evaluation_split": "ACI-Bench test",
+  "examples_per_model": 120,
+  "models": {
+    "baseline": {
+      "model_stage": "base_model",
+      "base_model": "Qwen/Qwen2.5-0.5B-Instruct",
+      "valid_predictions": 112,
+      "invalid_predictions": 8,
+      "overall_mean_section_rougeL_fmeasure": 0.10452115886092928,
+      "by_section": {
+        "subjective": {
+          "examples": 112,
+          "rougeL_fmeasure": 0.10008168780472274
+        },
+        "objective": {
+          "examples": 112,
+          "rougeL_fmeasure": 0.07544410468662369
+        },
+        "assessment": {
+          "examples": 112,
+          "rougeL_fmeasure": 0.12171813306464606
+        },
+        "plan": {
+          "examples": 112,
+          "rougeL_fmeasure": 0.12084070988772462
+        }
+      }
+    },
+    "lora": {
+      "model_stage": "lora_adapter",
+      "base_model": "Qwen/Qwen2.5-0.5B-Instruct",
+      "valid_predictions": 110,
+      "invalid_predictions": 10,
+      "overall_mean_section_rougeL_fmeasure": 0.09887523581652721,
+      "by_section": {
+        "subjective": {
+          "examples": 110,
+          "rougeL_fmeasure": 0.09788775777679656
+        },
+        "objective": {
+          "examples": 110,
+          "rougeL_fmeasure": 0.0657284660629784
+        },
+        "assessment": {
+          "examples": 110,
+          "rougeL_fmeasure": 0.12919772693419324
+        },
+        "plan": {
+          "examples": 110,
+          "rougeL_fmeasure": 0.10268699249214067
+        }
+      }
+    }
+  },
+  "interpretation": "Heuristic SOAP-reference overlap only; not clinical correctness. Pilot LoRA trained on 26 short training encounters; do not treat this comparison as evidence of clinical benefit."
+}
