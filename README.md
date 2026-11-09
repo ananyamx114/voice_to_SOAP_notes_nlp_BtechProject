@@ -11,7 +11,7 @@ The intended consultations may mix Hindi, Marathi, and English. The system is a 
 
 ## Project status
 
-This repository is being built in small, testable stages. The current code is an early scaffold, not a completed or clinically validated system. No model is trained or included in the repository. Model weights and datasets must be obtained separately, subject to their licences and access requirements.
+This repository contains research code, prepared ACI-Bench splits, and exploratory pilot results; it is not a completed or clinically validated system. Model weights are not included. Other datasets must be obtained separately, subject to their licences and access requirements. For the full project aim, code walkthrough, setup, commands, current status, and implementation roadmap, see the [Project Guide](./docs/PROJECT_GUIDE.md).
 
 ## First step: prepare the development environment
 
