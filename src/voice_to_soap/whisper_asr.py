@@ -60,10 +60,21 @@ def sequential_transcribe(audio, sample_rate: int, model_id: str, device: str,
     if language:
         generation["language"] = language
     asr = load_sequential_pipeline(model_id, revision, selected_device, precision)
+    last_progress = -1
+
+    def monitor_progress(batch):
+        nonlocal last_progress
+        seek, total = batch.detach().cpu().tolist()[0]
+        percent = int(100 * seek / total) if total else 0
+        if percent // 5 != last_progress:
+            print(f"  sequential decoding: {percent}% of source frames reached", flush=True)
+            last_progress = percent // 5
+
+    inference_generation = {**generation, "monitor_progress": monitor_progress}
     # No chunk_length_s: keep Whisper's native sequential long-form algorithm.
     result = asr({"raw": audio, "sampling_rate": sample_rate},
                  return_timestamps="word" if timestamps == "word" else True,
-                 generate_kwargs=generation)
+                 generate_kwargs=inference_generation)
     chunks, warnings = [], []
     duration = len(audio) / sample_rate
     for index, item in enumerate(result.get("chunks") or []):

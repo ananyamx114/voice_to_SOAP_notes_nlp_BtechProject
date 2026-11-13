@@ -31,6 +31,8 @@ class SequentialAsrTests(unittest.TestCase):
         self.assertEqual(kwargs["generate_kwargs"]["language"], "hindi")
         self.assertFalse(kwargs["generate_kwargs"]["condition_on_prev_tokens"])
         self.assertEqual(result["metadata"]["quantization"], "none")
+        self.assertIn("monitor_progress", kwargs["generate_kwargs"])
+        json.dumps(result) # Runtime progress callback must not leak into saved metadata.
 
     def test_unpinned_and_translation_overrides_fail_before_loading(self):
         with self.assertRaisesRegex(ValueError, "immutable"):
