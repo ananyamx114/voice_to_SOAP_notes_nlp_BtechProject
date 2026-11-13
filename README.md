@@ -326,3 +326,5 @@ Keep raw audio, identifiable transcripts, model weights, access tokens, and othe
 4. Add model components one at a time and evaluate each on held-out data.
 
 Do not treat generated notes as suitable for patient care without appropriate clinical validation and clinician approval.
+
+hi
