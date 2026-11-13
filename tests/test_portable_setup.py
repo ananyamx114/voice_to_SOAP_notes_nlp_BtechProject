@@ -18,7 +18,7 @@ class PortableSetupTests(unittest.TestCase):
         self.assertTrue(command_for("hf-login", root, [], True)[0].endswith("hf.exe"))
 
     def test_linux_memory_uses_page_size_and_count(self):
-        with patch("scripts.check_system.os.sysconf", side_effect=[1024, 4096]):
+        with patch("scripts.check_system.os.sysconf", side_effect=[1024, 4096], create=True):
             self.assertEqual(physical_memory("Linux"), 1024 * 4096)
 
     def test_macos_memory_queries_only_memory_size(self):
@@ -27,7 +27,7 @@ class PortableSetupTests(unittest.TestCase):
             self.assertEqual(run.call_args.args[0], ["sysctl", "-n", "hw.memsize"])
 
     def test_missing_memory_access_does_not_invent_a_value(self):
-        with patch("scripts.check_system.os.sysconf", side_effect=OSError):
+        with patch("scripts.check_system.os.sysconf", side_effect=OSError, create=True):
             self.assertIsNone(physical_memory("Linux"))
 
     def test_windows_memory_uses_system_api(self):
