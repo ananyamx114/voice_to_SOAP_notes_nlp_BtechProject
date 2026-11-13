@@ -2,6 +2,10 @@
 
 Start the independent model-stage sequence with
 [COMPONENT_01_VAD.md](COMPONENT_01_VAD.md) and the `vad` setup profile.
+The next model stage uses [COMPONENT_02_ASR.md](COMPONENT_02_ASR.md): a pinned full
+Large-v3 checkpoint, sequential decoding, scored full recordings and explicit
+device/precision/provenance. Its commands supersede the earlier small-model
+execution check for this component investigation.
 
 The target is the complete local pipeline on each teammate's computer. Run the
 same committed implementation with real weights and actual audio. A bounded

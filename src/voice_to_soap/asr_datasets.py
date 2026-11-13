@@ -229,6 +229,7 @@ def evaluate_asr_manifest(
     limit_per_language: int | None = None,
     chunk_length_s: int = 30,
     stride_length_s: int = 5,
+    asr_options: dict | None = None,
 ) -> dict[str, Any]:
     from .audio import load_audio, transcribe
     from .datasets import load_manifest
@@ -272,6 +273,7 @@ def evaluate_asr_manifest(
             language=LANGUAGE_NAMES[language],
             chunk_length_s=chunk_length_s,
             stride_length_s=stride_length_s,
+            **({"asr_options": asr_options} if asr_options else {}),
         )
         hypothesis = " ".join(chunk["text"] for chunk in chunks).strip()
         if not hypothesis:

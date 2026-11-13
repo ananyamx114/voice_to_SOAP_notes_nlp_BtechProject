@@ -1,0 +1,21 @@
+# ASR component configuration: full multilingual checkpoint, no quantization.
+# This file configures ASR only; it is not a complete SOAP run configuration.
+audio:
+  target_sample_rate: 16000
+  asr_model_id: openai/whisper-large-v3
+  asr_device: auto
+  asr_options:
+    mode: sequential
+    revision: 06f233fe06e710322aca913c1bc4249a0d71fce1
+    precision: auto # FP16 on CUDA/MPS; FP32 on CPU. Always recorded in output.
+    timestamps: word
+    generation:
+      max_new_tokens: 440
+      num_beams: 1
+      condition_on_prev_tokens: false
+      compression_ratio_threshold: 1.35
+      temperature: [0.0, 0.2, 0.4, 0.6, 0.8, 1.0]
+      logprob_threshold: -1.0
+      no_speech_threshold: 0.6
+  vad_join_gap_seconds: 2.0
+seed: 42

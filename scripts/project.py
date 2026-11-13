@@ -20,15 +20,18 @@ def command_for(action: str, root: Path, extra: list[str], windows: bool | None 
         return [python, "-m", "unittest", "discover", "-s", "tests", "-v", *extra]
     if action == "cli":
         return [python, "-m", "voice_to_soap.cli", *extra]
+    if action == "asr-run":
+        return [python, "-m", "voice_to_soap.asr_component", *extra]
     script = {"system": "check_system.py", "check": "check_setup.py",
-              "hf-check": "check_huggingface.py", "download-data": "download_benchmarks.py"}[action]
+              "hf-check": "check_huggingface.py", "download-data": "download_benchmarks.py",
+              "download-asr": "download_asr.py", "prepare-asr-data": "prepare_asr_inputs.py"}[action]
     return [python, str(root / "scripts" / script), *extra]
 
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("action", choices=("setup", "system", "check", "test", "hf-login",
-                                           "hf-check", "download-data", "cli"))
+                                           "hf-check", "download-data", "download-asr", "prepare-asr-data", "asr-run", "cli"))
     # Parse only the action here; flags such as cli --help belong to the child.
     args = parser.parse_args(sys.argv[1:2])
     extra = sys.argv[2:]

@@ -51,6 +51,7 @@ def _audio_stage(
             language=audio_config.get("asr_language"),
             chunk_length_s=int(audio_config.get("asr_chunk_length_s", 30)),
             stride_length_s=int(audio_config.get("asr_stride_length_s", 5)),
+            asr_options=audio_config.get("asr_options"),
         )
     else:
         speech_segments = [{"start_seconds": 0.0, "end_seconds": duration}]
@@ -64,6 +65,7 @@ def _audio_stage(
             language=audio_config.get("asr_language"),
             chunk_length_s=int(audio_config.get("asr_chunk_length_s", 30)),
             stride_length_s=int(audio_config.get("asr_stride_length_s", 5)),
+            asr_options=audio_config.get("asr_options"),
         )
     utterances = []
     for index, chunk in enumerate(chunks, start=1):

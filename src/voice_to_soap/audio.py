@@ -164,6 +164,7 @@ def transcribe_speech_segments(
     language: str | None = None,
     chunk_length_s: int = 30,
     stride_length_s: int = 5,
+    asr_options: dict | None = None,
 ) -> list[dict[str, Any]]:
     if audio.ndim != 1 or audio.size == 0:
         raise ValueError("ASR input must be a non-empty mono waveform")
@@ -189,6 +190,7 @@ def transcribe_speech_segments(
             language=language,
             chunk_length_s=chunk_length_s,
             stride_length_s=stride_length_s,
+            **({"asr_options": asr_options} if asr_options else {}),
         )
         for word in segment_words:
             local_start = word["start"]
@@ -312,6 +314,7 @@ def transcribe(
     language: str | None = None,
     chunk_length_s: int = 30,
     stride_length_s: int = 5,
+    asr_options: dict | None = None,
 ) -> list[dict[str, Any]]:
     if not model_id:
         raise RuntimeError("Audio has no supplied transcript and audio.asr_model_id is unset")
@@ -323,6 +326,12 @@ def transcribe(
         raise ValueError("ASR chunk/stride settings are invalid")
     if not np.isfinite(audio).all():
         raise ValueError("ASR input contains non-finite sample values")
+
+    if asr_options:
+        if asr_options.get("mode") != "sequential":
+            raise ValueError("Unsupported explicit ASR mode")
+        from .whisper_asr import sequential_transcribe
+        return sequential_transcribe(audio, sample_rate, model_id, device, language, asr_options)["chunks"]
 
     selected_device = _resolve_asr_device(device)
     asr = _load_asr_pipeline(model_id, selected_device)

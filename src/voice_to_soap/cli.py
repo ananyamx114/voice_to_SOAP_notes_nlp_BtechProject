@@ -221,6 +221,7 @@ def main() -> None:
             language=args.language or audio_config.get("asr_language"),
             chunk_length_s=int(audio_config.get("asr_chunk_length_s", 30)),
             stride_length_s=int(audio_config.get("asr_stride_length_s", 5)),
+            **({"asr_options": audio_config["asr_options"]} if audio_config.get("asr_options") else {}),
         )
         write_json(args.out, {
             "audio_path": str(Path(args.audio).resolve()),
@@ -228,6 +229,7 @@ def main() -> None:
             "sample_rate": sample_rate,
             "text": " ".join(chunk["text"] for chunk in chunks).strip(),
             "chunks": chunks,
+            "asr_options": audio_config.get("asr_options"),
         })
         logging.info("Wrote ASR transcript to %s", args.out)
     elif args.command == "prepare-audio":
@@ -359,6 +361,7 @@ def main() -> None:
             limit_per_language=args.limit_per_language,
             chunk_length_s=int(audio_config.get("asr_chunk_length_s", 30)),
             stride_length_s=int(audio_config.get("asr_stride_length_s", 5)),
+            asr_options=audio_config.get("asr_options"),
         )
         logging.info(
             "Evaluated %d Eka ASR examples with %s; metrics saved to %s",
