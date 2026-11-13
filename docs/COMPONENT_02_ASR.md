@@ -20,6 +20,14 @@ FP16 checkpoint; actual capacity must be checked on each machine. Batch size is
 one, and model/device errors are reported rather than silently using another
 checkpoint or device. Do not disable framework memory protections to force a run.
 
+The first Metal attempt showed a 7.4 GiB process footprint and stalled before
+finishing its first clip. Transformers' timestamp generation requests encoder
+attention outputs as well as decoder cross-attention; only the decoder weights
+are used for token alignment. The backend now leaves encoder computations and
+the complete checkpoint intact but does not retain unused per-layer encoder
+attention matrices. Decoder attention/timestamps are preserved. This memory
+optimization is explicit in output metadata; it is not quantization or pruning.
+
 The earlier Whisper Small run produced Hindi repetition. This implementation
 uses native sequential long-form decoding, attention masks supplied by the
 Transformers pipeline, and the model card's previous-token/repetition/silence

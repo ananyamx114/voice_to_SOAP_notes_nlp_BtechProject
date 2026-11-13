@@ -8,7 +8,7 @@ from unittest.mock import Mock, patch
 import numpy as np
 import soundfile as sf
 
-from voice_to_soap.whisper_asr import sequential_transcribe, speech_context_regions
+from voice_to_soap.whisper_asr import sequential_transcribe, speech_context_regions, omit_unused_encoder_attention_outputs
 from voice_to_soap.asr_component import run_component, ResumeMismatchError
 
 
@@ -17,6 +17,16 @@ OPTIONS = {"mode": "sequential", "revision": "a" * 40,
 
 
 class SequentialAsrTests(unittest.TestCase):
+    def test_encoder_memory_change_preserves_inputs_and_decoder(self):
+        encoder = SimpleNamespace(forward=Mock(return_value="unchanged encoder result"))
+        original = encoder.forward
+        decoder = SimpleNamespace(forward=Mock())
+        model = SimpleNamespace(get_encoder=lambda: encoder, decoder=decoder)
+        omit_unused_encoder_attention_outputs(model)
+        self.assertEqual(encoder.forward("features", output_attentions=True), "unchanged encoder result")
+        original.assert_called_once_with("features", output_attentions=False)
+        decoder.forward.assert_not_called()
+
     @patch("voice_to_soap.whisper_asr.version", return_value="test-version")
     @patch("voice_to_soap.audio._resolve_asr_device", return_value="mps")
     @patch("voice_to_soap.whisper_asr.load_sequential_pipeline")

@@ -1,5 +1,5 @@
 """Pinned, full-checkpoint Whisper sequential decoding with explicit provenance."""
-from functools import lru_cache
+from functools import lru_cache, wraps
 from importlib.metadata import version
 import math
 import re
@@ -10,6 +10,24 @@ import numpy as np
 GENERATION_KEYS = {"max_new_tokens", "num_beams", "condition_on_prev_tokens",
                    "compression_ratio_threshold", "temperature", "logprob_threshold",
                    "no_speech_threshold"}
+
+
+def omit_unused_encoder_attention_outputs(model):
+    """Word alignment needs decoder cross-attention, not encoder attention outputs.
+
+    Transformers generation requests output_attentions for both stacks. Keep
+    encoder computations unchanged, but do not retain its per-layer matrices.
+    This does not prune layers/weights or alter decoder attention collection.
+    """
+    encoder = model.get_encoder()
+    original = encoder.forward
+
+    @wraps(original)
+    def forward(*args, **kwargs):
+        kwargs["output_attentions"] = False
+        return original(*args, **kwargs)
+
+    encoder.forward = forward
 
 
 @lru_cache(maxsize=1)
@@ -24,6 +42,7 @@ def load_sequential_pipeline(model_id: str, revision: str, device: str, precisio
     )
     model.to(device)
     model.eval()
+    omit_unused_encoder_attention_outputs(model)
     processor = AutoProcessor.from_pretrained(model_id, revision=revision)
     return pipeline("automatic-speech-recognition", model=model,
                     tokenizer=processor.tokenizer, feature_extractor=processor.feature_extractor,
@@ -103,6 +122,7 @@ def sequential_transcribe(audio, sample_rate: int, model_id: str, device: str,
             "metadata": {"model_id": model_id, "revision": revision, "device": selected_device,
                          "precision": precision, "quantization": "none",
                          "algorithm": "sequential", "timestamps": timestamps,
+                         "encoder_attention_outputs": False,
                          "generation": generation, "torch_version": version("torch"),
                          "transformers_version": version("transformers")}}
 
