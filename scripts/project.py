@@ -41,7 +41,7 @@ def main() -> int:
     python = environment_python(root)
     if args.action == "setup":
         setup_parser = argparse.ArgumentParser(prog=f"{parser.prog} setup")
-        setup_parser.add_argument("--profile", choices=("dev", "asr"), default="dev")
+        setup_parser.add_argument("--profile", choices=("dev", "asr", "vad"), default="dev")
         setup = setup_parser.parse_args(extra)
         if sys.version_info < (3, 10):
             parser.error("Python >=3.10 required; Python 3.12 is the tested starting point")
@@ -52,8 +52,9 @@ def main() -> int:
                            cwd=root, env=env, check=True)
         subprocess.run([str(python), "-m", "pip", "install", "-e", ".[dev,hub]"],
                        cwd=root, env=env, check=True)
-        if setup.profile == "asr":
-            subprocess.run([str(python), "-m", "pip", "install", "-r", "requirements-local-asr.txt"],
+        if setup.profile in {"asr", "vad"}:
+            requirements = {"asr": "requirements-local-asr.txt", "vad": "requirements-vad.txt"}
+            subprocess.run([str(python), "-m", "pip", "install", "-r", requirements[setup.profile]],
                            cwd=root, env=env, check=True)
         subprocess.run([str(python), str(root / "scripts/check_system.py")],
                        cwd=root, env=env, check=True)

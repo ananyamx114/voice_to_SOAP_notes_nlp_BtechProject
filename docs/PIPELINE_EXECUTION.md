@@ -1,5 +1,8 @@
 # Run real pipeline sections, then integrate the complete system
 
+Start the independent model-stage sequence with
+[COMPONENT_01_VAD.md](COMPONENT_01_VAD.md) and the `vad` setup profile.
+
 The target is the complete local pipeline on each teammate's computer. Run the
 same committed implementation with real weights and actual audio. A bounded
 first encounter checks execution; it is not a replacement for full evaluation,

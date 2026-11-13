@@ -90,6 +90,15 @@ class VoiceActivityTests(unittest.TestCase):
             metadata_file = output / "visit-1" / "speech_segments.json"
             self.assertTrue(segment_file.is_file())
             self.assertTrue(metadata_file.is_file())
+            import json
+            metadata = json.loads(metadata_file.read_text())
+            self.assertEqual(metadata["segment_count"], 1)
+            self.assertAlmostEqual(metadata["source_duration_seconds"], 0.25)
+            self.assertAlmostEqual(metadata["speech_duration_seconds"], 0.1)
+            self.assertAlmostEqual(metadata["speech_fraction"], 0.4)
+            self.assertEqual(metadata["vad"]["backend"], "torch_jit")
+            self.assertEqual(metadata["vad"]["threshold"], 0.5)
+            self.assertGreaterEqual(metadata["processing_seconds"], 0)
 
 
 if __name__ == "__main__":

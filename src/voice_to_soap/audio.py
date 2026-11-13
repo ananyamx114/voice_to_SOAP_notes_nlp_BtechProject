@@ -137,7 +137,7 @@ def detect_speech(
         from silero_vad import get_speech_timestamps, load_silero_vad
     except ImportError as exc:
         raise RuntimeError(
-            "Silero VAD is not installed; install the audio dependencies from requirements.txt"
+            "Silero VAD is not installed; install requirements-vad.txt"
         ) from exc
 
     model = load_silero_vad()

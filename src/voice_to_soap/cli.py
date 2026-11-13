@@ -1,7 +1,9 @@
 import argparse
 import json
 import logging
+from importlib.metadata import PackageNotFoundError, version
 from pathlib import Path
+from time import perf_counter
 import soundfile as sf
 from .audio import (
     assign_speakers,
@@ -263,6 +265,7 @@ def main() -> None:
             encounter_id = row["encounter_id"]
             prepared_path = audio_root / encounter_id / "audio_mono.wav"
             try:
+                started = perf_counter()
                 info = sf.info(str(prepared_path))
                 if info.channels != 1 or info.samplerate != args.sample_rate:
                     raise ValueError(
@@ -282,12 +285,31 @@ def main() -> None:
                 saved = save_speech_segments(
                     waveform, rate, segments, encounter_output / "segments"
                 )
+                try:
+                    silero_version = version("silero-vad")
+                except PackageNotFoundError:
+                    silero_version = None
+                source_duration = len(waveform) / rate
+                speech_duration = sum(item["duration_seconds"] for item in saved)
                 write_json(encounter_output / "speech_segments.json", {
                     "encounter_id": encounter_id,
                     "source_audio": str(prepared_path.resolve()),
                     "sample_rate": rate,
                     "speech_detected": bool(saved),
                     "segments": saved,
+                    "source_duration_seconds": source_duration,
+                    "speech_duration_seconds": speech_duration,
+                    "speech_fraction": speech_duration / source_duration,
+                    "segment_count": len(saved),
+                    "processing_seconds": perf_counter() - started,
+                    "vad": {
+                        "model": "silero_vad", "backend": "torch_jit",
+                        "package_version": silero_version,
+                        "threshold": args.threshold,
+                        "min_speech_duration_ms": args.min_speech_ms,
+                        "min_silence_duration_ms": args.min_silence_ms,
+                        "speech_pad_ms": args.padding_ms,
+                    },
                 })
                 logging.info("Detected %d speech segment(s) for %s", len(saved), encounter_id)
             except Exception as exc:

@@ -85,7 +85,8 @@ interpreter manually if a previous workspace selection persists.
 
 `setup` installs development/HF tooling only; it does not run a model. The
 `--profile asr` option additionally installs real Whisper inference dependencies.
-Both profiles use the same source pipeline; neither substitutes a mock model.
+The `--profile vad` option installs the released Silero JIT model dependencies.
+All profiles use the same source pipeline; none substitutes a mock model.
 Model weights are downloaded only by a requested real inference/download step.
 Different OS/GPU driver combinations still require their own execution checks.
 

@@ -1,0 +1,4 @@
+# Real Silero JIT inference; existing SoundFile/SciPy handles audio decoding.
+-r requirements-dev.txt
+torch>=2.2,<3
+silero-vad==6.2.3
