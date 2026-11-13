@@ -41,7 +41,7 @@ Waiting longer cannot make an arbitrary model/context fit RAM or GPU memory.
 | Dataset import | BeTraC manifests, Eka audio export and labels; revision/hash checks | Independently download/validate on each system |
 | Audio preparation | Decode, finite-sample checks, mono/16 kHz resampling and metadata | Test each OS's codecs with actual target recordings |
 | ASR | Real Transformers Whisper transcription, timestamps and en/hi WER/CER; executed on CPU | Investigate poor Hindi repetition, long-form decoding, model choice, language-specific evaluation and measured latency/memory |
-| VAD | Silero adapter and timestamp preservation | Install compatible torch/torchaudio/Silero; execute and inspect actual regions/short clinical turns |
+| VAD | Released Silero 6.2.3 JIT executed on two full consultations; 180 exported regions passed WAV/timestamp checks | Listen/review speech boundaries, short turns and negations; measure quality on annotated data |
 | Diarization | pyannote turns and ASR timestamp alignment | Install compatible pyannote/audio stack; download approved weights; run actual speaker tests and measure DER on annotated data |
 | Speaker roles | Local-LLM role assignment with source-ID checks | Configure the local LLM and evaluate roles against reviewed labels |
 | Normalization | Raw/normalized separation and auditable lookup substitutions | Review language/abbreviation coverage; avoid unsupported corrections |
@@ -101,7 +101,8 @@ After installing and validating pyannote with the approved individual HF login:
 python scripts/project.py cli diarize-audio --audio data/raw/sully-smoke/audio/pm57-d1c01.mp3 --out data/outputs/diarization-validation.json --config configs/base.yaml
 ```
 
-These two dependency environments are not validated yet. A successful HF file
+The VAD environment has now executed on the originating computer using the
+published vad profile. Diarization remains unvalidated. A successful HF file
 access check does not prove pyannote loads or decodes audio on every OS.
 
 Once a real local OpenAI-compatible LLM server and the configured model are

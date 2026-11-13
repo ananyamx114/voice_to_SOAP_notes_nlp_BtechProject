@@ -1,5 +1,9 @@
 # First model component run: voice activity detection
 
+Executed results are in [results/component-01-vad](../results/component-01-vad/README.md):
+two complete encounters, 180 regions, all exported WAV/timestamp consistency
+checks passed. Manual speech-boundary accuracy still needs assessment.
+
 Audio preparation already ran on actual recordings. Next is Silero VAD:
 waveform -> speech regions with original recording timestamps. The standalone
 command calls the same detect_speech function used by the integrated audio

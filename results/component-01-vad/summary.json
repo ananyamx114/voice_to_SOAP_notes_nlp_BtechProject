@@ -1,0 +1,62 @@
+{
+  "date": "2026-11-13",
+  "implementation_commit": "6c8812466a104501ae3766a742ec7f0edace0fc9",
+  "dataset": "BeTraC/betrac-2026",
+  "source_revision": "96f7b94e662dac0d1394cfdf55e8b8ae81422663",
+  "split": "dev (validation)",
+  "selection": "First two complete encounters from the dev archive",
+  "backend": "torch_jit_cpu",
+  "torch_version": "2.15.0",
+  "silero_version": "6.2.3",
+  "model_file": "silero_vad.jit",
+  "model_bytes": 2272526,
+  "model_sha256": "e1122837f4154c511485fe0b9c64455f7b929c96fbb8d79fbdb336383ebd3720",
+  "encounters": [
+    {
+      "encounter_id": "betrac-dev-dialog_0060_0120",
+      "source_duration_seconds": 343.645875,
+      "speech_duration_seconds": 315.0000625,
+      "speech_fraction": 0.9166414772183721,
+      "segment_count": 97,
+      "processing_seconds": 2.727255542005878,
+      "vad": {
+        "model": "silero_vad",
+        "backend": "torch_jit",
+        "package_version": "6.2.3",
+        "threshold": 0.5,
+        "min_speech_duration_ms": 250,
+        "min_silence_duration_ms": 100,
+        "speech_pad_ms": 100
+      }
+    },
+    {
+      "encounter_id": "betrac-dev-dialog_0060_0121",
+      "source_duration_seconds": 240.849875,
+      "speech_duration_seconds": 212.9,
+      "speech_fraction": 0.8839531264029097,
+      "segment_count": 83,
+      "processing_seconds": 1.1412319999653846,
+      "vad": {
+        "model": "silero_vad",
+        "backend": "torch_jit",
+        "package_version": "6.2.3",
+        "threshold": 0.5,
+        "min_speech_duration_ms": 250,
+        "min_silence_duration_ms": 100,
+        "speech_pad_ms": 100
+      }
+    }
+  ],
+  "checks": {
+    "interval_bounds_and_order": "passed",
+    "all_saved_wavs_decode": "passed",
+    "mono_sample_rate_and_duration": "passed",
+    "speech_duration_totals": "passed",
+    "manual_boundary_listening": "not performed",
+    "gold_boundary_accuracy": "not measured"
+  },
+  "warnings": [
+    "PyTorch emitted a torch.jit.load future deprecation warning; inference completed."
+  ],
+  "timing_scope": "Per encounter: load, model initialization, detection and WAV writing; excludes process startup and metadata writing."
+}

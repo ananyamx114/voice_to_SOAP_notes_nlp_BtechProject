@@ -206,7 +206,7 @@ Latest pulled update 751da5a fixes approval status: every generated note stays
 pending clinician review and automated issues are recorded separately.
 
 Remaining: local SOAP-serving runtime/model, measured end-to-end cited generation,
-actual diarization/VAD environment and execution,
+actual diarization environment and execution, VAD boundary-quality evaluation,
 clinician-review application/export, terminology population, protected
 translation, and complete research evaluation. HF login does not install these
 components. Keep diarization disabled until its dependencies and a real smoke
