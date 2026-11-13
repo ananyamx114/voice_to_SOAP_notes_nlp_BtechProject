@@ -5,6 +5,7 @@
       "label": "Voice-to-SOAP: unit tests",
       "type": "process",
       "command": "${workspaceFolder}/.venv/bin/python",
+      "windows": {"command": "${workspaceFolder}/.venv/Scripts/python.exe"},
       "args": ["-m", "unittest", "discover", "-s", "tests", "-v"],
       "options": {
         "cwd": "${workspaceFolder}",
@@ -17,7 +18,17 @@
       "label": "Voice-to-SOAP: check setup",
       "type": "process",
       "command": "${workspaceFolder}/.venv/bin/python",
+      "windows": {"command": "${workspaceFolder}/.venv/Scripts/python.exe"},
       "args": ["scripts/check_setup.py"],
+      "options": {"cwd": "${workspaceFolder}"},
+      "problemMatcher": []
+    },
+    {
+      "label": "Voice-to-SOAP: inspect this computer",
+      "type": "process",
+      "command": "${workspaceFolder}/.venv/bin/python",
+      "windows": {"command": "${workspaceFolder}/.venv/Scripts/python.exe"},
+      "args": ["scripts/check_system.py"],
       "options": {"cwd": "${workspaceFolder}"},
       "problemMatcher": []
     }

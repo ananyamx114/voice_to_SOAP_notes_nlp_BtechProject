@@ -15,3 +15,6 @@ data/manifests/*.csv
 .env.*
 !.env.example
 .cache/huggingface/
+.local/
+configs/*.local.yaml
+requirements-*.local.txt

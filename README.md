@@ -4,6 +4,10 @@
 for installation, individual Hugging Face login, model-access verification,
 dataset download commands, and the shared-main workflow.
 
+Use [pipeline execution](docs/PIPELINE_EXECUTION.md) for actual stage commands,
+readiness, and the next integration steps. Each computer inspects its own
+hardware with `scripts/project.py system`; local reports/configs stay out of Git.
+
 Start with [development setup](docs/DEVELOPMENT_SETUP.md) for the lightweight
 local environment and VS Code tasks, and [repository audit](docs/REPOSITORY_AUDIT.md)
 for verified status, gaps, and the implementation plan. Full model execution

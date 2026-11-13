@@ -1,5 +1,10 @@
 # Repository audit and implementation plan
 
+Subsequent status: main commit `751da5a` fixed clinician-approval flag separation.
+Portable setup and independent local hardware inspection were then added; see
+TEAM_SETUP.md and PIPELINE_EXECUTION.md. The inventory below records the initial
+audit findings rather than claiming every issue is still unresolved.
+
 Audit date: 13 November 2026. Scope: repository source, configuration, tests,
 lookup tables, both project-guide copies, all committed JSON/JSONL artifacts,
 and the two pasted ChatGPT conversations. No report PDF or PPT was present;

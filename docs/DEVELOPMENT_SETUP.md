@@ -49,9 +49,9 @@ Python >=3.10 is declared; 3.12.4 is the version exercised here. The full ML sta
 is not installed. `requirements-dev.txt` is deliberately sufficient for mocked
 model tests and real synthetic audio I/O. `requirements.txt` remains the broader
 model/audio/training stack and needs platform-specific verification before use.
-Do not assume bitsandbytes/CUDA training works on this Mac. The exact installed
-lightweight versions are captured in `requirements-dev-macos-py312.lock.txt`;
-this snapshot is specific to this environment, not a full ML reproducibility lock.
+Do not assume bitsandbytes/CUDA training works on every computer. Use the
+portable launcher in TEAM_SETUP.md. Machine-specific dependency snapshots were
+removed from shared setup; record local versions under ignored .local/ instead.
 
 Open this folder in VS Code. If an interpreter was previously selected, use
 **Python: Select Interpreter** and select `.venv/bin/python`; the configured

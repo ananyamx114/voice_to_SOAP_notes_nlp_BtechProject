@@ -103,9 +103,9 @@ not acceptable clinical performance. WER can exceed 1 because of insertions.
 See [the saved aggregate results](../results/local-benchmark-setup/README.md).
 No SOAP or diarization inference was run. All 3,939 Eka clips were exported via
 the existing importer, and all 3,939 manifest audio paths exist. Unit tests:
-75 passed. Installed local ASR versions are recorded separately in
-`requirements-local-asr-macos-py312.lock.txt`; the initial lightweight lock is
-unchanged. Latency and peak memory require instrumentation
+75 passed. Machine-specific dependency snapshots are now kept locally rather than
+published as teammate setup requirements. The model revision and measured
+results above remain historical experiment records. Latency and peak memory require instrumentation
 for a substantive benchmark.
 
 ## Connections needed for later phases
