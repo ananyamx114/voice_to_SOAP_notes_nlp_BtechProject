@@ -240,11 +240,16 @@ def generate_verified_soap(
     supported = [claim for claim in checked if claim["verdict"] == "supported"]
     final_omissions = find_omissions(facts, supported)
     final_warnings = all_dose_warnings
+    automated_review_required = bool(
+        final_omissions or final_warnings or len(supported) != len(checked)
+    )
     return {
         "claims": checked,
         "supported_claims": supported,
         "omissions": final_omissions,
         "warnings": final_warnings,
         "attempts": attempt_history,
-        "review_required": bool(final_omissions or final_warnings or len(supported) != len(checked)),
+        "automated_review_required": automated_review_required,
+        "review_required": True,
+        "clinician_approval_status": "pending",
     }

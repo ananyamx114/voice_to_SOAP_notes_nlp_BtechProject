@@ -120,9 +120,11 @@ pipeline does not infer a doctor/patient mapping from unlabeled text.
   retries a bounded number of times when it finds unsupported claims,
   omissions, or configured dose warnings.
 - The final `soap_verified.json` contains supported claims, citations,
-  omissions, warnings, attempt history, and a `review_required` flag. This is
-  not a guarantee of factual correctness: the verifier is itself an LLM, and
-  omission checks are limited heuristics.
+  omissions, warnings, attempt history, and separate automated and human-review
+  status. `review_required` remains true until a clinician approval workflow
+  records approval; `automated_review_required` reports unresolved verifier
+  issues. This is not a guarantee of factual correctness: the verifier is
+  itself an LLM, and omission checks are limited heuristics.
 
 The default SOAP generator uses the configured local OpenAI-compatible model
 (defaults in `configs/base.yaml` point to an Ollama-compatible endpoint and
@@ -291,7 +293,7 @@ Each encounter gets its own directory with files such as:
 | `transcript.json` | Raw/normalized utterance data and recorded lookup changes. |
 | `facts.json` | Extracted facts, assertion, evidence, and optional terminology-link result. |
 | `soap_draft.json` | Draft SOAP claims with evidence and verifier verdicts. |
-| `soap_verified.json` | Supported claims plus citations, omissions, warnings, attempts, and review status. |
+| `soap_verified.json` | Supported claims plus citations, omissions, warnings, attempts, automated review status, and pending clinician approval. |
 
 `run.jsonl` at the output root records completion/failure per encounter. By
 default the pipeline logs a failure and continues to the next encounter; set

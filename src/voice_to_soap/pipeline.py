@@ -192,7 +192,9 @@ def run(config: dict, manifest_path: str, output_dir: str) -> None:
                 "omissions": outcome["omissions"],
                 "warnings": outcome["warnings"],
                 "verification_attempts": outcome["attempts"],
+                "automated_review_required": outcome["automated_review_required"],
                 "review_required": outcome["review_required"],
+                "clinician_approval_status": outcome["clinician_approval_status"],
             }
             translation = config.get("translation", {})
             if translation.get("enabled"):

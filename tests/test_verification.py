@@ -62,7 +62,9 @@ class VerificationTests(unittest.TestCase):
         self.assertEqual(outcome["attempts"][0]["status"], "needs_revision")
         self.assertIn("Include the source-supported fact", outcome["attempts"][0]["feedback"][0])
         self.assertEqual(outcome["attempts"][1]["status"], "passed")
-        self.assertFalse(outcome["review_required"])
+        self.assertFalse(outcome["automated_review_required"])
+        self.assertTrue(outcome["review_required"])
+        self.assertEqual(outcome["clinician_approval_status"], "pending")
         second_prompt = generator.generate_json.call_args_list[1].args[1]
         self.assertIn("REQUIRED CORRECTIONS", second_prompt)
         self.assertIn("fever denied", second_prompt)

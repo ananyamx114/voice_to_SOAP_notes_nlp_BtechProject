@@ -102,9 +102,11 @@ PYTHONPATH=src .venv/bin/python -m voice_to_soap.cli run \
 ```
 
 Inspect `run.jsonl`: the existing CLI can finish with encounter failures. Inspect
-the cited draft, facts and verifier report; `review_required: false` currently
-means no selected automated issue, not clinician approval. Fixing that ambiguity
-is a first-phase task. Neither the API nor clinician review UI exists yet.
+the cited draft, facts and verifier report. Every generated note is pending
+clinician approval: `review_required` remains true, while
+`automated_review_required` separately reports unresolved verifier issues.
+`clinician_approval_status` is `pending` until a future review workflow records
+approval. Neither the API nor clinician review UI exists yet.
 
 Whisper/VAD need additional dependencies and weights. Diarization additionally
 requires the chosen model's terms and `HF_TOKEN`; it stays disabled. Terminology
