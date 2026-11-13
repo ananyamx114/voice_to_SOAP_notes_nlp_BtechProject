@@ -1,0 +1,29 @@
+{
+  "model_id": "openai/whisper-small",
+  "split": "test",
+  "examples": 4,
+  "metrics_by_language": {
+    "en": {
+      "examples": 2,
+      "wer": 0.2,
+      "cer": 0.17197452229299362
+    },
+    "hi": {
+      "examples": 2,
+      "wer": 3.3260869565217392,
+      "cer": 3.4389140271493215
+    }
+  },
+  "metrics_by_recording_context": {
+    "conversation": {
+      "examples": 4,
+      "wer": 2.0921052631578947,
+      "cer": 2.082010582010582
+    }
+  },
+  "overall": {
+    "examples": 4,
+    "wer": 2.0921052631578947,
+    "cer": 2.082010582010582
+  }
+}

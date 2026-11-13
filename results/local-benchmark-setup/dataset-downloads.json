@@ -1,0 +1,146 @@
+{
+  "date": "2026-11-13",
+  "sources": [
+    {
+      "selection": "betrac",
+      "repository": "BeTraC/betrac-2026",
+      "revision": "96f7b94e662dac0d1394cfdf55e8b8ae81422663",
+      "license_from_card": "cc-by-4.0",
+      "files": [
+        {
+          "path": "README.md",
+          "bytes": 4993,
+          "sha256": "bd8f1b0772b0da179127982843044e4f8fd1759c94b1a5eb60fbf5b9d95ac0d4",
+          "upstream_sha256": null
+        },
+        {
+          "path": "data/dev-00000.tar",
+          "bytes": 469422080,
+          "sha256": "009d9d3c8eff8594675f3eedc99e509c2590d65013a1391c87b3e1ecfdda76b3",
+          "upstream_sha256": "009d9d3c8eff8594675f3eedc99e509c2590d65013a1391c87b3e1ecfdda76b3"
+        }
+      ],
+      "total_bytes": 469427073
+    },
+    {
+      "selection": "eka",
+      "repository": "ekacare/eka-medical-asr-evaluation-dataset",
+      "revision": "433e66037c8aebb8f396b938624a5ab6afc4ca36",
+      "license_from_card": "mit",
+      "files": [
+        {
+          "path": "README.md",
+          "bytes": 7810,
+          "sha256": "402561891dd51f5ff750b16b8dba5f9e962a90bb5675067cf58ff4bf58548ebd",
+          "upstream_sha256": null
+        },
+        {
+          "path": "dataset_info.json",
+          "bytes": 702,
+          "sha256": "3f1c8065b92deeecd278a25ff9efccd3cf0c1c6bb9f632b5b442265190ffc200",
+          "upstream_sha256": null
+        },
+        {
+          "path": "en/test-00000.parquet",
+          "bytes": 23036046,
+          "sha256": "80b8bd252299b5838713d74b3affb0f8527f0e361f6e7f989f6842d1093090c0",
+          "upstream_sha256": "80b8bd252299b5838713d74b3affb0f8527f0e361f6e7f989f6842d1093090c0"
+        },
+        {
+          "path": "en/test-00001.parquet",
+          "bytes": 14153038,
+          "sha256": "b73f0aeac31e434b565a377c8e384884a29528cf25edb92ff6edb4fac0a9f9f5",
+          "upstream_sha256": "b73f0aeac31e434b565a377c8e384884a29528cf25edb92ff6edb4fac0a9f9f5"
+        },
+        {
+          "path": "en/test-00002.parquet",
+          "bytes": 14350013,
+          "sha256": "12fd7880b480c73ad50f8af8dfbf6b53bb874bcb526bb8e0aff43950f9d60a18",
+          "upstream_sha256": "12fd7880b480c73ad50f8af8dfbf6b53bb874bcb526bb8e0aff43950f9d60a18"
+        },
+        {
+          "path": "en/test-00003.parquet",
+          "bytes": 14047077,
+          "sha256": "1ec6f999087795a204309bbbb7d21b45d881a889103d5869f9d35f65c3a6a82b",
+          "upstream_sha256": "1ec6f999087795a204309bbbb7d21b45d881a889103d5869f9d35f65c3a6a82b"
+        },
+        {
+          "path": "en/test-00004.parquet",
+          "bytes": 32050118,
+          "sha256": "0a701ba902ac9d76e2a42de96eff950c4be0f5eec743bb22729efc91f01d5d30",
+          "upstream_sha256": "0a701ba902ac9d76e2a42de96eff950c4be0f5eec743bb22729efc91f01d5d30"
+        },
+        {
+          "path": "en/test-00005.parquet",
+          "bytes": 60194999,
+          "sha256": "ef7f24d3a7f053d06b6c47950e94592b180bdfb20f4aba10ecd6ae8e89c84aed",
+          "upstream_sha256": "ef7f24d3a7f053d06b6c47950e94592b180bdfb20f4aba10ecd6ae8e89c84aed"
+        },
+        {
+          "path": "en/test-00006.parquet",
+          "bytes": 63108235,
+          "sha256": "c0b2983acacdd5fc19de121d4896bfdba306db2585c9ed246c26844715f0219c",
+          "upstream_sha256": "c0b2983acacdd5fc19de121d4896bfdba306db2585c9ed246c26844715f0219c"
+        },
+        {
+          "path": "en/test-00007.parquet",
+          "bytes": 15824483,
+          "sha256": "2ec39f1acfe9f96d9f05aa015840cedf29e438342d4f4f0fba17639ffb5004a4",
+          "upstream_sha256": "2ec39f1acfe9f96d9f05aa015840cedf29e438342d4f4f0fba17639ffb5004a4"
+        },
+        {
+          "path": "hi/test-00000.parquet",
+          "bytes": 44625902,
+          "sha256": "fe929223483f0bbda60e24f8360fc78c0f0a4f0e37153e12457f75d5b447e978",
+          "upstream_sha256": "fe929223483f0bbda60e24f8360fc78c0f0a4f0e37153e12457f75d5b447e978"
+        }
+      ],
+      "total_bytes": 281398423
+    },
+    {
+      "selection": "sully-smoke",
+      "repository": "SullyHQ/open-clinical-conversations",
+      "revision": "06053cd9be2ea5fbfaefebb1db5be907b53a8c44",
+      "license_from_card": "cc-by-4.0",
+      "files": [
+        {
+          "path": "ATTRIBUTION.md",
+          "bytes": 2024,
+          "sha256": "b28521c7dd0a2d5a33e5cca8953b7421e5106300d9a656ed04a79c380c9a090d",
+          "upstream_sha256": null
+        },
+        {
+          "path": "CITATIONS.bib",
+          "bytes": 1696,
+          "sha256": "0306667c5eb3ab6ac82bca778cdce0f2f61206963752b3dd9ce6d30d3816e918",
+          "upstream_sha256": null
+        },
+        {
+          "path": "README.md",
+          "bytes": 4039,
+          "sha256": "fc8c8790006ea0bbd01facbab6778c589b6cdacd0be1329408176d65665565a9",
+          "upstream_sha256": null
+        },
+        {
+          "path": "audio/metadata.jsonl",
+          "bytes": 2714395,
+          "sha256": "4d231007f71ba8eed12c65880e5f14f4047595e8cf55e9bc714b1a09500c8f83",
+          "upstream_sha256": null
+        },
+        {
+          "path": "audio/pm57-d1c01.mp3",
+          "bytes": 2748213,
+          "sha256": "9ce5f5a43ae10900863930922f15f820cbb0e916cd63bd0c1d8d1e8df51a5493",
+          "upstream_sha256": "9ce5f5a43ae10900863930922f15f820cbb0e916cd63bd0c1d8d1e8df51a5493"
+        },
+        {
+          "path": "encounters.jsonl",
+          "bytes": 11069602,
+          "sha256": "4fd645109d89ceefd56fdd6a7fa25b146f52de3d76f43ccaf6c1cf59c1fbb73a",
+          "upstream_sha256": "4fd645109d89ceefd56fdd6a7fa25b146f52de3d76f43ccaf6c1cf59c1fbb73a"
+        }
+      ],
+      "total_bytes": 16539969
+    }
+  ]
+}

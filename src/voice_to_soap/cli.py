@@ -1,7 +1,6 @@
 import argparse
 import json
 import logging
-import os
 from pathlib import Path
 import soundfile as sf
 from .audio import (
@@ -13,7 +12,7 @@ from .audio import (
     save_speech_segments,
     transcribe,
 )
-from .config import load_config
+from .config import huggingface_token, load_config
 from .datasets import load_manifest
 from .io_utils import write_json
 
@@ -113,7 +112,7 @@ def main() -> None:
     if args.command == "diarize-audio":
         config = load_config(args.config)
         audio_config = config["audio"]
-        token = os.environ.get(audio_config.get("diarization_token_env", "HF_TOKEN"))
+        token = huggingface_token(audio_config.get("diarization_token_env", "HF_TOKEN"))
         diarization_settings = audio_config.get("diarization", {})
         segments = diarize(
             args.audio,
@@ -137,7 +136,7 @@ def main() -> None:
     elif args.command == "diarize-manifest":
         config = load_config(args.config)
         audio_config = config["audio"]
-        token = os.environ.get(audio_config.get("diarization_token_env", "HF_TOKEN"))
+        token = huggingface_token(audio_config.get("diarization_token_env", "HF_TOKEN"))
         languages = {
             language.strip().lower()
             for language in args.languages.split(",")

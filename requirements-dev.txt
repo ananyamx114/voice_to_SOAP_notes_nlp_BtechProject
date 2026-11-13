@@ -1,0 +1,3 @@
+# Lightweight local development and the existing mocked-model test suite.
+# Model inference/training dependencies remain in requirements.txt.
+-e .[dev]

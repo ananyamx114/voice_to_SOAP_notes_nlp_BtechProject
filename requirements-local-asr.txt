@@ -1,0 +1,4 @@
+# Local CPU/Apple Silicon ASR path; excludes CUDA-only training dependencies.
+-r requirements-dev.txt
+torch>=2.2,<3
+transformers>=4.45,<5

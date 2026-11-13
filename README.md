@@ -1,5 +1,17 @@
 # Voice-to-SOAP
 
+**Teammates and Codex sessions: start with [TEAM_SETUP.md](docs/TEAM_SETUP.md)**
+for installation, individual Hugging Face login, model-access verification,
+dataset download commands, and the shared-main workflow.
+
+Start with [development setup](docs/DEVELOPMENT_SETUP.md) for the lightweight
+local environment and VS Code tasks, and [repository audit](docs/REPOSITORY_AUDIT.md)
+for verified status, gaps, and the implementation plan. Full model execution
+requires additional dependencies and a configured inference server.
+
+See [local audio benchmarks](docs/LOCAL_BENCHMARKS.md) for downloaded BeTraC,
+Eka and Sully samples, access requirements, and CPU Whisper commands.
+
 Voice-to-SOAP is a research project that aims to help a clinician turn a consultation into a structured SOAP note:
 
 - **S — Subjective:** what the patient reports

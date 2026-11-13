@@ -12,3 +12,6 @@ data/processed/
 data/manifests/*.csv
 !data/manifests/manifest.example.csv
 .env
+.env.*
+!.env.example
+.cache/huggingface/

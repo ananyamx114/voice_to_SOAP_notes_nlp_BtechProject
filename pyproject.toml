@@ -7,7 +7,17 @@ name = "voice-to-soap"
 version = "0.1.0"
 description = "Evidence-cited clinical scribe research pipeline"
 requires-python = ">=3.10"
-dependencies = []
+dependencies = [
+    "openai>=1.50,<2",
+    "PyYAML>=6",
+    "numpy>=1.26",
+    "scipy>=1.13",
+    "soundfile>=0.12",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8", "pyarrow>=17", "jiwer>=3", "rouge-score>=0.1.2"]
+hub = ["huggingface-hub>=0.34,<1"]
 
 [tool.setuptools]
 package-dir = {"" = "src"}

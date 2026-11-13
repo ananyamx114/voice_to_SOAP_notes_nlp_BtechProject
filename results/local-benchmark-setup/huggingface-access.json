@@ -1,0 +1,24 @@
+{
+  "authenticated": true,
+  "models": [
+    {
+      "repository": "openai/whisper-small",
+      "accessible": true,
+      "revision": "973afd24965f72e36ca33b3055d56a652f456b4d",
+      "weight_files_checked": 2
+    },
+    {
+      "repository": "pyannote/speaker-diarization-community-1",
+      "accessible": true,
+      "revision": "3533c8cf8e369892e6b79ff1bf80f7b0286a54ee",
+      "weight_files_checked": 2
+    },
+    {
+      "repository": "Qwen/Qwen2.5-3B-Instruct",
+      "accessible": true,
+      "revision": "aa8e72537993ba99e69dfaafa59ed015b17504d1",
+      "weight_files_checked": 2
+    }
+  ],
+  "scope": "Small config downloads and weight metadata; no model inference"
+}

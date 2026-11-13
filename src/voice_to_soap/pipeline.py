@@ -3,7 +3,6 @@ from __future__ import annotations
 from pathlib import Path
 from typing import TYPE_CHECKING, Any
 import logging
-import os
 from .audio import (
     assign_speakers,
     detect_speech,
@@ -12,6 +11,7 @@ from .audio import (
     transcribe_speech_segments,
 )
 from .datasets import load_manifest, parse_transcript
+from .config import huggingface_token
 from .io_utils import append_jsonl, write_json
 from .roles import assign_speaker_roles
 
@@ -81,7 +81,7 @@ def _audio_stage(
     segments: list[dict[str, Any]] = []
     role_assignments: list[dict[str, Any]] = []
     if diarization_config.get("enabled", False):
-        token = os.environ.get(audio_config.get("diarization_token_env", "HF_TOKEN"))
+        token = huggingface_token(audio_config.get("diarization_token_env", "HF_TOKEN"))
         segments = diarize(
             path,
             audio_config.get("diarization_model_id"),

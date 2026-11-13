@@ -1,0 +1,43 @@
+{
+  "date": "2026-11-13",
+  "hardware": "MacBook Air M1, 8 GB unified RAM",
+  "device": "cpu",
+  "model": "openai/whisper-small",
+  "model_revision": "973afd24965f72e36ca33b3055d56a652f456b4d",
+  "selection": "First two English and first two Hindi rows; four clips, not representative",
+  "timestamp_warnings": true,
+  "long_form_chunking_warning": true,
+  "latency": "Not instrumented",
+  "peak_memory": "Not instrumented",
+  "limitations": [
+    "Smoke execution only, not a full-dataset benchmark.",
+    "Hindi predictions contain substantial excess output; WER can exceed 1 due to insertions.",
+    "No SOAP, diarization, translation or clinical validation measured."
+  ],
+  "word_counts": [
+    {
+      "id": "eka-en-test-00001",
+      "language": "en",
+      "reference_words": 19,
+      "predicted_words": 13
+    },
+    {
+      "id": "eka-en-test-00002",
+      "language": "en",
+      "reference_words": 11,
+      "predicted_words": 11
+    },
+    {
+      "id": "eka-hi-test-00001",
+      "language": "hi",
+      "reference_words": 17,
+      "predicted_words": 139
+    },
+    {
+      "id": "eka-hi-test-00002",
+      "language": "hi",
+      "reference_words": 31,
+      "predicted_words": 25
+    }
+  ]
+}

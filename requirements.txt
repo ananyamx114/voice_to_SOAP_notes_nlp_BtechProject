@@ -42,9 +42,8 @@ sacrebleu>=2.4
 # Development and tests.
 pytest>=8
 
-# Optional: use only if serving the local model through Ollama or another
-# OpenAI-compatible inference server instead of loading it with Transformers.
-# openai>=1.50,<2
+# Required by fact extraction and verification, including when SOAP uses LoRA.
+openai>=1.50,<2
 
 # A database driver and review-UI framework are intentionally not selected yet.
 # Add them after choosing the storage and clinician-review design.
