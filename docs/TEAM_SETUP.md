@@ -174,6 +174,11 @@ authorization. Follow `docs/LOCAL_BENCHMARKS.md`, not a blanket download command
 
 ## 4. Real local ASR execution
 
+The current full-checkpoint component is [COMPONENT_02_ASR.md](COMPONENT_02_ASR.md),
+with sequential Large-v3 decoding and [actual measured results](../results/component-02-asr/README.md).
+The Small command below is retained only as the earlier baseline, not the new
+full-checkpoint component recipe.
+
 ```bash
 python scripts/project.py setup --profile asr
 python scripts/project.py system

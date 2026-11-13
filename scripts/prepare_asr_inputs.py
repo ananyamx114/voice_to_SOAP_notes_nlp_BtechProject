@@ -22,7 +22,7 @@ def main():
     sully = Path("data/manifests/sully-asr-selection.csv")
     if not sully.exists():
         uid = "pm57-d1c01"
-        rows = [json.loads(line) for line in Path("data/raw/sully-smoke/encounters.jsonl").read_text().splitlines() if line.strip()]
+        rows = [json.loads(line) for line in Path("data/raw/sully-smoke/encounters.jsonl").read_text(encoding="utf-8").splitlines() if line.strip()]
         selected = next(row for row in rows if row["encounter_id"] == uid)
         reference = re.sub(r"(?im)^(Clinician|Doctor|Patient|Family member):\s*", "", selected["transcript"])
         audio = Path("data/raw/sully-smoke/audio") / (uid + ".mp3")

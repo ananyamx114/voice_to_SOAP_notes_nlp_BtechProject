@@ -1,5 +1,9 @@
 # ASR component: full Whisper Large-v3, sequential transcription
 
+Actual results: [seven complete inputs and validation findings](../results/component-02-asr/README.md).
+The full checkpoint executed locally; Hindi and human role-play scores still
+need substantial quality review. This is not a clinical-readiness claim.
+
 This run uses the complete pretrained multilingual `openai/whisper-large-v3`
 checkpoint, revision `06f233fe06e710322aca913c1bc4249a0d71fce1`, without quantization
 or substitution by small/base/turbo/distilled checkpoints. It is a strong
@@ -111,7 +115,7 @@ changes require a new output directory. References never enter decoding.
 Temperature fallback is seeded per encounter, but cross-device bitwise equality
 is not promised. Do not edit the saved transcript to improve automated scores.
 
-Words with missing, reversed or out-of-source timestamps are flagged for review,
+Words with missing, reversed, non-monotonic or out-of-source timestamps are flagged for review,
 not assigned invented times. Keep original transcripts and input audio, inspect
 repetition and medication/number/negation errors, and listen against source audio.
 WER/CER and timestamp checks do not establish clinical correctness.

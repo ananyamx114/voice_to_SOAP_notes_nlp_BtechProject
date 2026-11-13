@@ -96,6 +96,7 @@ def sequential_transcribe(audio, sample_rate: int, model_id: str, device: str,
                  generate_kwargs=inference_generation)
     chunks, warnings = [], []
     duration = len(audio) / sample_rate
+    previous_start = None
     for index, item in enumerate(result.get("chunks") or []):
         text = item.get("text", "").strip()
         if not text:
@@ -110,6 +111,10 @@ def sequential_transcribe(audio, sample_rate: int, model_id: str, device: str,
             warnings.append({"chunk": index, "issue": "missing_timestamp"})
         elif start < 0 or end < start or end > duration + 0.1:
             warnings.append({"chunk": index, "issue": "timestamp_outside_source_or_reversed"})
+        if start is not None:
+            if previous_start is not None and start < previous_start - 1e-5:
+                warnings.append({"chunk": index, "issue": "non_monotonic_word_start"})
+            previous_start = start
         chunks.append({"text": text, "start": start, "end": end,
                        "confidence": item.get("confidence")})
     text = result.get("text", "").strip()

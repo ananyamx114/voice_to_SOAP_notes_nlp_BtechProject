@@ -52,6 +52,18 @@ class SequentialAsrTests(unittest.TestCase):
                 sequential_transcribe(np.ones(16000), 16000, "model", "cpu", None,
                     {**OPTIONS, "generation": {"task": "translate"}})
 
+    @patch("voice_to_soap.whisper_asr.version", return_value="test-version")
+    @patch("voice_to_soap.audio._resolve_asr_device", return_value="cpu")
+    @patch("voice_to_soap.whisper_asr.load_sequential_pipeline")
+    def test_timestamp_regression_is_flagged_without_reordering_or_clamping(self, load, resolve, version):
+        load.return_value = Mock(return_value={"text": "first second", "chunks": [
+            {"text": "first", "timestamp": (0.2, 0.3)},
+            {"text": "second", "timestamp": (0.16, 0.24)}]})
+        result = sequential_transcribe(np.ones(16000), 16000, "model", "cpu", None, OPTIONS)
+        self.assertIn({"chunk": 1, "issue": "non_monotonic_word_start"}, result["warnings"])
+        self.assertEqual([word["text"] for word in result["chunks"]], ["first", "second"])
+        self.assertEqual(result["chunks"][1]["start"], 0.16)
+
     def test_vad_context_preserves_short_pauses_and_original_offsets(self):
         regions = speech_context_regions([
             {"start_seconds": 1, "end_seconds": 2},
@@ -70,9 +82,9 @@ class SequentialAsrTests(unittest.TestCase):
             root = Path(tmp)
             sf.write(root / "input.wav", np.ones(16000, dtype=np.float32) * 0.1, 16000)
             manifest = root / "manifest.csv"
-            manifest.write_text('encounter_id,audio_path,transcript,reference_note,language,split,reference_transcript\nvisit-1,input.wav,,,en,test,hello\n')
+            manifest.write_text('encounter_id,audio_path,transcript,reference_note,language,split,reference_transcript\nvisit-1,input.wav,,,hi,test,नमस्ते\n', encoding="utf-8")
             config = {"audio": {"asr_model_id": "model", "asr_options": OPTIONS}}
-            transcribe.return_value = {"text": "hello", "chunks": [{"text": "hello",
+            transcribe.return_value = {"text": "नमस्ते", "chunks": [{"text": "नमस्ते",
                 "start": 0.1, "end": 0.5, "confidence": None}], "warnings": [],
                 "metadata": {"model_id": "model", "precision": "float32"}}
             with patch.dict("sys.modules", {"torch": SimpleNamespace(manual_seed=Mock())}):
@@ -84,8 +96,8 @@ class SequentialAsrTests(unittest.TestCase):
                 self.assertNotIn("reference_transcript", str(args[2:]))
                 run_component(config, [str(manifest)], str(root / "out"), "cpu", resume=True)
                 self.assertEqual(transcribe.call_count, 1)
-                before = (root / "out/visit-1/asr.json").read_text()
-                manifest.write_text(manifest.read_text().replace(',hello\n', ',changed\n'))
+                before = (root / "out/visit-1/asr.json").read_text(encoding="utf-8")
+                manifest.write_text(manifest.read_text(encoding="utf-8").replace(',नमस्ते\n', ',बदला\n'), encoding="utf-8")
                 with self.assertRaises(ResumeMismatchError):
                     run_component(config, [str(manifest)], str(root / "out"), "cpu", resume=True)
-                self.assertEqual((root / "out/visit-1/asr.json").read_text(), before)
+                self.assertEqual((root / "out/visit-1/asr.json").read_text(encoding="utf-8"), before)

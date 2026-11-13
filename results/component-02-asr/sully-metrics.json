@@ -1,0 +1,68 @@
+{
+  "requested": 1,
+  "completed": 1,
+  "failed": 0,
+  "not_processed": 0,
+  "metrics_by_language": {
+    "en": {
+      "examples": 1,
+      "wer": 0.22214484679665739,
+      "cer": 0.17041845049026377
+    }
+  },
+  "overall": {
+    "examples": 1,
+    "wer": 0.22214484679665739,
+    "cer": 0.17041845049026377
+  },
+  "encounters": [
+    {
+      "encounter_id": "pm57-d1c01",
+      "status": "complete",
+      "metrics": {
+        "examples": 1,
+        "wer": 0.22214484679665739,
+        "cer": 0.17041845049026377
+      },
+      "inference_seconds": 837.4834532499663,
+      "real_time_factor": 1.8288859478729171,
+      "process_peak_rss_bytes": 612548608,
+      "model": {
+        "model_id": "openai/whisper-large-v3",
+        "revision": "06f233fe06e710322aca913c1bc4249a0d71fce1",
+        "device": "mps",
+        "precision": "float16",
+        "quantization": "none",
+        "algorithm": "sequential",
+        "timestamps": "word",
+        "encoder_attention_outputs": false,
+        "generation": {
+          "max_new_tokens": 440,
+          "num_beams": 1,
+          "condition_on_prev_tokens": false,
+          "compression_ratio_threshold": 1.35,
+          "temperature": [
+            0.0,
+            0.2,
+            0.4,
+            0.6,
+            0.8,
+            1.0
+          ],
+          "logprob_threshold": -1.0,
+          "no_speech_threshold": 0.6,
+          "task": "transcribe",
+          "language": "english"
+        },
+        "torch_version": "2.15.0",
+        "transformers_version": "4.57.6"
+      },
+      "warnings": []
+    }
+  ],
+  "limitations": [
+    "WER/CER are transcript overlap, not clinical correctness.",
+    "Process peak RSS includes model loading; it is not peak total accelerator memory.",
+    "No claims of Marathi/code-mixed accuracy without scored recordings."
+  ]
+}

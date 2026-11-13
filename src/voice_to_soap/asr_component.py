@@ -52,7 +52,7 @@ def run_component(config: dict, manifests: list[str], output: str, device: str |
     root.mkdir(parents=True, exist_ok=True)
     run_config = {"config": config, "device_override": device, "use_vad": bool(vad_dir)}
     config_path = root / "run_config.json"
-    if config_path.exists() and json.loads(config_path.read_text()) != run_config:
+    if config_path.exists() and json.loads(config_path.read_text(encoding="utf-8")) != run_config:
         raise ResumeMismatchError("Existing run configuration differs; choose a new output directory")
     write_json(config_path, run_config)
     records = []
@@ -71,7 +71,7 @@ def run_component(config: dict, manifests: list[str], output: str, device: str |
             vad = None
             regions = [{"start_seconds": 0.0, "end_seconds": duration}]
             if vad_dir:
-                vad = json.loads((Path(vad_dir) / uid / "speech_segments.json").read_text())
+                vad = json.loads((Path(vad_dir) / uid / "speech_segments.json").read_text(encoding="utf-8"))
                 if abs(vad["source_duration_seconds"] - duration) > 2 / rate:
                     raise ValueError("VAD source duration differs from ASR source")
                 regions = speech_context_regions(vad["segments"], duration,
@@ -81,7 +81,7 @@ def run_component(config: dict, manifests: list[str], output: str, device: str |
                               "language": row["language"], "reference": row.get("reference_transcript", "")}
             signature = hashlib.sha256(json.dumps(signature_data, sort_keys=True).encode()).hexdigest()
             if target.exists() and resume:
-                previous = json.loads(target.read_text())
+                previous = json.loads(target.read_text(encoding="utf-8"))
                 if previous.get("input_signature") != signature:
                     raise ResumeMismatchError("Resume source/config/reference changed; choose a new output directory")
                 if previous.get("status") == "complete":

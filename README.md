@@ -8,6 +8,11 @@ Use [pipeline execution](docs/PIPELINE_EXECUTION.md) for actual stage commands,
 readiness, and the next integration steps. Each computer inspects its own
 hardware with `scripts/project.py system`; local reports/configs stay out of Git.
 
+For the full Whisper Large-v3 ASR component, use [the ASR runbook](docs/COMPONENT_02_ASR.md)
+and review [the actual results](results/component-02-asr/README.md), including
+Hindi errors and timestamp-review findings. The component uses its explicit
+large-model configuration; legacy baseline configurations remain reproducible.
+
 Start with [development setup](docs/DEVELOPMENT_SETUP.md) for the lightweight
 local environment and VS Code tasks, and [repository audit](docs/REPOSITORY_AUDIT.md)
 for verified status, gaps, and the implementation plan. Full model execution

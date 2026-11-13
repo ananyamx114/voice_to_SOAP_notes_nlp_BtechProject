@@ -1,0 +1,60 @@
+{
+  "date": "2026-11-13",
+  "inference_implementation_commit": "59cd70f",
+  "model": "openai/whisper-large-v3",
+  "model_revision": "06f233fe06e710322aca913c1bc4249a0d71fce1",
+  "weight_bytes": 3087130976,
+  "device": "mps",
+  "precision": "float16",
+  "quantization": "none",
+  "encoder_attention_outputs": false,
+  "completed_recordings": 7,
+  "total_source_seconds": 1086.0877500000001,
+  "total_inference_seconds": 1606.926375625946,
+  "word_timestamp_chunks": 3029,
+  "checks": {
+    "eka": {
+      "completed": 4,
+      "source_seconds": 43.672,
+      "inference_seconds": 57.40113929199288,
+      "word_timestamp_chunks": 72,
+      "invalid_or_missing_timestamps": 0,
+      "utterance_ids_and_unknown_speakers": "passed"
+    },
+    "betrac": {
+      "completed": 2,
+      "source_seconds": 584.49575,
+      "inference_seconds": 712.041783083987,
+      "word_timestamp_chunks": 1701,
+      "invalid_or_missing_timestamps": 0,
+      "utterance_ids_and_unknown_speakers": "passed"
+    },
+    "sully": {
+      "completed": 1,
+      "source_seconds": 457.92,
+      "inference_seconds": 837.4834532499663,
+      "word_timestamp_chunks": 1256,
+      "invalid_or_missing_timestamps": 1,
+      "utterance_ids_and_unknown_speakers": "passed"
+    }
+  },
+  "earlier_attempt": {
+    "status": "terminated before first prediction due to severe memory pressure",
+    "observed_process_footprint": "approximately 7.4 GB by native process sampler",
+    "change": "Encoder computations retained; unused encoder attention outputs no longer retained."
+  },
+  "resume_check": "Four completed Eka results reused without inference.",
+  "review_findings": [
+    "Hindi references mix Latin and Devanagari scripts; strict WER includes script differences.",
+    "One Hindi reference numeric medication dose was not reproduced reliably; clinical review required.",
+    "Synthetic BeTraC results do not establish real-world clinical accuracy.",
+    "No Marathi scored recordings were available."
+  ],
+  "limitations": [
+    "Selected seven recordings, not full dataset benchmarks.",
+    "Timing includes first model loading within each run.",
+    "Process RSS excludes complete GPU/Metal memory accounting.",
+    "Word timestamp checks establish consistency, not gold boundary accuracy.",
+    "No clinical safety certification or automatic approval."
+  ]
+}

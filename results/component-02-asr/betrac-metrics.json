@@ -1,0 +1,111 @@
+{
+  "requested": 2,
+  "completed": 2,
+  "failed": 0,
+  "not_processed": 0,
+  "metrics_by_language": {
+    "en": {
+      "examples": 2,
+      "wer": 0.02984201287302516,
+      "cer": 0.026200873362445413
+    }
+  },
+  "overall": {
+    "examples": 2,
+    "wer": 0.02984201287302516,
+    "cer": 0.026200873362445413
+  },
+  "encounters": [
+    {
+      "encounter_id": "betrac-dev-dialog_0060_0120",
+      "status": "complete",
+      "metrics": {
+        "examples": 1,
+        "wer": 0.020060180541624874,
+        "cer": 0.01858534824972934
+      },
+      "inference_seconds": 409.0564169170102,
+      "real_time_factor": 1.190342869435026,
+      "process_peak_rss_bytes": 606814208,
+      "model": {
+        "model_id": "openai/whisper-large-v3",
+        "revision": "06f233fe06e710322aca913c1bc4249a0d71fce1",
+        "device": "mps",
+        "precision": "float16",
+        "quantization": "none",
+        "algorithm": "sequential",
+        "timestamps": "word",
+        "encoder_attention_outputs": false,
+        "generation": {
+          "max_new_tokens": 440,
+          "num_beams": 1,
+          "condition_on_prev_tokens": false,
+          "compression_ratio_threshold": 1.35,
+          "temperature": [
+            0.0,
+            0.2,
+            0.4,
+            0.6,
+            0.8,
+            1.0
+          ],
+          "logprob_threshold": -1.0,
+          "no_speech_threshold": 0.6,
+          "task": "transcribe",
+          "language": "english"
+        },
+        "torch_version": "2.15.0",
+        "transformers_version": "4.57.6"
+      },
+      "warnings": []
+    },
+    {
+      "encounter_id": "betrac-dev-dialog_0060_0121",
+      "status": "complete",
+      "metrics": {
+        "examples": 1,
+        "wer": 0.04353932584269663,
+        "cer": 0.037866224433388614
+      },
+      "inference_seconds": 302.98536616697675,
+      "real_time_factor": 1.2579843197634075,
+      "process_peak_rss_bytes": 606814208,
+      "model": {
+        "model_id": "openai/whisper-large-v3",
+        "revision": "06f233fe06e710322aca913c1bc4249a0d71fce1",
+        "device": "mps",
+        "precision": "float16",
+        "quantization": "none",
+        "algorithm": "sequential",
+        "timestamps": "word",
+        "encoder_attention_outputs": false,
+        "generation": {
+          "max_new_tokens": 440,
+          "num_beams": 1,
+          "condition_on_prev_tokens": false,
+          "compression_ratio_threshold": 1.35,
+          "temperature": [
+            0.0,
+            0.2,
+            0.4,
+            0.6,
+            0.8,
+            1.0
+          ],
+          "logprob_threshold": -1.0,
+          "no_speech_threshold": 0.6,
+          "task": "transcribe",
+          "language": "english"
+        },
+        "torch_version": "2.15.0",
+        "transformers_version": "4.57.6"
+      },
+      "warnings": []
+    }
+  ],
+  "limitations": [
+    "WER/CER are transcript overlap, not clinical correctness.",
+    "Process peak RSS includes model loading; it is not peak total accelerator memory.",
+    "No claims of Marathi/code-mixed accuracy without scored recordings."
+  ]
+}

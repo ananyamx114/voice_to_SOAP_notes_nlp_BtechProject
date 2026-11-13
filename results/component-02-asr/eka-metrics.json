@@ -1,0 +1,202 @@
+{
+  "requested": 4,
+  "completed": 4,
+  "failed": 0,
+  "not_processed": 0,
+  "metrics_by_language": {
+    "en": {
+      "examples": 2,
+      "wer": 0.13333333333333333,
+      "cer": 0.10828025477707007
+    },
+    "hi": {
+      "examples": 2,
+      "wer": 0.5,
+      "cer": 0.49321266968325794
+    }
+  },
+  "overall": {
+    "examples": 4,
+    "wer": 0.35526315789473684,
+    "cer": 0.3333333333333333
+  },
+  "encounters": [
+    {
+      "encounter_id": "eka-en-test-00001",
+      "status": "complete",
+      "metrics": {
+        "examples": 1,
+        "wer": 0.21052631578947367,
+        "cer": 0.17708333333333334
+      },
+      "inference_seconds": 21.975891916954424,
+      "real_time_factor": 2.093739702453737,
+      "process_peak_rss_bytes": 410566656,
+      "model": {
+        "model_id": "openai/whisper-large-v3",
+        "revision": "06f233fe06e710322aca913c1bc4249a0d71fce1",
+        "device": "mps",
+        "precision": "float16",
+        "quantization": "none",
+        "algorithm": "sequential",
+        "timestamps": "word",
+        "encoder_attention_outputs": false,
+        "generation": {
+          "max_new_tokens": 440,
+          "num_beams": 1,
+          "condition_on_prev_tokens": false,
+          "compression_ratio_threshold": 1.35,
+          "temperature": [
+            0.0,
+            0.2,
+            0.4,
+            0.6,
+            0.8,
+            1.0
+          ],
+          "logprob_threshold": -1.0,
+          "no_speech_threshold": 0.6,
+          "task": "transcribe",
+          "language": "english"
+        },
+        "torch_version": "2.15.0",
+        "transformers_version": "4.57.6"
+      },
+      "warnings": []
+    },
+    {
+      "encounter_id": "eka-en-test-00002",
+      "status": "complete",
+      "metrics": {
+        "examples": 1,
+        "wer": 0.0,
+        "cer": 0.0
+      },
+      "inference_seconds": 5.533781000005547,
+      "real_time_factor": 0.5425275490201517,
+      "process_peak_rss_bytes": 410566656,
+      "model": {
+        "model_id": "openai/whisper-large-v3",
+        "revision": "06f233fe06e710322aca913c1bc4249a0d71fce1",
+        "device": "mps",
+        "precision": "float16",
+        "quantization": "none",
+        "algorithm": "sequential",
+        "timestamps": "word",
+        "encoder_attention_outputs": false,
+        "generation": {
+          "max_new_tokens": 440,
+          "num_beams": 1,
+          "condition_on_prev_tokens": false,
+          "compression_ratio_threshold": 1.35,
+          "temperature": [
+            0.0,
+            0.2,
+            0.4,
+            0.6,
+            0.8,
+            1.0
+          ],
+          "logprob_threshold": -1.0,
+          "no_speech_threshold": 0.6,
+          "task": "transcribe",
+          "language": "english"
+        },
+        "torch_version": "2.15.0",
+        "transformers_version": "4.57.6"
+      },
+      "warnings": []
+    },
+    {
+      "encounter_id": "eka-hi-test-00001",
+      "status": "complete",
+      "metrics": {
+        "examples": 1,
+        "wer": 0.8823529411764706,
+        "cer": 0.6705882352941176
+      },
+      "inference_seconds": 13.866532500018366,
+      "real_time_factor": 1.231048694959017,
+      "process_peak_rss_bytes": 612007936,
+      "model": {
+        "model_id": "openai/whisper-large-v3",
+        "revision": "06f233fe06e710322aca913c1bc4249a0d71fce1",
+        "device": "mps",
+        "precision": "float16",
+        "quantization": "none",
+        "algorithm": "sequential",
+        "timestamps": "word",
+        "encoder_attention_outputs": false,
+        "generation": {
+          "max_new_tokens": 440,
+          "num_beams": 1,
+          "condition_on_prev_tokens": false,
+          "compression_ratio_threshold": 1.35,
+          "temperature": [
+            0.0,
+            0.2,
+            0.4,
+            0.6,
+            0.8,
+            1.0
+          ],
+          "logprob_threshold": -1.0,
+          "no_speech_threshold": 0.6,
+          "task": "transcribe",
+          "language": "hindi"
+        },
+        "torch_version": "2.15.0",
+        "transformers_version": "4.57.6"
+      },
+      "warnings": []
+    },
+    {
+      "encounter_id": "eka-hi-test-00002",
+      "status": "complete",
+      "metrics": {
+        "examples": 1,
+        "wer": 0.27586206896551724,
+        "cer": 0.38235294117647056
+      },
+      "inference_seconds": 16.02493387501454,
+      "real_time_factor": 1.3682491355032906,
+      "process_peak_rss_bytes": 612007936,
+      "model": {
+        "model_id": "openai/whisper-large-v3",
+        "revision": "06f233fe06e710322aca913c1bc4249a0d71fce1",
+        "device": "mps",
+        "precision": "float16",
+        "quantization": "none",
+        "algorithm": "sequential",
+        "timestamps": "word",
+        "encoder_attention_outputs": false,
+        "generation": {
+          "max_new_tokens": 440,
+          "num_beams": 1,
+          "condition_on_prev_tokens": false,
+          "compression_ratio_threshold": 1.35,
+          "temperature": [
+            0.0,
+            0.2,
+            0.4,
+            0.6,
+            0.8,
+            1.0
+          ],
+          "logprob_threshold": -1.0,
+          "no_speech_threshold": 0.6,
+          "task": "transcribe",
+          "language": "hindi"
+        },
+        "torch_version": "2.15.0",
+        "transformers_version": "4.57.6"
+      },
+      "warnings": []
+    }
+  ],
+  "limitations": [
+    "WER/CER are transcript overlap, not clinical correctness.",
+    "Process peak RSS includes model loading; it is not peak total accelerator memory.",
+    "No claims of Marathi/code-mixed accuracy without scored recordings."
+  ]
+}
