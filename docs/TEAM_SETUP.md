@@ -6,6 +6,9 @@ still under development; use the status below to distinguish completed work
 from remaining integration. Everyone uses their own accounts and local clone,
 and the team has explicitly chosen to collaborate on `main`.
 
+The latest local execution record is documented in
+[PROGRESS_SO_FAR.md](PROGRESS_SO_FAR.md).
+
 ## Instructions for a teammate's Codex
 
 Read `AGENTS.md`, this file, `docs/REPOSITORY_AUDIT.md`, and
