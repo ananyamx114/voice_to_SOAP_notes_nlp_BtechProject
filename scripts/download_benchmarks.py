@@ -1,7 +1,7 @@
 """Download the initial public audio benchmarks, pinned and SHA-256 checked.
 
-Uses httpx already installed with the project's local LLM client. No login or
-remote dataset code execution is needed for the selected public repositories.
+No login or remote dataset code execution is needed for the selected public
+repositories.
 """
 import argparse
 import fnmatch
