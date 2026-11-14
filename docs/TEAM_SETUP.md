@@ -8,6 +8,8 @@ and the team has explicitly chosen to collaborate on `main`.
 
 The latest local execution record is documented in
 [PROGRESS_SO_FAR.md](PROGRESS_SO_FAR.md).
+For the prepared direct Qwen LoRA transcript-to-SOAP run on Kaggle, see
+[KAGGLE_TEXT_TO_SOAP.md](KAGGLE_TEXT_TO_SOAP.md).
 
 ## Instructions for a teammate's Codex
 
