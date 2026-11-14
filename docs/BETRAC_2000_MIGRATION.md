@@ -1,5 +1,10 @@
 # BeTraC-2000 dataset migration
 
+Current training default: **3 epochs**, explicitly requested after dataset
+preparation. This applies equally to DIRECT and HYBRID through both CLI and
+Python API defaults. Other training settings remain unchanged. The historical
+statements below about unchanged hyperparameters describe the migration itself.
+
 ## Current execution: approved removal of the standalone facts cap
 
 The revised selection succeeded: **2,000 encounters**, split into **1,600 train,
@@ -167,13 +172,13 @@ PYTHONPATH=src python -m voice_to_soap.aci_soap compare \
   --test data/processed/betrac_2000/test.jsonl \
   --base-model Qwen/Qwen2.5-0.5B-Instruct \
   --model-revision 7ae557604adf67be50417f59c2c2f167def9a775 \
-  --max-seq-length 4096 --seed 42 \
+  --max-seq-length 4096 --seed 42 --epochs 3 \
   --output-dir data/outputs/betrac-2000-comparison
 ```
 
 This command trains and evaluates both methods using the existing implementation;
-it was not executed on the CPU laptop. It uses the repository's unchanged epochs,
-learning rate, batch size and LoRA defaults. Do not launch until CUDA/VRAM and a
+it was not executed on the CPU laptop. It uses the approved three-epoch default;
+learning rate, batch size and LoRA defaults remain unchanged. Do not launch until CUDA/VRAM and a
 separate smoke run are verified. Two T4 cards do not merge memory automatically.
 
 For separate stages, the existing Python API supports `approach` (the individual
@@ -191,7 +196,7 @@ for approach in ('direct', 'hybrid'):
     train_aci_soap_lora(
         data/'train.jsonl', data/'validation.jsonl', base,
         f'data/models/betrac_2000/{approach}', approach=approach,
-        model_revision=revision, seed=42, max_seq_length=4096,
+        model_revision=revision, seed=42, max_seq_length=4096, epochs=3,
     )
 for approach in ('direct', 'hybrid'):
     evaluate_aci_soap_lora(
