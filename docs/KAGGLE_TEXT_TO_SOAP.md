@@ -1,4 +1,14 @@
-# Kaggle guide: Qwen text-to-SOAP LoRA run
+# Kaggle guide: current dataset migration
+
+**The default experimental dataset is now BeTraC-2000, sourced only from official
+training shards.** Follow [BETRAC_2000_MIGRATION.md](BETRAC_2000_MIGRATION.md).
+Do not start training until its selection report says `complete` and the split
+files exist. If fewer than 2,000 qualify, the dataset builder fails closed.
+
+The content below is a **historical mixed-data workflow**, not the new default.
+An unchanged copy is retained in [KAGGLE_LEGACY_MIXED.md](KAGGLE_LEGACY_MIXED.md).
+
+## Historical workflow (not the default)
 
 This guide explains how to run the prepared **direct transcript-to-SOAP**
 experiment on a Kaggle GPU. It does not run Whisper or the hybrid fact-extraction

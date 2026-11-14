@@ -1190,9 +1190,9 @@ def main() -> None:
     )
 
     train_parser = commands.add_parser("train", help="LoRA fine-tune a small SOAP model")
-    train_parser.add_argument("--train", default="data/processed/aci-bench-soap/train.jsonl")
+    train_parser.add_argument("--train", default="data/processed/betrac_2000/train.jsonl")
     train_parser.add_argument(
-        "--validation", default="data/processed/aci-bench-soap/validation.jsonl"
+        "--validation", default="data/processed/betrac_2000/validation.jsonl"
     )
     train_parser.add_argument("--base-model", default=DEFAULT_BASE_MODEL)
     train_parser.add_argument("--model-revision", default=None)
@@ -1210,7 +1210,7 @@ def main() -> None:
     )
 
     eval_parser = commands.add_parser("evaluate", help="evaluate LoRA adapter on held-out ACI tests")
-    eval_parser.add_argument("--test", default="data/processed/aci-bench-soap/test.jsonl")
+    eval_parser.add_argument("--test", default="data/processed/betrac_2000/test.jsonl")
     eval_parser.add_argument("--base-model", default=DEFAULT_BASE_MODEL)
     eval_parser.add_argument("--adapter-dir", default=None)
     eval_parser.add_argument("--output-dir", default="data/outputs/aci-qwen25-05b-soap")
@@ -1221,11 +1221,11 @@ def main() -> None:
         "compare",
         help="train and evaluate matched direct and rule-based hybrid Qwen LoRA approaches",
     )
-    compare_parser.add_argument("--train", default="data/processed/aci-bench-soap/train.jsonl")
+    compare_parser.add_argument("--train", default="data/processed/betrac_2000/train.jsonl")
     compare_parser.add_argument(
-        "--validation", default="data/processed/aci-bench-soap/validation.jsonl"
+        "--validation", default="data/processed/betrac_2000/validation.jsonl"
     )
-    compare_parser.add_argument("--test", default="data/processed/aci-bench-soap/test.jsonl")
+    compare_parser.add_argument("--test", default="data/processed/betrac_2000/test.jsonl")
     compare_parser.add_argument("--base-model", default=DEFAULT_BASE_MODEL)
     compare_parser.add_argument("--model-revision", default=None)
     compare_parser.add_argument("--output-dir", default="data/outputs/aci-soap-comparison")
