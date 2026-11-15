@@ -22,16 +22,22 @@ def command_for(action: str, root: Path, extra: list[str], windows: bool | None 
         return [python, "-m", "voice_to_soap.cli", *extra]
     if action == "asr-run":
         return [python, "-m", "voice_to_soap.asr_component", *extra]
+    if action in {"asr-align", "asr-train", "asr-compare"}:
+        module = {"asr-align": "asr_alignment", "asr-train": "whisper_lora",
+                  "asr-compare": "asr_comparison"}[action]
+        return [python, "-m", "voice_to_soap." + module, *extra]
     script = {"system": "check_system.py", "check": "check_setup.py",
               "hf-check": "check_huggingface.py", "download-data": "download_benchmarks.py",
-              "download-asr": "download_asr.py", "prepare-asr-data": "prepare_asr_inputs.py"}[action]
+              "download-asr": "download_asr.py", "prepare-asr-data": "prepare_asr_inputs.py",
+              "prepare-fleurs": "prepare_fleurs_asr.py", "asr-experiment": "run_asr_lora_experiment.py",
+              "asr-job": "asr_job.py"}[action]
     return [python, str(root / "scripts" / script), *extra]
 
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("action", choices=("setup", "system", "check", "test", "hf-login",
-                                           "hf-check", "download-data", "download-asr", "prepare-asr-data", "asr-run", "cli"))
+                                           "hf-check", "download-data", "download-asr", "prepare-asr-data", "prepare-fleurs", "asr-experiment", "asr-run", "asr-align", "asr-train", "asr-compare", "asr-job", "cli"))
     # Parse only the action here; flags such as cli --help belong to the child.
     args = parser.parse_args(sys.argv[1:2])
     extra = sys.argv[2:]
@@ -44,7 +50,7 @@ def main() -> int:
     python = environment_python(root)
     if args.action == "setup":
         setup_parser = argparse.ArgumentParser(prog=f"{parser.prog} setup")
-        setup_parser.add_argument("--profile", choices=("dev", "asr", "vad"), default="dev")
+        setup_parser.add_argument("--profile", choices=("dev", "asr", "vad", "asr-training"), default="dev")
         setup = setup_parser.parse_args(extra)
         if sys.version_info < (3, 10):
             parser.error("Python >=3.10 required; Python 3.12 is the tested starting point")
@@ -55,8 +61,9 @@ def main() -> int:
                            cwd=root, env=env, check=True)
         subprocess.run([str(python), "-m", "pip", "install", "-e", ".[dev,hub]"],
                        cwd=root, env=env, check=True)
-        if setup.profile in {"asr", "vad"}:
-            requirements = {"asr": "requirements-local-asr.txt", "vad": "requirements-vad.txt"}
+        if setup.profile in {"asr", "vad", "asr-training"}:
+            requirements = {"asr": "requirements-local-asr.txt", "vad": "requirements-vad.txt",
+                            "asr-training": "requirements-asr-training.txt"}
             subprocess.run([str(python), "-m", "pip", "install", "-r", requirements[setup.profile]],
                            cwd=root, env=env, check=True)
         subprocess.run([str(python), str(root / "scripts/check_system.py")],

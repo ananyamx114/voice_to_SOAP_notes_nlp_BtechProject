@@ -4,6 +4,18 @@ Actual results: [seven complete inputs and validation findings](../results/compo
 The full checkpoint executed locally; Hindi and human role-play scores still
 need substantial quality review. This is not a clinical-readiness claim.
 
+The subsequent experiment is [Whisper LoRA](ASR_LORA.md), with separate aligned
+training audio, held-out validation and paired full-encounter evaluation.
+Full-model LoRA training completed three epochs / 90 updates. Its
+[71-recording comparison](../results/asr-lora-run1/README.md) has mixed results:
+three WER gains, two regressions and one unchanged dataset/language group.
+
+The expanded five-epoch run is also complete. Its
+[final matched CUDA results and report](../results/asr-lora-run2/README.md)
+cover 71 selected recordings, with three Hindi/Marathi WER improvements and
+three English regressions. Read the [team handoff](ASR_TEAM_HANDOFF.md) before
+using its adapter or combining ASR and Qwen experiment claims.
+
 This run uses the complete pretrained multilingual `openai/whisper-large-v3`
 checkpoint, revision `06f233fe06e710322aca913c1bc4249a0d71fce1`, without quantization
 or substitution by small/base/turbo/distilled checkpoints. It is a strong

@@ -1,0 +1,19 @@
+# Expanded-data experiment; preserve the original three-epoch control config.
+model_id: openai/whisper-large-v3
+revision: 06f233fe06e710322aca913c1bc4249a0d71fce1
+seed: 42
+lora:
+  rank: 16
+  alpha: 32
+  dropout: 0.05
+  scope: encoder_decoder
+training:
+  epochs: 5
+  learning_rate: 0.00005
+  weight_decay: 0.01
+  gradient_accumulation: 16
+  warmup_ratio: 0.1
+  max_grad_norm: 1.0
+  early_stopping_patience: 5
+  checkpoint_every_updates: 10
+  selection_metric: macro_language_wer

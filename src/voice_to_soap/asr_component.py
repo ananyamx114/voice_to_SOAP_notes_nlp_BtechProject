@@ -12,7 +12,7 @@ from .asr_datasets import _metric_summary
 from .config import load_config
 from .datasets import load_manifest
 from .io_utils import append_jsonl, write_json
-from .whisper_asr import sequential_transcribe, speech_context_regions
+from .whisper_asr import IMPLEMENTATION_SHA256, sequential_transcribe, speech_context_regions
 
 
 class ResumeMismatchError(ValueError):
@@ -51,6 +51,12 @@ def run_component(config: dict, manifests: list[str], output: str, device: str |
         raise ValueError("ASR requires actual audio; supplied transcript is not used as input")
     root.mkdir(parents=True, exist_ok=True)
     run_config = {"config": config, "device_override": device, "use_vad": bool(vad_dir)}
+    adapter_hash = None
+    if options.get("adapter_path"):
+        from .whisper_lora import validate_adapter
+        adapter_hash = validate_adapter(options["adapter_path"], audio_config["asr_model_id"],
+                                        options["revision"])["adapter_sha256"]
+        run_config["adapter_sha256"] = adapter_hash
     config_path = root / "run_config.json"
     if config_path.exists() and json.loads(config_path.read_text(encoding="utf-8")) != run_config:
         raise ResumeMismatchError("Existing run configuration differs; choose a new output directory")
@@ -77,8 +83,11 @@ def run_component(config: dict, manifests: list[str], output: str, device: str |
                 regions = speech_context_regions(vad["segments"], duration,
                                                  float(audio_config.get("vad_join_gap_seconds", 2.0)))
             signature_data = {"audio_sha256": file_sha256(Path(row["audio_path"])),
+                              "asr_implementation_sha256": IMPLEMENTATION_SHA256,
                               "config": config, "device": device, "regions": regions,
                               "language": row["language"], "reference": row.get("reference_transcript", "")}
+            if adapter_hash:
+                signature_data["adapter"] = adapter_hash
             signature = hashlib.sha256(json.dumps(signature_data, sort_keys=True).encode()).hexdigest()
             if target.exists() and resume:
                 previous = json.loads(target.read_text(encoding="utf-8"))
@@ -165,8 +174,12 @@ def main() -> int:
     parser.add_argument("--device", help="Explicit cpu, mps or cuda:0; no fallback on errors")
     parser.add_argument("--vad-dir", help="Require prior VAD artifacts for every input encounter")
     parser.add_argument("--resume", action="store_true")
+    parser.add_argument("--adapter", help="Validated Whisper ASR adapter directory; full base remains required")
     args = parser.parse_args()
-    summary = run_component(load_config(args.config), args.manifest, args.outdir,
+    config = load_config(args.config)
+    if args.adapter:
+        config["audio"]["asr_options"]["adapter_path"] = str(Path(args.adapter).resolve())
+    summary = run_component(config, args.manifest, args.outdir,
                             args.device, args.vad_dir, args.resume)
     print(json.dumps({k: v for k, v in summary.items() if k != "encounters"}, indent=2))
     return 0 if summary["completed"] == summary["requested"] else 1

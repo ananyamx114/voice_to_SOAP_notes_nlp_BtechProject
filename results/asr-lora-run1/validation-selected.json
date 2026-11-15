@@ -1,0 +1,106 @@
+{
+  "status": "complete",
+  "exploratory": true,
+  "selection": "Minimum language validation WER across completed epochs; ties choose earlier epoch",
+  "selected_epochs": {
+    "en": 1,
+    "hi": 3,
+    "mr": 3
+  },
+  "evaluated_recordings": 71,
+  "improved_wer_groups": 4,
+  "regressed_wer_groups": 0,
+  "all_wer_groups_improved": false,
+  "all_cer_groups_non_regressing": false,
+  "adapter_sha256_by_language": {
+    "en": "25bbc6f7ee910fafc4941e1ce61ee539cbd59d24a82a8f387b7740071489a469",
+    "hi": "ed5e9bb188872971e79f3ec87b872df25135d48f008cc8c811bd4a62fdf655a2",
+    "mr": "ed5e9bb188872971e79f3ec87b872df25135d48f008cc8c811bd4a62fdf655a2"
+  },
+  "comparisons": [
+    {
+      "dataset": "eka",
+      "language": "en",
+      "examples": 2,
+      "selected_epoch": 1,
+      "base_wer": 0.13333333333333333,
+      "shared_adapter_wer": 0.13333333333333333,
+      "selected_adapter_wer": 0.13333333333333333,
+      "base_cer": 0.10828025477707007,
+      "selected_adapter_cer": 0.10828025477707007,
+      "wer_change_percentage_points": 0.0
+    },
+    {
+      "dataset": "eka",
+      "language": "hi",
+      "examples": 2,
+      "selected_epoch": 3,
+      "base_wer": 0.5,
+      "shared_adapter_wer": 0.34782608695652173,
+      "selected_adapter_wer": 0.34782608695652173,
+      "base_cer": 0.49321266968325794,
+      "selected_adapter_cer": 0.39819004524886875,
+      "wer_change_percentage_points": -15.217391304347828
+    },
+    {
+      "dataset": "betrac",
+      "language": "en",
+      "examples": 2,
+      "selected_epoch": 1,
+      "base_wer": 0.02984201287302516,
+      "shared_adapter_wer": 0.038033937975424224,
+      "selected_adapter_wer": 0.02984201287302516,
+      "base_cer": 0.026200873362445413,
+      "selected_adapter_cer": 0.027183406113537117,
+      "wer_change_percentage_points": 0.0
+    },
+    {
+      "dataset": "sully",
+      "language": "en",
+      "examples": 1,
+      "selected_epoch": 1,
+      "base_wer": 0.22214484679665739,
+      "shared_adapter_wer": 0.23050139275766016,
+      "selected_adapter_wer": 0.2200557103064067,
+      "base_cer": 0.17041845049026377,
+      "selected_adapter_cer": 0.16889932329788704,
+      "wer_change_percentage_points": -0.20891364902506926
+    },
+    {
+      "dataset": "fleurs",
+      "language": "hi",
+      "examples": 32,
+      "selected_epoch": 3,
+      "base_wer": 0.3921085080147966,
+      "shared_adapter_wer": 0.34155363748458695,
+      "selected_adapter_wer": 0.34155363748458695,
+      "base_cer": 0.20994475138121546,
+      "selected_adapter_cer": 0.1633437424933942,
+      "wer_change_percentage_points": -5.055487053020963
+    },
+    {
+      "dataset": "fleurs",
+      "language": "mr",
+      "examples": 32,
+      "selected_epoch": 3,
+      "base_wer": 0.7871287128712872,
+      "shared_adapter_wer": 0.7376237623762376,
+      "selected_adapter_wer": 0.7376237623762376,
+      "base_cer": 0.2495743128192654,
+      "selected_adapter_cer": 0.27122354658234005,
+      "wer_change_percentage_points": -4.950495049504955
+    }
+  ],
+  "limitations": [
+    "Validation selects the adapter; final comparisons are separate.",
+    "Previously inspected Eka examples are diagnostic, not untouched final test data.",
+    "Automatic alignment is not human-reviewed gold; general FLEURS is not clinical speech.",
+    "A measured improvement on these recordings does not establish clinical readiness.",
+    "Exploratory diagnostic comparison on previously inspected clinical samples.",
+    "Do not choose a winner per test encounter; retain every candidate result.",
+    "Greedy short-segment validation differs from production decoding with temperature fallback and word timestamps.",
+    "These are separate verified runs using known language hints; automatic adapter routing is not implemented.",
+    "Retain the original shared-checkpoint results, including its English regressions.",
+    "WER gains do not imply CER gains or clinical correctness."
+  ]
+}

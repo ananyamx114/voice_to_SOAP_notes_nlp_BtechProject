@@ -1,12 +1,141 @@
 # Voice-to-SOAP: Progress So Far
 
+## Expanded ASR final evaluation and report ready (15 November 2026)
+
+The complete base and validation-selected epoch-5 adapter finished matched CUDA
+evaluation on all 71 selected recordings. The final private recovery archive
+passed its SHA-256 and all 358 file checks. The report exporter additionally
+checked exact per-language coverage, adapter identity, model/decoder pairing
+and validation-only checkpoint selection. There were no failed/skipped test
+recordings. All 137 local tests passed for the handoff.
+
+| Dataset/language | Base WER | LoRA WER |
+|---|---:|---:|
+| Eka English (2) | 13.33% | 16.67% |
+| Eka Hindi (2) | 50.00% | 39.13% |
+| BeTraC English (2) | 2.98% | 4.56% |
+| Sully English (1) | 22.21% | 22.63% |
+| FLEURS Hindi (32) | 32.80% | 26.02% |
+| FLEURS Marathi (32) | 79.87% | 61.55% |
+
+WER and CER improved in the three Hindi/Marathi groups and worsened in all
+three English groups. Do not hide those regressions or describe the adapter as
+universally better. Current data expansion is deferred to a separate experiment.
+The report section, Word document, tables, JSON provenance and PNG/SVG/PDF figures
+are in [results/asr-lora-run2](../results/asr-lora-run2/README.md). The
+[team handoff](ASR_TEAM_HANDOFF.md) explains real ASR prediction inputs to Qwen
+and the remaining speaker/evidence/end-to-end validation boundaries.
+
+The selected adapter was installed and checksum-validated under ignored
+`data/models/asr-adapters/large-v3-expanded-run2/`. Models, audio, transcripts,
+credentials and runtime files remain outside Git. No commit/push was made;
+the existing resolved merge and newer SOAP/BeTraC remote commits still require
+normal integration when the user approves publication.
+
+## Expanded ASR training complete; evaluation recovery (15 November 2026)
+
+The expanded run finished all five epochs and 515 optimizer updates on Kaggle.
+The downloaded recovery archive passed its SHA-256 and all 67 file checks.
+Its final checkpoint was also loaded on CPU to verify update 515, next epoch 5
+and offset 0, all 384 adapter tensors/optimizer states, scaler step 515 and CUDA
+RNG state. The epoch-5 adapter was selected by validation macro-language WER.
+
+| Validation language | Historical base WER | Epoch-5 WER | Historical base CER | Epoch-5 CER |
+|---|---:|---:|---:|---:|
+| English | 8.48% | 1.32% | 6.32% | 0.54% |
+| Hindi | 30.10% | 24.13% | 13.44% | 9.99% |
+| Marathi | 81.55% | 59.59% | 23.55% | 15.87% |
+
+The historical validation control ran on MPS, and the trained adapter validation
+ran on CUDA. These are diagnostic validation results, not completed paired CUDA
+test results. Marathi error remains high. All five epochs' metrics and the
+adapter weights are retained locally; no commit or push has been made.
+
+The first evaluation session completed base and adapter transcription for the
+four Eka diagnostic clips, then failed in metric comparison because its parent
+coordinator used system Python without `jiwer`. The initial English result
+regressed (13.33% to 16.67% WER on two clips), while Hindi improved (50.00% to
+39.13% on two clips). The remaining dataset comparisons are unfinished.
+The launcher now uses the ASR environment for the coordinator, and evaluation
+recovery requires the completed update-515 archive before loading any model.
+
+The local live log stream stopped updating at step 187 while the actual GPU
+training continued. The saved session log and verified archive are authoritative.
+The monitor now reconnects stale streams, flags unconfirmed live progress,
+ignores backward replay of older updates and reads persisted logs at termination.
+The attempted evaluation restart could not attach the failed kernel as a source;
+the verified completed archive was transferred through a private dataset instead.
+The user cancelled the source-less restart, and corrected evaluation session 002
+version 2 was submitted with all required inputs. It has a separate five-minute
+monitor, a mandatory update-515 guard and automatic verified output download.
+
+## ASR GPU migration update (15 November 2026)
+
+The expanded five-epoch experiment has moved from local MPS to a private
+Kaggle CUDA session. Local training stopped at an atomic checkpoint at update
+90, with the original adapter, AdamW state, scaler and sample offset retained.
+A separate verified recovery archive remains local. No Git commit or push was
+made; the working source and selected audio were transferred privately.
+
+The cloud verified 2,393 asset files and six checkpoint files, restored update
+90/sample offset 1,440, and resumed the complete FP16 Whisper Large-v3 model
+with the same 7,864,320 trainable LoRA parameters. New CUDA optimizer checkpoints
+at updates 100 and 103 confirm continuation. At this recorded handoff, epoch 1
+training had finished and validation was in progress; the schedule has 515
+updates in total. There are no new expanded-run WER results yet.
+
+Transformers 4.57.6 and PEFT 0.17.1 remain pinned. The backend migration records
+the CUDA PyTorch/NumPy version changes and the necessary fresh CUDA RNG seed;
+it preserves learned and optimizer state but does not claim bitwise identical
+continuation across GPU backends. The current trainer uses one T4. Observed
+GPU microbatches were mostly about 0.9 seconds; validation/evaluation time is
+additional and has not yet been measured for a completion estimate.
+
+See [KAGGLE_ASR.md](KAGGLE_ASR.md) for authentication, verified transfer, session
+checkpointing and continuation instructions. Query the ignored local migration
+handoff record and remote job before attempting to resume the old local source.
+The full local suite passed 125 tests after the input-loader correction.
+
+## ASR experiment update (14 November 2026)
+
+The local ASR experiment trained 7,864,320 LoRA parameters on the complete
+Whisper Large-v3 model. Base weights stayed frozen; no quantization or smaller
+model was used.
+Training completed three epochs / 90 optimizer updates on 472 segments
+(64.90 minutes); 199 separate segments were used for validation. The frozen base
+and trained adapter were both evaluated on 71 selected recordings.
+
+[Measured results](../results/asr-lora-run1/README.md): WER decreased in three of
+six dataset/language groups, increased in two, and stayed unchanged in one.
+Marathi CER increased despite lower WER. This is a mixed experiment result,
+not completion of the whole pipeline or a universal ASR improvement. The separate
+English validation-selected epoch-1 checkpoint matches base WER on Eka/BeTraC
+and lowers Sully WER from 22.21% to 22.01%. Using epoch 1 for English and epoch 3
+for Hindi/Marathi gives four WER gains and two ties; the original shared-adapter
+regressions remain reported. Marathi CER still worsens. These are exploratory
+results using known language hints, not automatic adapter routing.
+
+The run recovered from recorded MPS allocation failures using memory corrections
+and a protected local resource budget. Full predictions, training checkpoints,
+source snapshots and recovery histories remain ignored. The shared results
+contain aggregate metrics and portable experiment settings.
+
+The teammate update `9d14ea0` was fetched and integrated in the working tree.
+It changes the direct/hybrid Qwen SOAP experiment, with no ASR runtime changes.
+All 117 repository tests pass after integration; dependency checks also pass.
+The merge and local ASR work remain uncommitted and unpushed under the user's
+explicit publication restriction. Local backup patches and a recovery stash
+were retained before integration.
+
+## Earlier Windows execution record (13 November 2026)
+
 Updated: 13 November 2026
 
 This document records the setup and execution completed on the Windows
 development computer. It is an execution record, not a claim that the complete
 clinical pipeline is finished.
 
-## Repository state
+### Repository state
 
 - Shared branch: `main`
 - Latest synchronized commit: `3f78366`
@@ -16,7 +145,7 @@ clinical pipeline is finished.
 - Local datasets, model weights, outputs, hardware reports, and credentials
   remain outside Git and under ignored paths.
 
-## Computer and environment
+### Computer and environment
 
 The local system report recorded:
 
@@ -30,7 +159,7 @@ The local system report recorded:
 
 Machine-specific details are written to the ignored `.local/system.json`.
 
-## Installed components
+### Installed components
 
 The lightweight development environment was created in `.venv` and extended
 with the following local profiles:
@@ -45,7 +174,7 @@ with the following local profiles:
 
 The full training stack, CUDA, and a 7B local model were not installed.
 
-## Hugging Face access
+### Hugging Face access
 
 The project cache is authenticated as the local account and access checks
 passed for:
@@ -58,7 +187,7 @@ The check only downloads small configuration/metadata files and does not run
 inference. Tokens were entered through the hidden Hugging Face CLI prompt and
 were not stored in the repository.
 
-## Dataset preparation
+### Dataset preparation
 
 The selected public benchmark files were downloaded with pinned revisions and
 hash checks:
@@ -75,9 +204,9 @@ Bounded local validation data was prepared:
 
 The raw datasets and generated audio remain ignored.
 
-## Executed stages and results
+### Executed stages and results
 
-### Setup and regression tests
+#### Setup and regression tests
 
 All **84 unit tests pass**, including Windows portability tests.
 
@@ -89,7 +218,7 @@ py scripts\project.py test
 .venv\Scripts\python.exe -m pip check
 ```
 
-### Public benchmark download and preparation
+#### Public benchmark download and preparation
 
 ```powershell
 py scripts\project.py download-data --dataset all
@@ -105,7 +234,7 @@ py scripts\project.py cli import-eka-asr `
   --limit-per-language 2
 ```
 
-### ASR smoke evaluation
+#### ASR smoke evaluation
 
 ```powershell
 py scripts\project.py cli evaluate-asr `
@@ -125,7 +254,7 @@ The Hindi result contains substantial repetition/error and must not be treated
 as acceptable clinical performance. Full results are in the ignored local
 [ASR metrics](../data/outputs/asr-validation/metrics.json).
 
-### VAD
+#### VAD
 
 ```powershell
 py scripts\project.py cli prepare-audio `
@@ -143,7 +272,7 @@ Silero VAD executed on both BeTraC samples and exported 180 speech regions.
 This validates execution and timestamps, not speech recall or clinical-word
 preservation.
 
-### Diarization
+#### Diarization
 
 FFmpeg was installed through Windows Package Manager. The downloaded Sully
 MP3 had a codec-duration mismatch under the pyannote decoder, so it was
@@ -166,7 +295,7 @@ local [diarization result](../data/outputs/diarization-validation-30s.json).
 The full 7.6-minute CPU run was stopped after roughly 12 minutes without
 producing a result; no full-recording quality claim is made.
 
-### Local LLM
+#### Local LLM
 
 Ollama was installed and the small local model was downloaded:
 
@@ -182,7 +311,7 @@ py scripts\project.py check --check-llm
 The project check confirmed that the model is listed. A direct JSON response
 smoke test also succeeded.
 
-### Evidence-cited SOAP pipeline
+#### Evidence-cited SOAP pipeline
 
 The bounded real-model run was started with:
 
@@ -204,7 +333,7 @@ The pipeline correctly recorded failed encounter entries in the ignored local
 [run log](../data/outputs/soap-transcript-validation/run.jsonl) rather than
 presenting invalid facts or an unsafe SOAP note as successful output.
 
-## Current limitations
+### Current limitations
 
 - The real SOAP path needs stronger bounded correction/retry handling for
   malformed fact extraction output.
@@ -219,7 +348,7 @@ presenting invalid facts or an unsafe SOAP note as successful output.
 - Translation, training, research evaluation, and full audio-to-SOAP integration
   remain incomplete.
 
-## Recommended next steps
+### Recommended next steps
 
 1. Add bounded fact-extraction retries or deterministic normalization for
    invalid `entity_type` and speaker/evidence mismatches without weakening

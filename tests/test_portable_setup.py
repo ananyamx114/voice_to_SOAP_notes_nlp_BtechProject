@@ -16,6 +16,10 @@ class PortableSetupTests(unittest.TestCase):
         self.assertEqual(command[-1], "a recording.wav")
         self.assertEqual(command[1:3], ["-m", "voice_to_soap.cli"])
         self.assertTrue(command_for("hf-login", root, [], True)[0].endswith("hf.exe"))
+        for action, module in (("asr-train", "whisper_lora"), ("asr-align", "asr_alignment"),
+                               ("asr-compare", "asr_comparison")):
+            self.assertEqual(command_for(action, root, ["--help"], True)[1:],
+                             ["-m", "voice_to_soap." + module, "--help"])
 
     def test_linux_memory_uses_page_size_and_count(self):
         with patch("scripts.check_system.os.sysconf", side_effect=[1024, 4096], create=True):

@@ -1,7 +1,7 @@
 """Download the initial public audio benchmarks, pinned and SHA-256 checked.
 
-Uses httpx already installed with the project's local LLM client. No login or
-remote dataset code execution is needed for the selected public repositories.
+No login or remote dataset code execution is needed for the selected public
+repositories.
 """
 import argparse
 import fnmatch
@@ -22,6 +22,12 @@ SOURCES = {
                     ["README.md", "ATTRIBUTION.md", "CITATIONS.bib", "encounters.jsonl",
                      "audio/metadata.jsonl", "audio/pm57-d1c01.mp3"]),
 }
+TRAINING_SOURCE = ("BeTraC/betrac-2026", ["README.md", "data/train-00000.tar"])
+FLEURS_SOURCE = ("google/fleurs", ["hi_in/train/0000.parquet", "hi_in/validation/0000.parquet",
+                                    "mr_in/train/0000.parquet", "mr_in/validation/0000.parquet"])
+FLEURS_TEST_SOURCE = ("google/fleurs", ["hi_in/test/0000.parquet", "mr_in/test/0000.parquet"])
+FLEURS_REVISION = "168de341b3db6859a9bac1c50a2ef5e3b47647e0"
+FLEURS_CARD_REVISION = "70bb2e84b976b7e960aa89f1c648e09c59f894dd"
 
 REVISIONS = {
     "betrac": "96f7b94e662dac0d1394cfdf55e8b8ae81422663",
@@ -39,15 +45,21 @@ def digest(path: Path) -> str:
 
 
 def download(name: str, root: Path, client: httpx.Client) -> None:
-    repo, patterns = SOURCES[name]
-    response = client.get(f"https://huggingface.co/api/datasets/{repo}/revision/{REVISIONS[name]}",
+    # Training is an explicit selection, never added to the benchmark 'all' download.
+    if name in {"fleurs-training", "fleurs-test"}:
+        repo, patterns = FLEURS_SOURCE if name == "fleurs-training" else FLEURS_TEST_SOURCE
+        pinned = FLEURS_REVISION
+    else:
+        repo, patterns = TRAINING_SOURCE if name == "betrac-train" else SOURCES[name]
+        pinned = REVISIONS["betrac"] if name == "betrac-train" else REVISIONS[name]
+    response = client.get(f"https://huggingface.co/api/datasets/{repo}/revision/{pinned}",
                           params={"blobs": "true"})
     response.raise_for_status()
     metadata = response.json()
     if metadata.get("gated"):
         raise RuntimeError("Dataset now requires access approval; review its current terms.")
     revision = metadata["sha"]
-    if revision != REVISIONS[name]:
+    if revision != pinned:
         raise RuntimeError("Upstream revision does not match the pinned benchmark revision")
     files = [item for item in metadata["siblings"]
              if any(fnmatch.fnmatchcase(item["rfilename"], p) for p in patterns)]
@@ -56,8 +68,9 @@ def download(name: str, root: Path, client: httpx.Client) -> None:
     destination = root / name
     destination.mkdir(parents=True, exist_ok=True)
     total = sum(item["size"] for item in files)
-    if total > 2 * 1024**3:
-        raise RuntimeError("Selected files exceed the initial 2 GiB per-dataset budget.")
+    budget = (6 if name == "fleurs-training" else 2) * 1024**3
+    if total > budget:
+        raise RuntimeError("Selected files exceed the explicitly selected dataset download budget.")
     if shutil.disk_usage(destination).free < total + 12 * 1024**3:
         raise RuntimeError("Insufficient free space to preserve 12 GiB for models/system use.")
     print(f"{name}: {len(files)} files, {total / 1024**2:.1f} MiB, revision {revision}", flush=True)
@@ -96,12 +109,20 @@ def download(name: str, root: Path, client: httpx.Client) -> None:
     manifest = {"repository": repo, "revision": revision,
                 "license_from_card": metadata.get("cardData", {}).get("license"),
                 "files": records, "total_bytes": total}
+    if name in {"fleurs-training", "fleurs-test"}:
+        card = client.get(f"https://huggingface.co/datasets/google/fleurs/resolve/{FLEURS_CARD_REVISION}/README.md")
+        card.raise_for_status()
+        if "cc-by-4.0" not in card.text:
+            raise RuntimeError("Pinned FLEURS card no longer states the reviewed license")
+        (destination / "README.md").write_bytes(card.content)
+        manifest.update(source_card_revision=FLEURS_CARD_REVISION, license_from_card="cc-by-4.0",
+                        source_card_sha256=digest(destination / "README.md"))
     (destination / "download_manifest.json").write_text(json.dumps(manifest, indent=2) + "\n")
 
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--dataset", choices=[*SOURCES, "all"], default="all")
+    parser.add_argument("--dataset", choices=[*SOURCES, "betrac-train", "fleurs-training", "fleurs-test", "all"], default="all")
     args = parser.parse_args()
     root = Path(__file__).resolve().parents[1] / "data/raw"
     with httpx.Client(follow_redirects=True, timeout=httpx.Timeout(90, connect=20)) as client:

@@ -1,0 +1,739 @@
+{
+  "status": "complete",
+  "model_id": "openai/whisper-large-v3",
+  "revision": "06f233fe06e710322aca913c1bc4249a0d71fce1",
+  "config": {
+    "model_id": "openai/whisper-large-v3",
+    "revision": "06f233fe06e710322aca913c1bc4249a0d71fce1",
+    "seed": 42,
+    "lora": {
+      "rank": 16,
+      "alpha": 32,
+      "dropout": 0.05,
+      "scope": "encoder_decoder"
+    },
+    "training": {
+      "epochs": 5,
+      "learning_rate": 5e-05,
+      "weight_decay": 0.01,
+      "gradient_accumulation": 16,
+      "warmup_ratio": 0.1,
+      "max_grad_norm": 1.0,
+      "early_stopping_patience": 5,
+      "checkpoint_every_updates": 10,
+      "selection_metric": "macro_language_wer"
+    }
+  },
+  "parameters": {
+    "target_modules": [
+      "model.encoder.layers.0.self_attn.v_proj",
+      "model.encoder.layers.0.self_attn.q_proj",
+      "model.encoder.layers.1.self_attn.v_proj",
+      "model.encoder.layers.1.self_attn.q_proj",
+      "model.encoder.layers.2.self_attn.v_proj",
+      "model.encoder.layers.2.self_attn.q_proj",
+      "model.encoder.layers.3.self_attn.v_proj",
+      "model.encoder.layers.3.self_attn.q_proj",
+      "model.encoder.layers.4.self_attn.v_proj",
+      "model.encoder.layers.4.self_attn.q_proj",
+      "model.encoder.layers.5.self_attn.v_proj",
+      "model.encoder.layers.5.self_attn.q_proj",
+      "model.encoder.layers.6.self_attn.v_proj",
+      "model.encoder.layers.6.self_attn.q_proj",
+      "model.encoder.layers.7.self_attn.v_proj",
+      "model.encoder.layers.7.self_attn.q_proj",
+      "model.encoder.layers.8.self_attn.v_proj",
+      "model.encoder.layers.8.self_attn.q_proj",
+      "model.encoder.layers.9.self_attn.v_proj",
+      "model.encoder.layers.9.self_attn.q_proj",
+      "model.encoder.layers.10.self_attn.v_proj",
+      "model.encoder.layers.10.self_attn.q_proj",
+      "model.encoder.layers.11.self_attn.v_proj",
+      "model.encoder.layers.11.self_attn.q_proj",
+      "model.encoder.layers.12.self_attn.v_proj",
+      "model.encoder.layers.12.self_attn.q_proj",
+      "model.encoder.layers.13.self_attn.v_proj",
+      "model.encoder.layers.13.self_attn.q_proj",
+      "model.encoder.layers.14.self_attn.v_proj",
+      "model.encoder.layers.14.self_attn.q_proj",
+      "model.encoder.layers.15.self_attn.v_proj",
+      "model.encoder.layers.15.self_attn.q_proj",
+      "model.encoder.layers.16.self_attn.v_proj",
+      "model.encoder.layers.16.self_attn.q_proj",
+      "model.encoder.layers.17.self_attn.v_proj",
+      "model.encoder.layers.17.self_attn.q_proj",
+      "model.encoder.layers.18.self_attn.v_proj",
+      "model.encoder.layers.18.self_attn.q_proj",
+      "model.encoder.layers.19.self_attn.v_proj",
+      "model.encoder.layers.19.self_attn.q_proj",
+      "model.encoder.layers.20.self_attn.v_proj",
+      "model.encoder.layers.20.self_attn.q_proj",
+      "model.encoder.layers.21.self_attn.v_proj",
+      "model.encoder.layers.21.self_attn.q_proj",
+      "model.encoder.layers.22.self_attn.v_proj",
+      "model.encoder.layers.22.self_attn.q_proj",
+      "model.encoder.layers.23.self_attn.v_proj",
+      "model.encoder.layers.23.self_attn.q_proj",
+      "model.encoder.layers.24.self_attn.v_proj",
+      "model.encoder.layers.24.self_attn.q_proj",
+      "model.encoder.layers.25.self_attn.v_proj",
+      "model.encoder.layers.25.self_attn.q_proj",
+      "model.encoder.layers.26.self_attn.v_proj",
+      "model.encoder.layers.26.self_attn.q_proj",
+      "model.encoder.layers.27.self_attn.v_proj",
+      "model.encoder.layers.27.self_attn.q_proj",
+      "model.encoder.layers.28.self_attn.v_proj",
+      "model.encoder.layers.28.self_attn.q_proj",
+      "model.encoder.layers.29.self_attn.v_proj",
+      "model.encoder.layers.29.self_attn.q_proj",
+      "model.encoder.layers.30.self_attn.v_proj",
+      "model.encoder.layers.30.self_attn.q_proj",
+      "model.encoder.layers.31.self_attn.v_proj",
+      "model.encoder.layers.31.self_attn.q_proj",
+      "model.decoder.layers.0.self_attn.v_proj",
+      "model.decoder.layers.0.self_attn.q_proj",
+      "model.decoder.layers.0.encoder_attn.v_proj",
+      "model.decoder.layers.0.encoder_attn.q_proj",
+      "model.decoder.layers.1.self_attn.v_proj",
+      "model.decoder.layers.1.self_attn.q_proj",
+      "model.decoder.layers.1.encoder_attn.v_proj",
+      "model.decoder.layers.1.encoder_attn.q_proj",
+      "model.decoder.layers.2.self_attn.v_proj",
+      "model.decoder.layers.2.self_attn.q_proj",
+      "model.decoder.layers.2.encoder_attn.v_proj",
+      "model.decoder.layers.2.encoder_attn.q_proj",
+      "model.decoder.layers.3.self_attn.v_proj",
+      "model.decoder.layers.3.self_attn.q_proj",
+      "model.decoder.layers.3.encoder_attn.v_proj",
+      "model.decoder.layers.3.encoder_attn.q_proj",
+      "model.decoder.layers.4.self_attn.v_proj",
+      "model.decoder.layers.4.self_attn.q_proj",
+      "model.decoder.layers.4.encoder_attn.v_proj",
+      "model.decoder.layers.4.encoder_attn.q_proj",
+      "model.decoder.layers.5.self_attn.v_proj",
+      "model.decoder.layers.5.self_attn.q_proj",
+      "model.decoder.layers.5.encoder_attn.v_proj",
+      "model.decoder.layers.5.encoder_attn.q_proj",
+      "model.decoder.layers.6.self_attn.v_proj",
+      "model.decoder.layers.6.self_attn.q_proj",
+      "model.decoder.layers.6.encoder_attn.v_proj",
+      "model.decoder.layers.6.encoder_attn.q_proj",
+      "model.decoder.layers.7.self_attn.v_proj",
+      "model.decoder.layers.7.self_attn.q_proj",
+      "model.decoder.layers.7.encoder_attn.v_proj",
+      "model.decoder.layers.7.encoder_attn.q_proj",
+      "model.decoder.layers.8.self_attn.v_proj",
+      "model.decoder.layers.8.self_attn.q_proj",
+      "model.decoder.layers.8.encoder_attn.v_proj",
+      "model.decoder.layers.8.encoder_attn.q_proj",
+      "model.decoder.layers.9.self_attn.v_proj",
+      "model.decoder.layers.9.self_attn.q_proj",
+      "model.decoder.layers.9.encoder_attn.v_proj",
+      "model.decoder.layers.9.encoder_attn.q_proj",
+      "model.decoder.layers.10.self_attn.v_proj",
+      "model.decoder.layers.10.self_attn.q_proj",
+      "model.decoder.layers.10.encoder_attn.v_proj",
+      "model.decoder.layers.10.encoder_attn.q_proj",
+      "model.decoder.layers.11.self_attn.v_proj",
+      "model.decoder.layers.11.self_attn.q_proj",
+      "model.decoder.layers.11.encoder_attn.v_proj",
+      "model.decoder.layers.11.encoder_attn.q_proj",
+      "model.decoder.layers.12.self_attn.v_proj",
+      "model.decoder.layers.12.self_attn.q_proj",
+      "model.decoder.layers.12.encoder_attn.v_proj",
+      "model.decoder.layers.12.encoder_attn.q_proj",
+      "model.decoder.layers.13.self_attn.v_proj",
+      "model.decoder.layers.13.self_attn.q_proj",
+      "model.decoder.layers.13.encoder_attn.v_proj",
+      "model.decoder.layers.13.encoder_attn.q_proj",
+      "model.decoder.layers.14.self_attn.v_proj",
+      "model.decoder.layers.14.self_attn.q_proj",
+      "model.decoder.layers.14.encoder_attn.v_proj",
+      "model.decoder.layers.14.encoder_attn.q_proj",
+      "model.decoder.layers.15.self_attn.v_proj",
+      "model.decoder.layers.15.self_attn.q_proj",
+      "model.decoder.layers.15.encoder_attn.v_proj",
+      "model.decoder.layers.15.encoder_attn.q_proj",
+      "model.decoder.layers.16.self_attn.v_proj",
+      "model.decoder.layers.16.self_attn.q_proj",
+      "model.decoder.layers.16.encoder_attn.v_proj",
+      "model.decoder.layers.16.encoder_attn.q_proj",
+      "model.decoder.layers.17.self_attn.v_proj",
+      "model.decoder.layers.17.self_attn.q_proj",
+      "model.decoder.layers.17.encoder_attn.v_proj",
+      "model.decoder.layers.17.encoder_attn.q_proj",
+      "model.decoder.layers.18.self_attn.v_proj",
+      "model.decoder.layers.18.self_attn.q_proj",
+      "model.decoder.layers.18.encoder_attn.v_proj",
+      "model.decoder.layers.18.encoder_attn.q_proj",
+      "model.decoder.layers.19.self_attn.v_proj",
+      "model.decoder.layers.19.self_attn.q_proj",
+      "model.decoder.layers.19.encoder_attn.v_proj",
+      "model.decoder.layers.19.encoder_attn.q_proj",
+      "model.decoder.layers.20.self_attn.v_proj",
+      "model.decoder.layers.20.self_attn.q_proj",
+      "model.decoder.layers.20.encoder_attn.v_proj",
+      "model.decoder.layers.20.encoder_attn.q_proj",
+      "model.decoder.layers.21.self_attn.v_proj",
+      "model.decoder.layers.21.self_attn.q_proj",
+      "model.decoder.layers.21.encoder_attn.v_proj",
+      "model.decoder.layers.21.encoder_attn.q_proj",
+      "model.decoder.layers.22.self_attn.v_proj",
+      "model.decoder.layers.22.self_attn.q_proj",
+      "model.decoder.layers.22.encoder_attn.v_proj",
+      "model.decoder.layers.22.encoder_attn.q_proj",
+      "model.decoder.layers.23.self_attn.v_proj",
+      "model.decoder.layers.23.self_attn.q_proj",
+      "model.decoder.layers.23.encoder_attn.v_proj",
+      "model.decoder.layers.23.encoder_attn.q_proj",
+      "model.decoder.layers.24.self_attn.v_proj",
+      "model.decoder.layers.24.self_attn.q_proj",
+      "model.decoder.layers.24.encoder_attn.v_proj",
+      "model.decoder.layers.24.encoder_attn.q_proj",
+      "model.decoder.layers.25.self_attn.v_proj",
+      "model.decoder.layers.25.self_attn.q_proj",
+      "model.decoder.layers.25.encoder_attn.v_proj",
+      "model.decoder.layers.25.encoder_attn.q_proj",
+      "model.decoder.layers.26.self_attn.v_proj",
+      "model.decoder.layers.26.self_attn.q_proj",
+      "model.decoder.layers.26.encoder_attn.v_proj",
+      "model.decoder.layers.26.encoder_attn.q_proj",
+      "model.decoder.layers.27.self_attn.v_proj",
+      "model.decoder.layers.27.self_attn.q_proj",
+      "model.decoder.layers.27.encoder_attn.v_proj",
+      "model.decoder.layers.27.encoder_attn.q_proj",
+      "model.decoder.layers.28.self_attn.v_proj",
+      "model.decoder.layers.28.self_attn.q_proj",
+      "model.decoder.layers.28.encoder_attn.v_proj",
+      "model.decoder.layers.28.encoder_attn.q_proj",
+      "model.decoder.layers.29.self_attn.v_proj",
+      "model.decoder.layers.29.self_attn.q_proj",
+      "model.decoder.layers.29.encoder_attn.v_proj",
+      "model.decoder.layers.29.encoder_attn.q_proj",
+      "model.decoder.layers.30.self_attn.v_proj",
+      "model.decoder.layers.30.self_attn.q_proj",
+      "model.decoder.layers.30.encoder_attn.v_proj",
+      "model.decoder.layers.30.encoder_attn.q_proj",
+      "model.decoder.layers.31.self_attn.v_proj",
+      "model.decoder.layers.31.self_attn.q_proj",
+      "model.decoder.layers.31.encoder_attn.v_proj",
+      "model.decoder.layers.31.encoder_attn.q_proj"
+    ],
+    "trainable_parameters": 7864320,
+    "total_parameters": 1551354880
+  },
+  "optimizer_updates": 515,
+  "versions": {
+    "torch": "2.11.0+cu130",
+    "transformers": "4.57.6",
+    "peft": "0.17.1",
+    "numpy": "2.1.3"
+  },
+  "base_precision": "torch.float16",
+  "quantization": "none",
+  "training_and_validation_seconds_cuda": 9710.71731477,
+  "adapter_sha256": "2557815bc1214fd48fbc4364efe6b1fb074c4598a66309d57a50f661da97012f",
+  "selected_epoch": 5,
+  "audit": {
+    "train_segments": 1644,
+    "validation_segments": 239,
+    "train_encounters": 635,
+    "validation_encounters": 68,
+    "shared_segment_texts": 0,
+    "train_audio_seconds": 14494.79,
+    "validation_audio_seconds": 1925.5924687499999
+  },
+  "training_by_language": {
+    "en": {
+      "segments": 1045,
+      "audio_seconds": 7222.370000000001
+    },
+    "hi": {
+      "segments": 321,
+      "audio_seconds": 3641.28
+    },
+    "mr": {
+      "segments": 278,
+      "audio_seconds": 3631.14
+    }
+  },
+  "validation_base_historical_mps": {
+    "overall": {
+      "examples": 239,
+      "wer": 0.20113851992409867,
+      "cer": 0.098691109643842
+    },
+    "by_language": {
+      "en": {
+        "examples": 175,
+        "wer": 0.08477011494252873,
+        "cer": 0.06316652994257588
+      },
+      "hi": {
+        "examples": 32,
+        "wer": 0.30097087378640774,
+        "cer": 0.13442176870748299
+      },
+      "mr": {
+        "examples": 32,
+        "wer": 0.8154981549815498,
+        "cer": 0.23554264589384738
+      }
+    },
+    "segments": 239,
+    "encounters": 68
+  },
+  "validation_selected_cuda": {
+    "overall": {
+      "examples": 239,
+      "wer": 0.11448450347881088,
+      "cer": 0.04144172136559599
+    },
+    "by_language": {
+      "en": {
+        "examples": 175,
+        "wer": 0.013218390804597701,
+        "cer": 0.005414273995077933
+      },
+      "hi": {
+        "examples": 32,
+        "wer": 0.24133148404993066,
+        "cer": 0.09986394557823129
+      },
+      "mr": {
+        "examples": 32,
+        "wer": 0.5959409594095941,
+        "cer": 0.15870081858991286
+      }
+    },
+    "segments": 239,
+    "encounters": 68
+  },
+  "validation_epochs": [
+    {
+      "epoch": 1,
+      "overall": {
+        "examples": 239,
+        "wer": 0.1513809825005271,
+        "cer": 0.0642016545616965
+      },
+      "by_language": {
+        "en": {
+          "examples": 175,
+          "wer": 0.04454022988505747,
+          "cer": 0.02685261143013399
+        },
+        "hi": {
+          "examples": 32,
+          "wer": 0.260748959778086,
+          "cer": 0.11346938775510204
+        },
+        "mr": {
+          "examples": 32,
+          "wer": 0.6918819188191881,
+          "cer": 0.19672564034856085
+        }
+      },
+      "segments": 239,
+      "encounters": 68,
+      "macro_language_wer": 0.33239036949411055
+    },
+    {
+      "epoch": 2,
+      "overall": {
+        "examples": 239,
+        "wer": 0.12144212523719165,
+        "cer": 0.044587718957548456
+      },
+      "by_language": {
+        "en": {
+          "examples": 175,
+          "wer": 0.014367816091954023,
+          "cer": 0.006125239267158873
+        },
+        "hi": {
+          "examples": 32,
+          "wer": 0.24687933425797504,
+          "cer": 0.10340136054421768
+        },
+        "mr": {
+          "examples": 32,
+          "wer": 0.6420664206642066,
+          "cer": 0.1732241880116187
+        }
+      },
+      "segments": 239,
+      "encounters": 68,
+      "macro_language_wer": 0.3011045236713786
+    },
+    {
+      "epoch": 3,
+      "overall": {
+        "examples": 239,
+        "wer": 0.1157495256166983,
+        "cer": 0.04206315298869771
+      },
+      "by_language": {
+        "en": {
+          "examples": 175,
+          "wer": 0.013793103448275862,
+          "cer": 0.0056330325403336065
+        },
+        "hi": {
+          "examples": 32,
+          "wer": 0.24133148404993066,
+          "cer": 0.09768707482993197
+        },
+        "mr": {
+          "examples": 32,
+          "wer": 0.6033210332103321,
+          "cer": 0.16398204383416953
+        }
+      },
+      "segments": 239,
+      "encounters": 68,
+      "macro_language_wer": 0.2861485402361796
+    },
+    {
+      "epoch": 4,
+      "overall": {
+        "examples": 239,
+        "wer": 0.11490617752477335,
+        "cer": 0.041558239794927565
+      },
+      "by_language": {
+        "en": {
+          "examples": 175,
+          "wer": 0.013218390804597701,
+          "cer": 0.005414273995077933
+        },
+        "hi": {
+          "examples": 32,
+          "wer": 0.24133148404993066,
+          "cer": 0.09931972789115646
+        },
+        "mr": {
+          "examples": 32,
+          "wer": 0.5996309963099631,
+          "cer": 0.16002112490097703
+        }
+      },
+      "segments": 239,
+      "encounters": 68,
+      "macro_language_wer": 0.2847269570548305
+    },
+    {
+      "epoch": 5,
+      "overall": {
+        "examples": 239,
+        "wer": 0.11448450347881088,
+        "cer": 0.04144172136559599
+      },
+      "by_language": {
+        "en": {
+          "examples": 175,
+          "wer": 0.013218390804597701,
+          "cer": 0.005414273995077933
+        },
+        "hi": {
+          "examples": 32,
+          "wer": 0.24133148404993066,
+          "cer": 0.09986394557823129
+        },
+        "mr": {
+          "examples": 32,
+          "wer": 0.5959409594095941,
+          "cer": 0.15870081858991286
+        }
+      },
+      "segments": 239,
+      "encounters": 68,
+      "macro_language_wer": 0.2834969447547075
+    }
+  ],
+  "paired_cuda_rows": [
+    {
+      "dataset": "eka",
+      "language": "en",
+      "recordings": 2,
+      "base_wer": 0.13333333333333333,
+      "adapter_wer": 0.16666666666666666,
+      "wer_change_pp": 3.3333333333333326,
+      "base_cer": 0.10828025477707007,
+      "adapter_cer": 0.14012738853503184
+    },
+    {
+      "dataset": "eka",
+      "language": "hi",
+      "recordings": 2,
+      "base_wer": 0.5,
+      "adapter_wer": 0.391304347826087,
+      "wer_change_pp": -10.869565217391303,
+      "base_cer": 0.49321266968325794,
+      "adapter_cer": 0.4253393665158371
+    },
+    {
+      "dataset": "betrac",
+      "language": "en",
+      "recordings": 2,
+      "base_wer": 0.02984201287302516,
+      "adapter_wer": 0.04564072557050907,
+      "wer_change_pp": 1.579871269748391,
+      "base_cer": 0.026200873362445413,
+      "adapter_cer": 0.02631004366812227
+    },
+    {
+      "dataset": "sully",
+      "language": "en",
+      "recordings": 1,
+      "base_wer": 0.22214484679665739,
+      "adapter_wer": 0.22632311977715877,
+      "wer_change_pp": 0.4178272980501385,
+      "base_cer": 0.17041845049026377,
+      "adapter_cer": 0.17069465543433227
+    },
+    {
+      "dataset": "fleurs",
+      "language": "hi",
+      "recordings": 32,
+      "base_wer": 0.3279901356350185,
+      "adapter_wer": 0.2601726263871763,
+      "wer_change_pp": -6.781750924784219,
+      "base_cer": 0.1542157098246457,
+      "adapter_cer": 0.10281047321643046
+    },
+    {
+      "dataset": "fleurs",
+      "language": "mr",
+      "recordings": 32,
+      "base_wer": 0.7986798679867987,
+      "adapter_wer": 0.6155115511551155,
+      "wer_change_pp": -18.31683168316832,
+      "base_cer": 0.2726830454877159,
+      "adapter_cer": 0.21041109219168086
+    }
+  ],
+  "paired_cuda_comparisons": {
+    "eka": {
+      "encounters": 4,
+      "paired_ids": [
+        "eka-en-test-00001",
+        "eka-en-test-00002",
+        "eka-hi-test-00001",
+        "eka-hi-test-00002"
+      ],
+      "by_language": {
+        "en": {
+          "base": {
+            "examples": 2,
+            "wer": 0.13333333333333333,
+            "cer": 0.10828025477707007
+          },
+          "adapter": {
+            "examples": 2,
+            "wer": 0.16666666666666666,
+            "cer": 0.14012738853503184
+          },
+          "wer_change": 0.033333333333333326,
+          "cer_change": 0.031847133757961776,
+          "improved_wer": false
+        },
+        "hi": {
+          "base": {
+            "examples": 2,
+            "wer": 0.5,
+            "cer": 0.49321266968325794
+          },
+          "adapter": {
+            "examples": 2,
+            "wer": 0.391304347826087,
+            "cer": 0.4253393665158371
+          },
+          "wer_change": -0.10869565217391303,
+          "cer_change": -0.06787330316742085,
+          "improved_wer": true
+        }
+      },
+      "limitations": [
+        "WER/CER are lexical overlap, not clinical accuracy.",
+        "Previously inspected Eka samples are diagnostic, not an untouched final test.",
+        "A gain on synthetic English does not establish Hindi/Marathi improvement.",
+        "Review medication/dose, negation, omissions and timestamps separately."
+      ]
+    },
+    "betrac": {
+      "encounters": 2,
+      "paired_ids": [
+        "betrac-dev-dialog_0060_0120",
+        "betrac-dev-dialog_0060_0121"
+      ],
+      "by_language": {
+        "en": {
+          "base": {
+            "examples": 2,
+            "wer": 0.02984201287302516,
+            "cer": 0.026200873362445413
+          },
+          "adapter": {
+            "examples": 2,
+            "wer": 0.04564072557050907,
+            "cer": 0.02631004366812227
+          },
+          "wer_change": 0.01579871269748391,
+          "cer_change": 0.00010917030567685754,
+          "improved_wer": false
+        }
+      },
+      "limitations": [
+        "WER/CER are lexical overlap, not clinical accuracy.",
+        "Previously inspected Eka samples are diagnostic, not an untouched final test.",
+        "A gain on synthetic English does not establish Hindi/Marathi improvement.",
+        "Review medication/dose, negation, omissions and timestamps separately."
+      ]
+    },
+    "sully": {
+      "encounters": 1,
+      "paired_ids": [
+        "pm57-d1c01"
+      ],
+      "by_language": {
+        "en": {
+          "base": {
+            "examples": 1,
+            "wer": 0.22214484679665739,
+            "cer": 0.17041845049026377
+          },
+          "adapter": {
+            "examples": 1,
+            "wer": 0.22632311977715877,
+            "cer": 0.17069465543433227
+          },
+          "wer_change": 0.004178272980501385,
+          "cer_change": 0.00027620494406849216,
+          "improved_wer": false
+        }
+      },
+      "limitations": [
+        "WER/CER are lexical overlap, not clinical accuracy.",
+        "Previously inspected Eka samples are diagnostic, not an untouched final test.",
+        "A gain on synthetic English does not establish Hindi/Marathi improvement.",
+        "Review medication/dose, negation, omissions and timestamps separately."
+      ]
+    },
+    "fleurs": {
+      "encounters": 64,
+      "paired_ids": [
+        "fleurs-hi-test-00010",
+        "fleurs-hi-test-00019",
+        "fleurs-hi-test-00020",
+        "fleurs-hi-test-00027",
+        "fleurs-hi-test-00031",
+        "fleurs-hi-test-00047",
+        "fleurs-hi-test-00052",
+        "fleurs-hi-test-00056",
+        "fleurs-hi-test-00073",
+        "fleurs-hi-test-00108",
+        "fleurs-hi-test-00121",
+        "fleurs-hi-test-00135",
+        "fleurs-hi-test-00143",
+        "fleurs-hi-test-00155",
+        "fleurs-hi-test-00162",
+        "fleurs-hi-test-00202",
+        "fleurs-hi-test-00208",
+        "fleurs-hi-test-00219",
+        "fleurs-hi-test-00234",
+        "fleurs-hi-test-00241",
+        "fleurs-hi-test-00244",
+        "fleurs-hi-test-00262",
+        "fleurs-hi-test-00281",
+        "fleurs-hi-test-00295",
+        "fleurs-hi-test-00296",
+        "fleurs-hi-test-00332",
+        "fleurs-hi-test-00333",
+        "fleurs-hi-test-00356",
+        "fleurs-hi-test-00369",
+        "fleurs-hi-test-00377",
+        "fleurs-hi-test-00379",
+        "fleurs-hi-test-00391",
+        "fleurs-mr-test-00015",
+        "fleurs-mr-test-00042",
+        "fleurs-mr-test-00151",
+        "fleurs-mr-test-00163",
+        "fleurs-mr-test-00167",
+        "fleurs-mr-test-00183",
+        "fleurs-mr-test-00187",
+        "fleurs-mr-test-00201",
+        "fleurs-mr-test-00234",
+        "fleurs-mr-test-00273",
+        "fleurs-mr-test-00302",
+        "fleurs-mr-test-00455",
+        "fleurs-mr-test-00457",
+        "fleurs-mr-test-00467",
+        "fleurs-mr-test-00470",
+        "fleurs-mr-test-00479",
+        "fleurs-mr-test-00503",
+        "fleurs-mr-test-00544",
+        "fleurs-mr-test-00590",
+        "fleurs-mr-test-00620",
+        "fleurs-mr-test-00669",
+        "fleurs-mr-test-00716",
+        "fleurs-mr-test-00722",
+        "fleurs-mr-test-00748",
+        "fleurs-mr-test-00797",
+        "fleurs-mr-test-00805",
+        "fleurs-mr-test-00828",
+        "fleurs-mr-test-00848",
+        "fleurs-mr-test-00892",
+        "fleurs-mr-test-00936",
+        "fleurs-mr-test-00941",
+        "fleurs-mr-test-01003"
+      ],
+      "by_language": {
+        "hi": {
+          "base": {
+            "examples": 32,
+            "wer": 0.3279901356350185,
+            "cer": 0.1542157098246457
+          },
+          "adapter": {
+            "examples": 32,
+            "wer": 0.2601726263871763,
+            "cer": 0.10281047321643046
+          },
+          "wer_change": -0.06781750924784219,
+          "cer_change": -0.051405236608215235,
+          "improved_wer": true
+        },
+        "mr": {
+          "base": {
+            "examples": 32,
+            "wer": 0.7986798679867987,
+            "cer": 0.2726830454877159
+          },
+          "adapter": {
+            "examples": 32,
+            "wer": 0.6155115511551155,
+            "cer": 0.21041109219168086
+          },
+          "wer_change": -0.18316831683168322,
+          "cer_change": -0.06227195329603502,
+          "improved_wer": true
+        }
+      },
+      "limitations": [
+        "WER/CER are lexical overlap, not clinical accuracy.",
+        "Previously inspected Eka samples are diagnostic, not an untouched final test.",
+        "A gain on synthetic English does not establish Hindi/Marathi improvement.",
+        "Review medication/dose, negation, omissions and timestamps separately."
+      ]
+    }
+  },
+  "paired_recordings": 71,
+  "wer_improved_groups": 3,
+  "wer_regressed_groups": 3,
+  "cer_regressed_groups": 3,
+  "source_archive_sha256": {
+    "training": "45f81c4a56c5bffb414e10d200154702e7fc00cef27f1416e93b2ae548019238",
+    "evaluation": "13c6728744a0bc08bc1df2751525a4d8e9449a068c9b510dfaadf60e96d4363a"
+  }
+}

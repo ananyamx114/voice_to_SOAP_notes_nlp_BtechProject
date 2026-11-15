@@ -6,8 +6,24 @@ still under development; use the status below to distinguish completed work
 from remaining integration. Everyone uses their own accounts and local clone,
 and the team has explicitly chosen to collaborate on `main`.
 
+The user reviewed the completed ASR work and authorized publication on
+15 November 2026. Publish only code, portable setup and aggregate results;
+preserve local artifacts and teammate updates. Future user-requested publication
+holds must still be honored.
+
 The latest local execution record is documented in
 [PROGRESS_SO_FAR.md](PROGRESS_SO_FAR.md).
+
+The expanded ASR run completed five epochs and all 71 selected paired CUDA
+recordings. Its [report and measured results](../results/asr-lora-run2/README.md)
+show three WER gains and three regressions; read the
+[ASR-to-SOAP handoff](ASR_TEAM_HANDOFF.md) before integrating with the Qwen stage.
+
+Kaggle CLI authentication and checkpoint-preserving ASR GPU migration are
+documented in [KAGGLE_ASR.md](KAGGLE_ASR.md). Local training must be confirmed
+paused before exporting its optimizer checkpoint; keep all transfers private.
+Before resuming local ASR, check for `.local/kaggle-asr/migration.local.json`:
+an active cloud continuation must not be duplicated by restarting the old source.
 
 ## Instructions for a teammate's Codex
 
@@ -173,6 +189,22 @@ IndicVoices/Svarah need individual gated access; DISPLACE-M requires challenge
 authorization. Follow `docs/LOCAL_BENCHMARKS.md`, not a blanket download command.
 
 ## 4. Real local ASR execution
+
+The new full-checkpoint fine-tuning implementation is documented in
+[ASR_LORA.md](ASR_LORA.md). Read its publication gate, data-alignment requirements,
+resource probe and validation procedure before training. A local full Large-v3
+LoRA run completed three epochs / 90 updates; validation improved in all three
+languages. The [71-recording paired evaluation](../results/asr-lora-run1/README.md)
+improved WER in three of six dataset/language groups, regressed in two and left
+one unchanged. Marathi CER regressed despite lower WER.
+The [English checkpoint follow-up](../results/asr-lora-run1/validation-selected.md)
+uses per-language validation minima and yields four WER gains/two ties, while
+CER regressions remain. It does not implement automatic adapter routing.
+Do not treat validation gains as universal test gains. Do not train on Eka test data.
+The [expanded five-epoch experiment](ASR_LORA_EXPANDED.md) uses a verified
+four-hour training cohort from the same datasets. Five-epoch training and its
+71-recording CUDA evaluation are complete, including the reported English
+regressions. Do not attribute the original run's measured scores to this model.
 
 The current full-checkpoint component is [COMPONENT_02_ASR.md](COMPONENT_02_ASR.md),
 with sequential Large-v3 decoding and [actual measured results](../results/component-02-asr/README.md).

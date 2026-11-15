@@ -4,6 +4,12 @@
 for installation, individual Hugging Face login, model-access verification,
 dataset download commands, and the shared-main workflow.
 
+The expanded ASR experiment is complete: five epochs and 71 selected paired CUDA
+recordings. [Final report, Word section, tables and figures](results/asr-lora-run2/README.md)
+record three Hindi/Marathi WER gains and three English regressions.
+Use the [ASR team handoff](docs/ASR_TEAM_HANDOFF.md) for trained-adapter setup,
+actual prediction inputs to Qwen, and report limitations.
+
 Use [pipeline execution](docs/PIPELINE_EXECUTION.md) for actual stage commands,
 readiness, and the next integration steps. Each computer inspects its own
 hardware with `scripts/project.py system`; local reports/configs stay out of Git.
@@ -12,6 +18,22 @@ For the full Whisper Large-v3 ASR component, use [the ASR runbook](docs/COMPONEN
 and review [the actual results](results/component-02-asr/README.md), including
 Hindi errors and timestamp-review findings. The component uses its explicit
 large-model configuration; legacy baseline configurations remain reproducible.
+
+For full-checkpoint ASR fine-tuning, read [the LoRA runbook](docs/ASR_LORA.md).
+It covers source alignment, separate train/validation data, a real training-memory
+probe, recovery checkpoints and paired evaluation. The first measured run
+improved WER in three of six dataset/language groups, with two regressions and
+one unchanged group; see [the LoRA results](results/asr-lora-run1/README.md).
+The follow-up English validation checkpoint removes those English WER
+regressions; language-based checkpoint selection gives four gains and two ties.
+Marathi CER still regresses, so this is not a universal quality improvement.
+
+The requested [expanded five-epoch run](docs/ASR_LORA_EXPANDED.md) uses 1,644
+training samples: at least two hours English and one hour each Hindi/Marathi.
+Preparation, the full-model resource probe, all five training epochs and the
+selected 71-recording paired CUDA evaluation are complete. The final report
+records the three Hindi/Marathi improvements and three English regressions.
+The original three-epoch controls/results remain unchanged.
 
 Start with [development setup](docs/DEVELOPMENT_SETUP.md) for the lightweight
 local environment and VS Code tasks, and [repository audit](docs/REPOSITORY_AUDIT.md)

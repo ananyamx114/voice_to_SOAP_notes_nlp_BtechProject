@@ -1,5 +1,18 @@
 # Voice-to-SOAP working context
 
+Current ASR publication authorization (15 November 2026): after reviewing the
+completed local/Kaggle experiment, the user explicitly requested integration
+of the latest main and publication of the ASR source, setup, documentation and
+aggregate results. This supersedes the earlier keep-local/no-commit hold for
+this completed work. Keep all models,
+data and execution artifacts out of Git; the user subsequently authorized
+private Kaggle checkpoint migration and compute. Report regressions as well as
+improvements. The old local training job must not be resumed while a cloud
+continuation is active. Read the ignored .local/kaggle-asr/migration.local.json
+and current monitor report before controlling jobs. The report handoff is
+docs/ASR_TEAM_HANDOFF.md; the shared results entry point is results/asr/README.md,
+with detailed expanded-run results in results/asr-lora-run2.
+
 Start with `docs/TEAM_SETUP.md`. Read `docs/REPOSITORY_AUDIT.md`, `docs/DEVELOPMENT_SETUP.md`, and
 `docs/PROJECT_GUIDE.md` before implementation. The root PROJECT_GUIDE.md is a
 user-provided copy; preserve it. The report/PPT have not yet been supplied.

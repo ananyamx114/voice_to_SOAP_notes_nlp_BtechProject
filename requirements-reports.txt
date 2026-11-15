@@ -1,0 +1,2 @@
+# Optional report exports; install separately from model/training environments.
+matplotlib>=3.9,<4

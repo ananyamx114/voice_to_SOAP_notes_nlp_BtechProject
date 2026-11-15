@@ -18,3 +18,11 @@ data/manifests/*.csv
 .local/
 configs/*.local.yaml
 requirements-*.local.txt
+# Personal Hugging Face/Kaggle credentials and exported checkpoints.
+.kaggle/
+kaggle.json
+access_token
+*.safetensors
+*.pt
+*.pth
+*.ckpt

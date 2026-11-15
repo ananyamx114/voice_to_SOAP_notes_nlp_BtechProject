@@ -1,8 +1,14 @@
 """Pinned, full-checkpoint Whisper sequential decoding with explicit provenance."""
 from functools import lru_cache, wraps
+from contextlib import contextmanager
+from copy import copy
 from importlib.metadata import version
+import hashlib
+import gc
 import math
+from pathlib import Path
 import re
+from types import SimpleNamespace
 
 import numpy as np
 
@@ -10,6 +16,18 @@ import numpy as np
 GENERATION_KEYS = {"max_new_tokens", "num_beams", "condition_on_prev_tokens",
                    "compression_ratio_threshold", "temperature", "logprob_threshold",
                    "no_speech_threshold"}
+IMPLEMENTATION_SHA256 = hashlib.sha256(Path(__file__).read_bytes()).hexdigest()
+
+
+def release_finished_mps_work(device):
+    """Finish queued work and release unreachable/cached buffers; retain live tensors."""
+    if not device.startswith("mps"):
+        return
+    import torch
+
+    torch.mps.synchronize()
+    gc.collect()
+    torch.mps.empty_cache()
 
 
 def omit_unused_encoder_attention_outputs(model):
@@ -30,8 +48,64 @@ def omit_unused_encoder_attention_outputs(model):
     encoder.forward = forward
 
 
+def select_timestamp_heads_before_concatenation(model):
+    """Use HF's unchanged DTW, concatenating only its configured alignment heads.
+
+    The pinned implementation concatenates every head of every decoder layer
+    before selecting a few. Reindexing views first preserves the exact selected
+    values and all generated tokens, with much smaller temporary tensors.
+    The model's actual architecture/config and original outputs remain intact.
+    """
+    if version("transformers") != "4.57.6":
+        raise ValueError("Timestamp aggregation optimization requires verified Transformers 4.57.6")
+    original = model._extract_token_timestamps
+
+    @wraps(original)
+    def extract(generate_outputs, alignment_heads, *args, **kwargs):
+        projected = copy(generate_outputs)
+        projected.cross_attentions = tuple(
+            tuple(step[layer][:, head:head + 1] for layer, head in alignment_heads)
+            for step in generate_outputs.cross_attentions)
+        config = copy(model.config)
+        config.decoder_layers = len(alignment_heads)
+        proxy = SimpleNamespace(config=config)
+        return original.__func__(proxy, projected,
+                                 [(index, 0) for index in range(len(alignment_heads))], *args, **kwargs)
+
+    model._extract_token_timestamps = extract
+
+
 @lru_cache(maxsize=1)
-def load_sequential_pipeline(model_id: str, revision: str, device: str, precision: str):
+def load_sequential_pipeline(model_id: str, revision: str, device: str, precision: str,
+                             adapter_path: str | None = None, adapter_sha256: str | None = None):
+    # Adapter initialization may consume RNG before saved weights are loaded.
+    # Keep that separate from the caller's per-encounter decoding random stream.
+    with preserve_loading_rng(device):
+        return construct_sequential_pipeline(model_id, revision, device, precision, adapter_path, adapter_sha256)
+
+
+@contextmanager
+def preserve_loading_rng(device):
+    import torch
+
+    cpu_state = torch.get_rng_state()
+    accelerator_state = None
+    if device.startswith("mps"):
+        accelerator_state = torch.mps.get_rng_state()
+    elif device.startswith("cuda"):
+        accelerator_state = torch.cuda.get_rng_state(device)
+    try:
+        yield
+    finally:
+        torch.set_rng_state(cpu_state)
+        if device.startswith("mps"):
+            torch.mps.set_rng_state(accelerator_state)
+        elif device.startswith("cuda"):
+            torch.cuda.set_rng_state(accelerator_state, device)
+
+
+def construct_sequential_pipeline(model_id: str, revision: str, device: str, precision: str,
+                                  adapter_path: str | None = None, adapter_sha256: str | None = None):
     import torch
     from transformers import AutoModelForSpeechSeq2Seq, AutoProcessor, pipeline
 
@@ -41,8 +115,16 @@ def load_sequential_pipeline(model_id: str, revision: str, device: str, precisio
         use_safetensors=True, attn_implementation="eager",
     )
     model.to(device)
+    if adapter_path:
+        from peft import PeftModel
+        from .whisper_lora import validate_adapter
+        metadata = validate_adapter(adapter_path, model_id, revision)
+        if metadata["adapter_sha256"] != adapter_sha256:
+            raise ValueError("Adapter changed during loading")
+        model = PeftModel.from_pretrained(model, adapter_path, is_trainable=False).merge_and_unload(safe_merge=True)
     model.eval()
     omit_unused_encoder_attention_outputs(model)
+    select_timestamp_heads_before_concatenation(model)
     processor = AutoProcessor.from_pretrained(model_id, revision=revision)
     return pipeline("automatic-speech-recognition", model=model,
                     tokenizer=processor.tokenizer, feature_extractor=processor.feature_extractor,
@@ -78,7 +160,17 @@ def sequential_transcribe(audio, sample_rate: int, model_id: str, device: str,
     generation["task"] = "transcribe"
     if language:
         generation["language"] = language
-    asr = load_sequential_pipeline(model_id, revision, selected_device, precision)
+    adapter = options.get("adapter_path")
+    adapter_metadata = None
+    if adapter:
+        from .whisper_lora import validate_adapter
+        adapter = str(Path(adapter).resolve())
+        adapter_metadata = validate_adapter(adapter, model_id, revision)
+        asr = load_sequential_pipeline(model_id, revision, selected_device, precision,
+                                      adapter, adapter_metadata["adapter_sha256"])
+    else:
+        asr = load_sequential_pipeline(model_id, revision, selected_device, precision)
+    release_finished_mps_work(selected_device)
     last_progress = -1
 
     def monitor_progress(batch):
@@ -86,6 +178,7 @@ def sequential_transcribe(audio, sample_rate: int, model_id: str, device: str,
         seek, total = batch.detach().cpu().tolist()[0]
         percent = int(100 * seek / total) if total else 0
         if percent // 5 != last_progress:
+            release_finished_mps_work(selected_device)
             print(f"  sequential decoding: {percent}% of source frames reached", flush=True)
             last_progress = percent // 5
 
@@ -94,6 +187,7 @@ def sequential_transcribe(audio, sample_rate: int, model_id: str, device: str,
     result = asr({"raw": audio, "sampling_rate": sample_rate},
                  return_timestamps="word" if timestamps == "word" else True,
                  generate_kwargs=inference_generation)
+    release_finished_mps_work(selected_device)
     chunks, warnings = [], []
     duration = len(audio) / sample_rate
     previous_start = None
@@ -127,9 +221,16 @@ def sequential_transcribe(audio, sample_rate: int, model_id: str, device: str,
             "metadata": {"model_id": model_id, "revision": revision, "device": selected_device,
                          "precision": precision, "quantization": "none",
                          "algorithm": "sequential", "timestamps": timestamps,
+                         "implementation_sha256": IMPLEMENTATION_SHA256,
+                         "model_loading_preserves_rng": True,
+                         "mps_window_cleanup": True,
+                         "timestamp_attention_aggregation": "configured_heads_before_concatenation",
                          "encoder_attention_outputs": False,
                          "generation": generation, "torch_version": version("torch"),
-                         "transformers_version": version("transformers")}}
+                         "transformers_version": version("transformers"),
+                         "adapter": {"task": adapter_metadata["task"],
+                             "sha256": adapter_metadata["adapter_sha256"],
+                             "application": "merged_in_memory"} if adapter_metadata else None}}
 
 
 def speech_context_regions(segments: list[dict], duration: float, join_gap: float = 2.0) -> list[dict]:

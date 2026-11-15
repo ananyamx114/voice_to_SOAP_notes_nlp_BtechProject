@@ -466,7 +466,55 @@ ROUGE-L is text-overlap with heuristic targets. It is not a clinical
 correctness or safety score. The pilot shows no overall improvement from LoRA.
 See `results/aci-bench-pilot/README.md` and the JSON files there for details.
 
-## 10. Tests and validation
+## 10. Matched direct-versus-hybrid experiment
+
+The ACI-Bench CLI now supports a paired experiment using the same pretrained
+Qwen checkpoint and two separate LoRA adapters:
+
+- **Direct:** transcript -> fine-tuned Qwen -> four SOAP text sections.
+- **Hybrid:** transcript -> lexicon/pattern fact extraction -> fine-tuned Qwen
+  receiving both transcript and extracted facts -> the same four SOAP sections.
+
+The hybrid preprocessor splits `[doctor]`/`[patient]` transcript lines into
+stable utterance IDs; matches a small explicit clinical-term list and the
+existing drug-name lookup; applies simple NegEx/ConText-inspired rules for
+present, absent, uncertain, and historical mentions; assigns SOAP sections
+with speaker and phrase cues; and records source utterance IDs and character
+spans relative to each source utterance. These are transparent development
+heuristics, not a trained clinical extractor. They can miss terms, scope
+negation incorrectly, and return
+`unknown` for section assignment.
+
+Run the matched train-and-test experiment after installing the training
+dependencies and selecting a checkpoint that fits the machine:
+
+```bash
+PYTHONPATH=src python -m voice_to_soap.aci_soap compare \
+  --base-model Qwen/Qwen2.5-0.5B-Instruct \
+  --train data/processed/aci-bench-soap/train.jsonl \
+  --validation data/processed/aci-bench-soap/validation.jsonl \
+  --test data/processed/aci-bench-soap/test.jsonl \
+  --output-dir data/outputs/aci-soap-comparison \
+  --epochs 1 --max-seq-length 4096 --lora-rank 8 --seed 42
+```
+
+The command identifies examples that exceed the input length for either
+approach and excludes the same encounter from both, without truncating it. It
+checks split leakage and verifies that the final test encounter IDs match.
+Separate adapters, per-approach predictions/metrics, a comparison summary,
+training example IDs, configuration, seed, and skipped IDs are saved under
+the output directory. The command refuses to reuse a non-empty output
+directory; choose a fresh path for each run. Set `--model-revision` to pin an
+immutable Hugging Face revision when one is selected. This command performs
+real downloads/training and is not part of unit tests.
+
+ACI-Bench's current SOAP targets remain heuristic mappings, not clinician-
+reviewed ground truth. The comparison reports JSON validity and ROUGE-L as
+text-overlap only; it cannot establish factuality, clinical correctness,
+citation accuracy, or safety. Clinician-reviewed reference annotations are
+needed for those measures and for a substantive clinical-quality claim.
+
+## 11. Tests and validation
 
 Run the full unit-test suite:
 
@@ -478,7 +526,7 @@ These tests exercise local data validation, transformations, mocked audio/LLM
 paths, evidence-ID validation, and result writing. They do not download or
 benchmark every pretrained model and do not validate clinical utility.
 
-## 11. Safety, privacy, and reproducibility
+## 12. Safety, privacy, and reproducibility
 
 - Never commit `.venv`, tokens, credentials, private recordings, or locally
   downloaded data without checking license, consent, and intended visibility.

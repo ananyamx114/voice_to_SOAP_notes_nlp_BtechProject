@@ -1,0 +1,7 @@
+# Full Whisper LoRA; no bitsandbytes, quantization, or cloud inference.
+-r requirements-local-asr.txt
+# Training uses torch.amp.GradScaler with CPU/CUDA/MPS device selection.
+torch>=2.8,<3
+peft==0.17.1
+num2words==0.5.14
+psutil>=5.9,<8

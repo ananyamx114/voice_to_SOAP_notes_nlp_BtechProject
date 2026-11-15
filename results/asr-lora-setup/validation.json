@@ -1,0 +1,99 @@
+{
+  "status": "full_model_training_and_primary_paired_evaluation_complete",
+  "selected_base": "openai/whisper-large-v3",
+  "selected_revision": "06f233fe06e710322aca913c1bc4249a0d71fce1",
+  "quantization": "none",
+  "unit_tests_passed": 117,
+  "checks": {
+    "base_weights_frozen_during_real_peft_backward": "passed_on_random_architecture_fixture",
+    "adapter_save_reload_logits_match": "passed_on_random_architecture_fixture",
+    "interrupted_training_matches_uninterrupted_adapter": "passed_on_random_architecture_fixture",
+    "ctc_alignment_matches_exhaustive_path_search": "passed_on_synthetic_emissions",
+    "split_group_audio_hash_and_boundary_guards": "passed",
+    "paired_comparison_rejects_changed_audio_and_reports_regression": "passed",
+    "portable_launcher_help": "passed_on_macos",
+    "pip_check": "passed",
+    "git_diff_check": "passed",
+    "completed_epoch_archives_and_boundary_crash_recovery": "passed_on_random_architecture_fixture",
+    "language_checkpoint_report_rejects_non_validation_best_epoch": "passed_against_local_run_metadata",
+    "new_epoch_archive_layout_exports_identical_measured_adapter": "passed_on_existing_full_model_checkpoint"
+  },
+  "full_large_v3_optimizer_update_run": true,
+  "pretrained_ctc_alignment_run": true,
+  "training_data_downloaded": true,
+  "training_memory_fit_established": true,
+  "trained_adapter_produced": true,
+  "asr_error_reduction_measured": true,
+  "execution_blocker": null,
+  "limitations": [
+    "Validation selects the adapter; final comparisons are separate.",
+    "Previously inspected Eka examples are diagnostic, not untouched final test data.",
+    "Automatic alignment is not human-reviewed gold; general FLEURS is not clinical speech.",
+    "A measured improvement on these recordings does not establish clinical readiness.",
+    "Checkpoint selection used greedy short-segment validation; production evaluation uses sequential decoding with temperature fallback and word timestamps.",
+    "Numeric/negation inventory differences are lexical review flags, not clinical error diagnoses.",
+    "Matching inventories do not prove correct dosage, assertion, speaker, or clinical meaning.",
+    "Timestamp consistency warnings are not gold word-boundary accuracy.",
+    "MPS driver samples at update boundaries are not measured peak total-system memory.",
+    "Every downstream generated note still requires clinician approval.",
+    "English clinical diagnostics are small; the shared adapter has regressions and Marathi CER increased."
+  ],
+  "full_paired_evaluation_complete": true,
+  "all_dataset_language_groups_improved": false,
+  "publication": "User requested no commits or pushes until results review",
+  "optimizer_updates": 90,
+  "training_segments": 472,
+  "validation_segments": 199,
+  "evaluated_recordings": 71,
+  "wer_groups": {
+    "improved": 3,
+    "regressed": 2,
+    "unchanged": 1
+  },
+  "english_validation_checkpoint_evaluation": "complete",
+  "initial_software_validation": {
+    "status": "software_validation_only",
+    "selected_base": "openai/whisper-large-v3",
+    "selected_revision": "06f233fe06e710322aca913c1bc4249a0d71fce1",
+    "quantization": "none",
+    "unit_tests_passed": 102,
+    "checks": {
+      "base_weights_frozen_during_real_peft_backward": "passed_on_random_architecture_fixture",
+      "adapter_save_reload_logits_match": "passed_on_random_architecture_fixture",
+      "interrupted_training_matches_uninterrupted_adapter": "passed_on_random_architecture_fixture",
+      "ctc_alignment_matches_exhaustive_path_search": "passed_on_synthetic_emissions",
+      "split_group_audio_hash_and_boundary_guards": "passed",
+      "paired_comparison_rejects_changed_audio_and_reports_regression": "passed",
+      "portable_launcher_help": "passed_on_macos",
+      "pip_check": "passed",
+      "git_diff_check": "passed"
+    },
+    "full_large_v3_optimizer_update_run": false,
+    "pretrained_ctc_alignment_run": false,
+    "training_data_downloaded": false,
+    "training_memory_fit_established": false,
+    "trained_adapter_produced": false,
+    "asr_error_reduction_measured": false,
+    "execution_blocker": "GitHub push was rejected by the permission prompt. AGENTS.md requires publishing reviewed implementation before large downloads or training.",
+    "limitations": [
+      "Random small Whisper fixtures verify APIs and recovery, not full-model fit or ASR quality.",
+      "Automatic CTC screening thresholds and real corpus boundaries still require execution and review.",
+      "No Windows/Linux or CUDA model execution is established by portability tests.",
+      "English synthetic training does not establish Hindi/Marathi improvement."
+    ]
+  },
+  "scope": "Originating local experiment; each computer must verify its own fit",
+  "language_validation_checkpoint_selection": {
+    "epochs": {
+      "en": 1,
+      "hi": 3,
+      "mr": 3
+    },
+    "wer_groups_improved": 4,
+    "wer_groups_regressed": 0,
+    "wer_groups_unchanged": 2,
+    "all_wer_groups_improved": false,
+    "all_cer_groups_non_regressing": false,
+    "exploratory": true
+  }
+}

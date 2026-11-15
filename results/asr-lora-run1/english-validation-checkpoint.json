@@ -1,0 +1,43 @@
+{
+  "status": "complete",
+  "selection": "minimum English validation WER; no test-score selection",
+  "selected_epoch": 1,
+  "adapter_sha256": "25bbc6f7ee910fafc4941e1ce61ee539cbd59d24a82a8f387b7740071489a469",
+  "validation_wer": 0.075,
+  "comparisons": [
+    {
+      "dataset": "eka",
+      "language": "en",
+      "examples": 2,
+      "base_wer": 0.13333333333333333,
+      "shared_epoch3_wer": 0.13333333333333333,
+      "english_validation_epoch_wer": 0.13333333333333333,
+      "english_checkpoint_cer": 0.10828025477707007,
+      "english_wer_change_percentage_points": 0.0
+    },
+    {
+      "dataset": "betrac",
+      "language": "en",
+      "examples": 2,
+      "base_wer": 0.02984201287302516,
+      "shared_epoch3_wer": 0.038033937975424224,
+      "english_validation_epoch_wer": 0.02984201287302516,
+      "english_checkpoint_cer": 0.027183406113537117,
+      "english_wer_change_percentage_points": 0.0
+    },
+    {
+      "dataset": "sully",
+      "language": "en",
+      "examples": 1,
+      "base_wer": 0.22214484679665739,
+      "shared_epoch3_wer": 0.23050139275766016,
+      "english_validation_epoch_wer": 0.2200557103064067,
+      "english_checkpoint_cer": 0.16889932329788704,
+      "english_wer_change_percentage_points": -0.20891364902506926
+    }
+  ],
+  "limitations": [
+    "Exploratory diagnostic comparison on previously inspected clinical samples.",
+    "Do not choose a winner per test encounter; retain every candidate result."
+  ]
+}

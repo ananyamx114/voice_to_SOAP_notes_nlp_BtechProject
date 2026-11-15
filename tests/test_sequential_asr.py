@@ -27,12 +27,18 @@ class SequentialAsrTests(unittest.TestCase):
         original.assert_called_once_with("features", output_attentions=False)
         decoder.forward.assert_not_called()
 
+    @patch("voice_to_soap.whisper_asr.release_finished_mps_work")
     @patch("voice_to_soap.whisper_asr.version", return_value="test-version")
     @patch("voice_to_soap.audio._resolve_asr_device", return_value="mps")
     @patch("voice_to_soap.whisper_asr.load_sequential_pipeline")
-    def test_native_longform_and_pinned_full_precision_selection(self, load, resolve, version):
-        load.return_value = Mock(return_value={"text": "hello", "chunks": [
-            {"text": "hello", "timestamp": (0.1, 0.5)}]})
+    def test_native_longform_and_pinned_full_precision_selection(self, load, resolve, version, cleanup):
+        prediction = {"text": "hello", "chunks": [{"text": "hello", "timestamp": (0.1, 0.5)}]}
+        def infer(*args, **kwargs):
+            batch = Mock()
+            batch.detach.return_value.cpu.return_value.tolist.return_value = [[150, 300]]
+            kwargs["generate_kwargs"]["monitor_progress"](batch)
+            return prediction
+        load.return_value = Mock(side_effect=infer)
         result = sequential_transcribe(np.ones(16000), 16000, "full-checkpoint", "auto", "hindi", OPTIONS)
         load.assert_called_once_with("full-checkpoint", "a" * 40, "mps", "float16")
         kwargs = load.return_value.call_args.kwargs
@@ -42,6 +48,8 @@ class SequentialAsrTests(unittest.TestCase):
         self.assertFalse(kwargs["generate_kwargs"]["condition_on_prev_tokens"])
         self.assertEqual(result["metadata"]["quantization"], "none")
         self.assertIn("monitor_progress", kwargs["generate_kwargs"])
+        self.assertEqual(cleanup.call_count, 3)  # Before, between native windows, after decoding.
+        self.assertEqual(result["text"], "hello")
         json.dumps(result) # Runtime progress callback must not leak into saved metadata.
 
     def test_unpinned_and_translation_overrides_fail_before_loading(self):
