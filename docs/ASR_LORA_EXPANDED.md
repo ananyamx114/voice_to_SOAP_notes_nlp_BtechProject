@@ -120,6 +120,10 @@ Do not disable memory protection or run multiple large model stages together.
 The local job controller can attach to an already running process using an
 ignored, machine-specific `.local/asr-expanded-run2.job.json` manifest. The
 originating process has been registered; no second trainer was started.
+Teammates do not inherit that manifest. On a fresh clone, use the foreground
+experiment command and its `--resume` option; job-controller status reports
+`not_registered` until this machine has a registered job. Never copy another
+machine's PID, paths or environment into your runtime settings.
 
 ```text
 python scripts/project.py asr-job status

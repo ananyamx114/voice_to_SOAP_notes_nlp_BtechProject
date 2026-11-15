@@ -13,11 +13,16 @@ holds must still be honored.
 
 The latest local execution record is documented in
 [PROGRESS_SO_FAR.md](PROGRESS_SO_FAR.md).
+For the prepared direct Qwen LoRA transcript-to-SOAP run on Kaggle, see
+[KAGGLE_TEXT_TO_SOAP.md](KAGGLE_TEXT_TO_SOAP.md).
 
 The expanded ASR run completed five epochs and all 71 selected paired CUDA
 recordings. Its [report and measured results](../results/asr-lora-run2/README.md)
 show three WER gains and three regressions; read the
 [ASR-to-SOAP handoff](ASR_TEAM_HANDOFF.md) before integrating with the Qwen stage.
+The shared [ASR results index](../results/asr/README.md) matches the team's stage
+folders; [ASR_RESOURCES.md](ASR_RESOURCES.md) inventories model/data pins,
+dependencies, downloaded resources, compute, and reproduction commands.
 
 Kaggle CLI authentication and checkpoint-preserving ASR GPU migration are
 documented in [KAGGLE_ASR.md](KAGGLE_ASR.md). Local training must be confirmed

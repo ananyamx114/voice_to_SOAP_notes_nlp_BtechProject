@@ -1,0 +1,16 @@
+{
+  "repository": "BeTraC/betrac-2026",
+  "revision": "96f7b94e662dac0d1394cfdf55e8b8ae81422663",
+  "source_split": "train",
+  "tokenizer": "Qwen/Qwen2.5-0.5B-Instruct",
+  "tokenizer_revision": "7ae557604adf67be50417f59c2c2f167def9a775",
+  "target_examples": 2000,
+  "train_examples": 1600,
+  "validation_examples": 200,
+  "test_examples": 200,
+  "random_seed": 42,
+  "max_transcript_tokens": 2200,
+  "max_soap_tokens": 700,
+  "max_hybrid_facts_tokens": null,
+  "max_total_sequence_tokens": 4096
+}

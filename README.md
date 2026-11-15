@@ -4,6 +4,8 @@
 for installation, individual Hugging Face login, model-access verification,
 dataset download commands, and the shared-main workflow.
 
+Start with [the ASR results index](results/asr/README.md) and
+[ASR resource/download guide](docs/ASR_RESOURCES.md).
 The expanded ASR experiment is complete: five epochs and 71 selected paired CUDA
 recordings. [Final report, Word section, tables and figures](results/asr-lora-run2/README.md)
 record three Hindi/Marathi WER gains and three English regressions.

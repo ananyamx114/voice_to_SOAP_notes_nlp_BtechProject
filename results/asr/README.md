@@ -12,6 +12,18 @@ Training: 1,644 aligned samples, about 4.03 hours (English 2.01 h, Hindi 1.01 h,
 Marathi 1.01 h). Validation: 239 separate samples. The shared adapter was
 selected at epoch 5 using validation macro-language WER, before test evaluation.
 
+| Epoch | English validation WER | Hindi validation WER | Marathi validation WER | Macro-language WER |
+|---|---:|---:|---:|---:|
+| 1 | 4.45% | 26.07% | 69.19% | 33.24% |
+| 2 | 1.44% | 24.69% | 64.21% | 30.11% |
+| 3 | 1.38% | 24.13% | 60.33% | 28.61% |
+| 4 | 1.32% | 24.13% | 59.96% | 28.47% |
+| 5 | 1.32% | 24.13% | 59.59% | 28.35% |
+
+These are validation WER measurements, not Qwen token losses or percentages
+of clinically correct notes. The selected checkpoint is fixed for all final
+test groups, including those on which it regresses.
+
 The base and adapter were evaluated on the same 71 selected recordings on CUDA.
 These are selected-recording benchmarks, not complete-corpus or clinical tests.
 
@@ -37,6 +49,7 @@ the final test table above uses matched CUDA runs for both models.
 - [Paired test CSV](../asr-lora-run2/paired-test-results.csv)
 - [All five validation epochs](../asr-lora-run2/validation-epochs.csv)
 - [Aggregate JSON, model/config pins and archive checksums](../asr-lora-run2/summary.json)
+- [Publication verification and test scope](verification.json)
 - [Paired test figure](../asr-lora-run2/paired-test-wer.png)
   ([SVG](../asr-lora-run2/paired-test-wer.svg), [PDF](../asr-lora-run2/paired-test-wer.pdf))
 - [Validation figure](../asr-lora-run2/validation-wer.png)

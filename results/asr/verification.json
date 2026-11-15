@@ -1,0 +1,43 @@
+{
+  "date": "2026-11-15",
+  "status": "verified_for_publication",
+  "training": {
+    "epochs_completed": 5,
+    "optimizer_updates": 515,
+    "validation_segments": 239,
+    "selected_epoch": 5,
+    "selection_metric": "macro_language_wer",
+    "adapter_sha256": "2557815bc1214fd48fbc4364efe6b1fb074c4598a66309d57a50f661da97012f"
+  },
+  "paired_cuda_evaluation": {
+    "recordings": 71,
+    "datasets": {"eka": 4, "betrac": 2, "sully": 1, "fleurs": 64},
+    "failed_or_skipped_recordings": 0,
+    "wer_improved_groups": 3,
+    "wer_regressed_groups": 3,
+    "cer_regressed_groups": 3,
+    "evaluated_adapter_matches_selected_checkpoint": true,
+    "audio_reference_seed_regions_and_decoder_pairing_checked": true
+  },
+  "recovery_archive": {
+    "sha256": "13c6728744a0bc08bc1df2751525a4d8e9449a068c9b510dfaadf60e96d4363a",
+    "files_verified": 358,
+    "archive_and_member_checksums_passed": true,
+    "archive_published_to_git": false
+  },
+  "software_verification": {
+    "command": "python3 scripts/project.py test",
+    "tests_discovered": 149,
+    "passed": 148,
+    "skipped": 1,
+    "failures": 0,
+    "errors": 0,
+    "skip_reason": "Managed macOS sandbox denies process-tree enumeration; that real pause/resume test runs in unrestricted environments and had passed previously.",
+    "scope": "Merged ASR and teammate source. Unit tests do not download large models or establish clinical accuracy. Windows/Linux execution is not claimed."
+  },
+  "publication_scope": {
+    "included": ["source", "tests", "portable configuration", "setup and resource guides", "aggregate results", "report documents and figures"],
+    "excluded": ["raw or prepared audio datasets", "reference and prediction text", "model weights and optimizer checkpoints", "Hugging Face or Kaggle credentials", "machine-specific runtime settings"],
+    "existing_teammate_artifacts": "Preserved upstream without adding ASR dataset/model archives."
+  }
+}

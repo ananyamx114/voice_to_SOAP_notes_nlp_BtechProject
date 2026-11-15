@@ -1,0 +1,51 @@
+HYBRID Text-to-SOAP LoRA Training and Validation Summary
+
+Experiment
+----------
+Approach: HYBRID (rule-based candidate facts + transcript as model input)
+Base model: Qwen2.5-0.5B-Instruct
+Training method: LoRA fine-tuning
+Dataset: BeTraC-2000 prepared dataset
+Training examples: 1,600
+Validation examples: 200
+Epochs completed: 3
+Adapter saved: Yes
+
+Training configuration
+----------------------
+Seed: 42
+Maximum sequence length: 4,096 tokens
+Batch size: 1
+Learning rate: 0.0001
+LoRA rank: 8
+
+Epoch results
+-------------
+Epoch    Training loss    Validation loss
+1        1.259200         1.216067
+2        1.170800         1.166118
+3        1.108900         1.151128
+
+Interpretation
+--------------
+Training loss decreased across all three epochs, from 1.259200 to
+1.108900. Validation loss also decreased, from 1.216067 to 1.151128.
+This indicates improving prediction of the target SOAP text on the
+training and validation data during this run.
+
+These losses are token-level training metrics. They do not, on their
+own, establish SOAP-note factual accuracy, clinical quality, or safety.
+
+The HYBRID candidate-fact extractor uses fixed rules and a medication
+lookup table; it is not trained as part of this run. The LoRA adapter
+fine-tunes the language model to generate SOAP notes from the transcript
+and extracted candidate facts.
+
+Status and next step
+--------------------
+Training and validation are complete, and the adapter was saved.
+Held-out test-set evaluation has not yet been included in this report.
+Test metrics and generated predictions should be reported separately
+after evaluating on the untouched test split. ROUGE-L, if reported, is
+text overlap with the prepared references and is not a clinical
+correctness or safety metric.

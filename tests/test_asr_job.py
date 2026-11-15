@@ -10,9 +10,23 @@ import unittest
 
 @unittest.skipUnless(importlib.util.find_spec("psutil"), "Optional ASR job-control dependency")
 class AsrJobTests(unittest.TestCase):
+    def test_fresh_clone_status_does_not_require_another_machines_manifest(self):
+        from scripts import asr_job
+        with tempfile.TemporaryDirectory() as folder:
+            result = asr_job.status(Path(folder) / "not-registered.json")
+            self.assertEqual(result["status"], "not_registered")
+            self.assertFalse(result["checkpoint_saved"])
+
     def test_pause_waits_for_new_checkpoint_and_resume_avoids_duplicates(self):
         import psutil
         from scripts import asr_job
+        # Some managed macOS sandboxes deny the process enumeration required
+        # for safe process-tree termination. Skip explicitly before starting a
+        # sleeper; ordinary environments still exercise the real controller.
+        try:
+            psutil.Process().children(recursive=True)
+        except (PermissionError, psutil.AccessDenied):
+            self.skipTest("OS process-tree queries unavailable in this sandbox")
         with tempfile.TemporaryDirectory() as folder:
             root = Path(folder)
             training = root / "run/training"

@@ -210,6 +210,9 @@ def resume(job_file, watching=True):
 def status(job_file):
     job_file = Path(job_file)
     job = read(job_file)
+    if not job:
+        return {"status": "not_registered", "checkpoint_saved": False,
+                "detail": "No local job manifest. Run the experiment normally, or register this machine's process before using job controls."}
     running = active_owner(job) is not None
     state = read(job_file.with_suffix(".state.json"))
     run_status = read(Path(job["run_dir"]) / "expanded-run.json").get("status")
