@@ -4,6 +4,12 @@
 for installation, individual Hugging Face login, model-access verification,
 dataset download commands, and the shared-main workflow.
 
+**Latest report update (26 November 2026):** [interim ASR and Qwen7B results](results/interim-2026-11-26/README.md)
+contain aggregate JSON, CSV tables and report wording. DIRECT training is complete;
+DIRECT test generation and HYBRID training are partial at the snapshot cutoff.
+New ASR continuation scores are validation only. See [report metric guidance](docs/REPORT_METRICS.md)
+before replacing any earlier experiment's numbers.
+
 Start with [the ASR results index](results/asr/README.md) and
 [ASR resource/download guide](docs/ASR_RESOURCES.md).
 The expanded ASR experiment is complete: five epochs and 71 selected paired CUDA
