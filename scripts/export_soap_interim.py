@@ -58,6 +58,11 @@ def export(root: Path) -> dict:
         history = [selected(row, ("step", "epoch", "eval_loss", "eval_runtime"))
                    for row in state.get("log_history", []) if "eval_loss" in row]
         best = complete.get("best_validation_loss", state.get("best_metric"))
+        asynchronous = read(folder / "async-validation-summary.json")
+        if asynchronous:
+            best = complete.get("best_validation_loss", asynchronous["best_validation_loss"])
+            history = [selected(row, ("step", "epoch", "eval_loss", "eval_runtime"))
+                       for row in asynchronous["validation_history"]]
         result["training"][stage] = {
             "status": "complete" if complete else "incomplete_checkpoint_snapshot" if state else "not_started",
             "saved_updates": complete.get("global_step", state.get("global_step")),
@@ -71,6 +76,11 @@ def export(root: Path) -> dict:
                 "learning_rate", "weight_decay", "seed", "max_seq_length", "lora_rank", "lora_alpha",
                 "lora_dropout", "target_modules", "selection_metric", "split_sha256")),
         }
+        if asynchronous:
+            result["training"][stage].update(
+                selected_checkpoint_step=asynchronous["selected_checkpoint_step"],
+                last_validated_update=asynchronous["last_evaluated_update"],
+                validation_execution="asynchronous_on_separate_gpu")
     keys = ("examples", "valid_predictions", "invalid_predictions", "by_section_rougeL_all_examples",
             "overall_mean_section_rougeL_all_examples", "overall_mean_section_rougeL_valid_only",
             "generation_seconds", "invalid_outputs_scored_as_zero", "clinical_factuality_measured",

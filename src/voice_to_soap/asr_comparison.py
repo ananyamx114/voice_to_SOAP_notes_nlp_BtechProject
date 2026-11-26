@@ -6,6 +6,7 @@ import re
 
 from .asr_datasets import _metric_summary
 from .io_utils import write_json
+from .asr_scoring import CURRENT, PROTOCOLS
 
 
 def load_run(directory):
@@ -27,7 +28,7 @@ def load_run(directory):
     return rows
 
 
-def compare(base_directory, adapted_directory, output):
+def compare(base_directory, adapted_directory, output, scoring_protocol=CURRENT):
     base, adapted = load_run(base_directory), load_run(adapted_directory)
     if base.keys() != adapted.keys():
         raise ValueError("Base and adapted runs must cover exactly the same encounters")
@@ -44,13 +45,15 @@ def compare(base_directory, adapted_directory, output):
         if left["model"].get("adapter") or not right["model"].get("adapter"):
             raise ValueError("Expected an unmodified base run and an explicit ASR adapter run")
     report = {"encounters": len(base), "paired_ids": sorted(base), "by_language": {},
+              "scoring_protocol": scoring_protocol,
               "limitations": ["WER/CER are lexical overlap, not clinical accuracy.",
                 "Previously inspected Eka samples are diagnostic, not an untouched final test.",
                 "A gain on synthetic English does not establish Hindi/Marathi improvement.",
                 "Review medication/dose, negation, omissions and timestamps separately."]}
     for language in sorted({r["language"] for r in base.values()}):
         ids = [uid for uid in base if base[uid]["language"] == language]
-        before, after = _metric_summary([base[uid] for uid in ids]), _metric_summary([adapted[uid] for uid in ids])
+        before = _metric_summary([base[uid] for uid in ids], scoring_protocol)
+        after = _metric_summary([adapted[uid] for uid in ids], scoring_protocol)
         report["by_language"][language] = {"base": before, "adapter": after,
             "wer_change": after["wer"] - before["wer"], "cer_change": after["cer"] - before["cer"],
             "improved_wer": after["wer"] < before["wer"]}
@@ -63,8 +66,9 @@ def main():
     parser.add_argument("--base", required=True)
     parser.add_argument("--adapted", required=True)
     parser.add_argument("--output", required=True)
+    parser.add_argument("--scoring-protocol", choices=PROTOCOLS, default=CURRENT)
     args = parser.parse_args()
-    print(json.dumps(compare(args.base, args.adapted, args.output), indent=2))
+    print(json.dumps(compare(args.base, args.adapted, args.output, args.scoring_protocol), indent=2))
 
 
 if __name__ == "__main__":

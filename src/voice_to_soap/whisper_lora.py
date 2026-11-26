@@ -10,6 +10,7 @@ from pathlib import Path
 import random
 import re
 import shutil
+from collections import defaultdict
 from time import perf_counter, time_ns
 
 import numpy as np
@@ -17,6 +18,7 @@ import soundfile as sf
 
 from .asr_component import file_sha256, peak_rss_bytes
 from .asr_datasets import _metric_summary
+from .asr_scoring import LEGACY, PROTOCOLS
 from .asr_training_data import check_disjoint, encode_labels, read_segments
 from .config import load_config
 from .io_utils import append_jsonl, write_json
@@ -25,11 +27,15 @@ TASK = "whisper_asr_lora_v1"
 
 
 def validate_config(config):
+    if config.get("scoring_protocol", LEGACY) not in PROTOCOLS:
+        raise ValueError("Unknown ASR scoring protocol")
     if config.get("model_id") != "openai/whisper-large-v3":
         raise ValueError("This experiment requires the complete Whisper Large-v3 checkpoint")
     if not re.fullmatch(r"[a-f0-9]{40}", config.get("revision", "")):
         raise ValueError("Pin an immutable base checkpoint revision")
     lora, training = config["lora"], config["training"]
+    if training.get("sampling_policy", "uniform_segments") not in {"uniform_segments", "language_balanced"}:
+        raise ValueError("Unknown training sampling policy")
     if training.get("selection_metric", "overall_wer") not in {"overall_wer", "macro_language_wer"}:
         raise ValueError("Unknown validation checkpoint-selection metric")
     if lora["scope"] not in {"encoder_decoder", "decoder"}:
@@ -118,7 +124,7 @@ def amp_context(device):
         if device.split(":")[0] in {"cuda", "mps"} else nullcontext()
 
 
-def evaluate(model, processor, rows, device, output):
+def evaluate(model, processor, rows, device, output, scoring_protocol=LEGACY, num_beams=1):
     import torch
 
     model.eval()
@@ -130,7 +136,7 @@ def evaluate(model, processor, rows, device, output):
         language = {"en": "english", "hi": "hindi", "mr": "marathi"}[row["language"]]
         with torch.inference_mode(), amp_context(device):
             tokens = model.generate(**batch, language=language, task="transcribe",
-                do_sample=False, num_beams=1, max_new_tokens=440,
+                do_sample=False, num_beams=num_beams, max_new_tokens=440,
                 return_timestamps=False, use_cache=True)
         prediction = processor.tokenizer.batch_decode(tokens, skip_special_tokens=True)[0].strip()
         if device.startswith("mps"):
@@ -143,10 +149,11 @@ def evaluate(model, processor, rows, device, output):
                         "language": row["language"], "reference_transcript": row["text"],
                         "prediction": prediction})
         print(f"  validation {index}/{len(rows)}: {row['id']}", flush=True)
-    summary = {"overall": _metric_summary(records),
-               "by_language": {lang: _metric_summary([r for r in records if r["language"] == lang])
+    summary = {"overall": _metric_summary(records, scoring_protocol),
+               "by_language": {lang: _metric_summary([r for r in records if r["language"] == lang], scoring_protocol)
                                for lang in sorted({r["language"] for r in records})},
-               "segments": len(rows), "encounters": len({r["encounter_id"] for r in rows})}
+               "segments": len(rows), "encounters": len({r["encounter_id"] for r in rows}),
+               "scoring_protocol": scoring_protocol, "num_beams": num_beams}
     write_json(Path(output) / "predictions.json", records)
     write_json(Path(output) / "metrics.json", summary)
     return summary
@@ -163,6 +170,52 @@ def selection_score(metrics, settings):
     if settings.get("selection_metric", "overall_wer") == "macro_language_wer":
         return sum(m["wer"] for m in metrics["by_language"].values()) / len(metrics["by_language"])
     return metrics["overall"]["wer"]
+
+
+def epoch_indices(rows, seed, epoch, policy="uniform_segments"):
+    """Fixed-size seeded schedule; balanced mode cycles each language before repeats."""
+    rng = random.Random(seed + epoch)
+    if policy == "uniform_segments":
+        indices = list(range(len(rows)))
+        rng.shuffle(indices)
+        return indices
+    if policy != "language_balanced":
+        raise ValueError("Unknown training sampling policy")
+    groups = defaultdict(list)
+    for index, row in enumerate(rows):
+        groups[row["language"]].append(index)
+    languages = sorted(groups)
+    if not languages:
+        raise ValueError("No training examples")
+    indices = []
+    for position, language in enumerate(languages):
+        quota = len(rows) // len(languages) + (position < len(rows) % len(languages))
+        selected = []
+        while len(selected) < quota:
+            cycle = list(groups[language])
+            rng.shuffle(cycle)
+            selected.extend(cycle[:quota - len(selected)])
+        indices.extend(selected)
+    rng.shuffle(indices)
+    return indices
+
+
+def save_selected(model, processor, root, config, metadata, metrics, baseline, epoch, score):
+    adapter = root / "best-adapter"
+    model.save_pretrained(adapter, safe_serialization=True)
+    processor.save_pretrained(adapter)
+    write_json(adapter / "asr_adapter.json", {
+        "task": TASK, "status": "complete", "model_id": config["model_id"], "revision": config["revision"],
+        "adapter_sha256": file_sha256(adapter / "adapter_model.safetensors"), "epoch": epoch,
+        "validation": metrics, "baseline_validation": baseline,
+        "baseline_kind": "initial_adapter" if metadata.get("initial_adapter") else "unadapted_base",
+        "selection_metric": config["training"].get("selection_metric", "overall_wer"),
+        "selection_score": score,
+        "validation_wer_change": metrics["overall"]["wer"] - baseline["overall"]["wer"],
+        "improved_validation_wer": metrics["overall"]["wer"] < baseline["overall"]["wer"],
+        "training_manifest_sha256": metadata["train_manifest_sha256"],
+        "validation_manifest_sha256": metadata["validation_manifest_sha256"],
+        "config": config, "independent_test_evaluated": False})
 
 
 def save_checkpoint(root, model, optimizer, scaler, state, device):
@@ -197,7 +250,7 @@ def archive_epoch_checkpoint(root, epoch):
 
 
 def train(config, train_path, validation_path, output, device="auto", probe=False, resume=False,
-          resume_source_patch=None):
+          resume_source_patch=None, initial_adapter=None):
     import torch
     from transformers import AutoProcessor, WhisperForConditionalGeneration
     from .audio import _resolve_asr_device
@@ -206,9 +259,13 @@ def train(config, train_path, validation_path, output, device="auto", probe=Fals
     train_rows, validation_rows = read_segments(train_path), read_segments(validation_path)
     audit = check_disjoint(train_rows, validation_rows)
     selected = _resolve_asr_device(device)
+    evaluation_options = ({"scoring_protocol": config["scoring_protocol"]}
+                          if "scoring_protocol" in config else {})
     root = Path(output).resolve()
     if probe and resume:
         raise ValueError("Resource probes cannot resume substantive training")
+    if resume and initial_adapter:
+        raise ValueError("Resume restores its own weights; do not also supply an initial adapter")
     root.mkdir(parents=True, exist_ok=resume)
     seed = int(config["seed"])
     random.seed(seed)
@@ -233,6 +290,8 @@ def train(config, train_path, validation_path, output, device="auto", probe=Fals
           "English synthetic training does not establish Hindi/Marathi improvement."]}
     if resume:
         previous = json.loads((root / "run.json").read_text(encoding="utf-8"))
+        if previous.get("initial_adapter"):
+            metadata["initial_adapter"] = previous["initial_adapter"]
         for key in ("task", "config", "device", "probe_only", "train_manifest_sha256",
                     "validation_manifest_sha256", "versions"):
             if previous.get(key) != metadata[key]:
@@ -250,6 +309,15 @@ def train(config, train_path, validation_path, output, device="auto", probe=Fals
         if not (root / "checkpoint.pt").is_file():
             raise ValueError("No completed optimizer checkpoint to resume")
         metadata["resumed_checkpoint_sha256"] = file_sha256(root / "checkpoint.pt")
+    elif initial_adapter:
+        initial = validate_adapter(initial_adapter, config["model_id"], config["revision"])
+        initial_settings = json.loads((Path(initial_adapter) / "adapter_config.json").read_text())
+        for key, expected in (("r", config["lora"]["rank"]), ("lora_alpha", config["lora"]["alpha"]),
+                              ("lora_dropout", config["lora"]["dropout"])):
+            if initial_settings.get(key) != expected:
+                raise ValueError(f"Initial adapter {key} differs from configured LoRA")
+        metadata["initial_adapter"] = {"sha256": initial["adapter_sha256"], "source_epoch": initial.get("epoch"),
+                                       "optimizer_reset": True, "new_experiment": True}
     write_json(root / "run.json", metadata)
     started = perf_counter()
     try:
@@ -267,12 +335,21 @@ def train(config, train_path, validation_path, output, device="auto", probe=Fals
         model.generation_config.forced_decoder_ids = None
         model.config.forced_decoder_ids = None
         # Baseline uses identical segments/settings and the unmodified checkpoint.
-        if resume and (root / "base-validation/metrics.json").is_file():
-            baseline = json.loads((root / "base-validation/metrics.json").read_text(encoding="utf-8"))
+        baseline_dir = root / ("initial-validation" if metadata.get("initial_adapter") else "base-validation")
+        if resume and (baseline_dir / "metrics.json").is_file():
+            baseline = json.loads((baseline_dir / "metrics.json").read_text(encoding="utf-8"))
         else:
-            baseline = None if probe else evaluate(model, processor, validation_rows,
-                                                    selected, root / "base-validation")
+            baseline = None if probe or initial_adapter else evaluate(model, processor, validation_rows,
+                                                    selected, baseline_dir, **evaluation_options)
         model, parameters = attach_lora(model, config["lora"])
+        if initial_adapter:
+            from peft import set_peft_model_state_dict
+            from safetensors.torch import load_file
+            result = set_peft_model_state_dict(model, load_file(str(Path(initial_adapter) / "adapter_model.safetensors")))
+            if result.unexpected_keys or any("lora_" in key for key in result.missing_keys):
+                raise ValueError("Initial adapter projections do not match the configured LoRA model")
+            if not probe:
+                baseline = evaluate(model, processor, validation_rows, selected, baseline_dir, **evaluation_options)
         metadata["parameters"] = parameters
         write_json(root / "run.json", metadata)
         print(f"LoRA attached: {parameters['trainable_parameters']:,} trainable / {parameters['total_parameters']:,} total parameters", flush=True)
@@ -287,6 +364,10 @@ def train(config, train_path, validation_path, output, device="auto", probe=Fals
         total_updates = math.ceil(len(train_rows) / accumulation) * settings["epochs"]
         updates, best_wer, stale, next_epoch, next_offset = 0, float("inf"), 0, 0, 0
         best_metrics = None
+        if initial_adapter and not probe:
+            best_metrics = baseline
+            best_wer = selection_score(baseline, settings)
+            save_selected(model, processor, root, config, metadata, baseline, baseline, 0, best_wer)
         if resume:
             from peft import set_peft_model_state_dict
             checkpoint = torch.load(root / "checkpoint.pt", map_location="cpu", weights_only=True)
@@ -317,7 +398,7 @@ def train(config, train_path, validation_path, output, device="auto", probe=Fals
                 # Test the largest decoder targets before committing to a long run.
                 indices.sort(key=lambda i: label_lengths[i], reverse=True)
             else:
-                random.Random(seed + epoch).shuffle(indices)
+                indices = epoch_indices(train_rows, seed, epoch, settings.get("sampling_policy", "uniform_segments"))
             for start in range(next_offset if epoch == next_epoch else 0, len(indices), accumulation):
                 group = indices[start:start + accumulation]
                 optimizer.zero_grad(set_to_none=True)
@@ -376,26 +457,12 @@ def train(config, train_path, validation_path, output, device="auto", probe=Fals
                         {"updates": updates, "best_wer": best_wer, "stale": stale,
                          "best_metrics": best_metrics,
                          "next_epoch": epoch, "next_offset": start + len(group)}, selected)
-            metrics = evaluate(model, processor, validation_rows, selected, root / f"epoch-{epoch+1}")
+            metrics = evaluate(model, processor, validation_rows, selected, root / f"epoch-{epoch+1}", **evaluation_options)
             wer = selection_score(metrics, settings)
             if wer < best_wer:
                 best_wer, stale = wer, 0
                 best_metrics = metrics
-                adapter = root / "best-adapter"
-                model.save_pretrained(adapter, safe_serialization=True)
-                processor.save_pretrained(adapter)
-                adapter_metadata = {"task": TASK, "status": "complete",
-                    "model_id": config["model_id"], "revision": config["revision"],
-                    "adapter_sha256": file_sha256(adapter / "adapter_model.safetensors"),
-                    "epoch": epoch + 1, "validation": metrics, "baseline_validation": baseline,
-                    "selection_metric": settings.get("selection_metric", "overall_wer"),
-                    "selection_score": best_wer,
-                    "validation_wer_change": metrics["overall"]["wer"] - baseline["overall"]["wer"],
-                    "improved_validation_wer": metrics["overall"]["wer"] < baseline["overall"]["wer"],
-                    "training_manifest_sha256": metadata["train_manifest_sha256"],
-                    "validation_manifest_sha256": metadata["validation_manifest_sha256"],
-                    "config": config, "independent_test_evaluated": False}
-                write_json(adapter / "asr_adapter.json", adapter_metadata)
+                save_selected(model, processor, root, config, metadata, metrics, baseline, epoch + 1, best_wer)
             else:
                 stale += 1
             write_json(root / f"epoch-{epoch+1}" / "training-state.json",
@@ -433,6 +500,7 @@ def main():
     parser.add_argument("--resume", action="store_true", help="Resume matching local adapter/optimizer/RNG checkpoint")
     parser.add_argument("--resume-source-patch", help="Explicit reason for a compatible code correction; all other resume guards remain")
     parser.add_argument("--audit-only", action="store_true", help="Validate sources/splits without loading models")
+    parser.add_argument("--initial-adapter", help="Warm-start a new experiment from a validated adapter; reset optimizer and step count")
     args = parser.parse_args()
     config = load_config(args.config)
     validate_config(config)
@@ -440,7 +508,7 @@ def main():
         print(json.dumps(check_disjoint(read_segments(args.train), read_segments(args.validation)), indent=2))
         return
     train(config, args.train, args.validation, args.outdir, args.device, args.probe, args.resume,
-          args.resume_source_patch)
+          args.resume_source_patch, args.initial_adapter)
 
 
 if __name__ == "__main__":

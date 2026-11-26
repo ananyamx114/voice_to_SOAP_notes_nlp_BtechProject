@@ -4,12 +4,12 @@ import csv
 import io
 import json
 import os
-import unicodedata
 from collections import defaultdict
 from pathlib import Path
 from typing import Any, Iterable
 
 import soundfile as sf
+from .asr_scoring import CURRENT, PROTOCOLS, normalize_asr_text, score_records
 
 
 EKA_MANIFEST_FIELDS = (
@@ -52,27 +52,12 @@ def _serialize_metadata(value: Any) -> str:
     return json.dumps(value, ensure_ascii=False, separators=(",", ":"))
 
 
-def _normalize_asr_text(text: str) -> str:
-    without_punctuation = "".join(
-        character
-        for character in text.casefold()
-        if not unicodedata.category(character).startswith("P")
-    )
-    return " ".join(without_punctuation.split())
+def _normalize_asr_text(text: str, protocol: str = CURRENT) -> str:
+    return normalize_asr_text(text, protocol)
 
 
-def _metric_summary(rows: list[dict[str, Any]]) -> dict[str, Any]:
-    from jiwer import cer, wer
-
-    references = [
-        _normalize_asr_text(item["reference_transcript"]) for item in rows
-    ]
-    hypotheses = [_normalize_asr_text(item["prediction"]) for item in rows]
-    return {
-        "examples": len(rows),
-        "wer": float(wer(references, hypotheses)),
-        "cer": float(cer(references, hypotheses)),
-    }
+def _metric_summary(rows: list[dict[str, Any]], protocol: str = CURRENT) -> dict[str, Any]:
+    return score_records(rows, protocol)
 
 
 def _iter_parquet_rows(path: Path) -> Iterable[dict[str, Any]]:
@@ -230,9 +215,13 @@ def evaluate_asr_manifest(
     chunk_length_s: int = 30,
     stride_length_s: int = 5,
     asr_options: dict | None = None,
+    scoring_protocol: str = CURRENT,
 ) -> dict[str, Any]:
     from .audio import load_audio, transcribe
     from .datasets import load_manifest
+
+    if scoring_protocol not in PROTOCOLS:
+        raise ValueError("Unknown ASR scoring protocol")
 
     selected_languages = set(language.strip().lower() for language in languages)
     if not selected_languages or not selected_languages <= LANGUAGE_NAMES.keys():
@@ -297,20 +286,21 @@ def evaluate_asr_manifest(
     metrics_by_language: dict[str, dict[str, Any]] = {}
     for language in sorted({item["language"] for item in predictions}):
         language_rows = [item for item in predictions if item["language"] == language]
-        metrics_by_language[language] = _metric_summary(language_rows)
+        metrics_by_language[language] = _metric_summary(language_rows, scoring_protocol)
     metrics_by_context: dict[str, dict[str, Any]] = {}
     for context in sorted({item["recording_context"] for item in predictions}):
         context_rows = [
             item for item in predictions if item["recording_context"] == context
         ]
-        metrics_by_context[context or "unknown"] = _metric_summary(context_rows)
+        metrics_by_context[context or "unknown"] = _metric_summary(context_rows, scoring_protocol)
     results = {
         "model_id": model_id,
         "split": "test",
+        "scoring_protocol": scoring_protocol,
         "examples": len(predictions),
         "metrics_by_language": metrics_by_language,
         "metrics_by_recording_context": metrics_by_context,
-        "overall": _metric_summary(predictions),
+        "overall": _metric_summary(predictions, scoring_protocol),
     }
 
     destination = Path(output_dir)

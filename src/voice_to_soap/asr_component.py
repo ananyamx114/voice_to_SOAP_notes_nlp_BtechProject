@@ -9,6 +9,7 @@ from time import perf_counter
 
 from .audio import load_audio
 from .asr_datasets import _metric_summary
+from .asr_scoring import CURRENT, PROTOCOLS
 from .config import load_config
 from .datasets import load_manifest
 from .io_utils import append_jsonl, write_json
@@ -39,6 +40,9 @@ def peak_rss_bytes():
 def run_component(config: dict, manifests: list[str], output: str, device: str | None = None,
                   vad_dir: str | None = None, resume: bool = False) -> dict:
     audio_config = config["audio"]
+    scoring_protocol = config.get("scoring_protocol", CURRENT)
+    if scoring_protocol not in PROTOCOLS:
+        raise ValueError("Unknown ASR scoring protocol")
     options = audio_config["asr_options"]
     if options.get("mode") != "sequential":
         raise ValueError("ASR component requires explicit sequential mode")
@@ -50,7 +54,8 @@ def run_component(config: dict, manifests: list[str], output: str, device: str |
     if any(not row["audio_path"] for row in rows):
         raise ValueError("ASR requires actual audio; supplied transcript is not used as input")
     root.mkdir(parents=True, exist_ok=True)
-    run_config = {"config": config, "device_override": device, "use_vad": bool(vad_dir)}
+    run_config = {"config": config, "device_override": device, "use_vad": bool(vad_dir),
+                  "scoring_protocol": scoring_protocol}
     adapter_hash = None
     if options.get("adapter_path"):
         from .whisper_lora import validate_adapter
@@ -86,6 +91,7 @@ def run_component(config: dict, manifests: list[str], output: str, device: str |
                               "asr_implementation_sha256": IMPLEMENTATION_SHA256,
                               "config": config, "device": device, "regions": regions,
                               "language": row["language"], "reference": row.get("reference_transcript", "")}
+            signature_data["scoring_protocol"] = scoring_protocol
             if adapter_hash:
                 signature_data["adapter"] = adapter_hash
             signature = hashlib.sha256(json.dumps(signature_data, sort_keys=True).encode()).hexdigest()
@@ -127,7 +133,7 @@ def run_component(config: dict, manifests: list[str], output: str, device: str |
                           reference_transcript=row.get("reference_transcript", ""),
                           recording_context=row.get("recording_context", ""))
             if row.get("reference_transcript", "").strip():
-                record["metrics"] = _metric_summary([record])
+                record["metrics"] = _metric_summary([record], scoring_protocol)
             utterances = [{"id": f"U{i}", "start": item["start"], "end": item["end"],
                 "text_raw": item["text"], "text_normalized": item["text"],
                 "speaker_id": "unknown", "role": "unknown", "confidence": item["confidence"]}
@@ -151,11 +157,11 @@ def run_component(config: dict, manifests: list[str], output: str, device: str |
             break
     complete = [r for r in records if r["status"] == "complete"]
     scored = [r for r in complete if r.get("reference_transcript", "").strip()]
-    summary = {"requested": len(rows), "completed": len(complete),
+    summary = {"requested": len(rows), "completed": len(complete), "scoring_protocol": scoring_protocol,
                "failed": len(records) - len(complete), "not_processed": len(rows) - len(records),
-               "metrics_by_language": {lang: _metric_summary([r for r in scored if r["language"] == lang])
+               "metrics_by_language": {lang: _metric_summary([r for r in scored if r["language"] == lang], scoring_protocol)
                                        for lang in sorted({r["language"] for r in scored})},
-               "overall": _metric_summary(scored) if scored else None,
+               "overall": _metric_summary(scored, scoring_protocol) if scored else None,
                "encounters": [{k: r[k] for k in ("encounter_id", "status", "metrics",
                               "inference_seconds", "real_time_factor", "process_peak_rss_bytes",
                               "model", "warnings", "error_type") if k in r} for r in records],
@@ -175,8 +181,10 @@ def main() -> int:
     parser.add_argument("--vad-dir", help="Require prior VAD artifacts for every input encounter")
     parser.add_argument("--resume", action="store_true")
     parser.add_argument("--adapter", help="Validated Whisper ASR adapter directory; full base remains required")
+    parser.add_argument("--scoring-protocol", choices=PROTOCOLS, default=CURRENT)
     args = parser.parse_args()
     config = load_config(args.config)
+    config["scoring_protocol"] = args.scoring_protocol
     if args.adapter:
         config["audio"]["asr_options"]["adapter_path"] = str(Path(args.adapter).resolve())
     summary = run_component(config, args.manifest, args.outdir,

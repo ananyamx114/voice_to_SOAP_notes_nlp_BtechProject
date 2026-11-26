@@ -329,6 +329,18 @@ class RealPeftContractTests(unittest.TestCase):
                               root / "boundary-recovered", "cpu")
                 train(settings, root / "train.jsonl", root / "validation.jsonl",
                       root / "boundary-recovered", "cpu", resume=True)
+                # A new phase starts from selected weights, not the old optimizer/step.
+                source = root / "uninterrupted/best-adapter"
+                adapter_config = json.loads((source / "adapter_config.json").read_text())
+                adapter_config["base_model_name_or_path"] = settings["model_id"]
+                write_json(source / "adapter_config.json", adapter_config)
+                warm = train(settings, root / "train.jsonl", root / "validation.jsonl",
+                             root / "warm-start", "cpu", initial_adapter=source)
+                self.assertTrue(warm["initial_adapter"]["optimizer_reset"])
+                selected = json.loads((root / "warm-start/best-adapter/asr_adapter.json").read_text())
+                self.assertEqual(selected["epoch"], 0)
+                self.assertEqual(selected["adapter_sha256"], file_sha256(source / "adapter_model.safetensors"))
+                self.assertEqual(warm["optimizer_updates"], 4)
             self.assertEqual(result["status"], "complete")
             continuous = torch.load(root / "uninterrupted/checkpoint.pt", weights_only=True)
             recovered = torch.load(root / "recovered/checkpoint.pt", weights_only=True)

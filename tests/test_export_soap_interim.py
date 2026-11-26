@@ -52,6 +52,26 @@ class ExportSoapInterimTests(unittest.TestCase):
             self.assertEqual(report["invalid_predictions"], 1)
             self.assertEqual(report["overall_mean_section_rougeL_all_examples"], .5)
 
+    def test_async_validation_overrides_stale_trainer_metric(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            self.fixture(root)
+            folder = root / "data/outputs/dgx-qwen7b-soap/hybrid"
+            checkpoint = folder / "checkpoint-1400"
+            checkpoint.mkdir(parents=True)
+            (checkpoint / "trainer_state.json").write_text(json.dumps({
+                "global_step": 1400, "epoch": .875, "best_metric": 1.0,
+                "best_model_checkpoint": "checkpoint-1200", "log_history": []}))
+            (folder / "async-validation-summary.json").write_text(json.dumps({
+                "best_validation_loss": .5, "selected_checkpoint_step": 1300,
+                "last_evaluated_update": 1300, "validation_history": [
+                    {"step": 1300, "epoch": .8125, "eval_loss": .5, "eval_runtime": 1}]}))
+            result = module.export(root)["training"]["hybrid"]
+            self.assertEqual(result["saved_updates"], 1400)
+            self.assertEqual(result["last_validated_update"], 1300)
+            self.assertEqual(result["best_validation_loss"], .5)
+            self.assertEqual(result["selected_checkpoint_step"], 1300)
+
 
 if __name__ == "__main__":
     unittest.main()

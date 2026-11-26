@@ -10,6 +10,10 @@ Latest report handoff: [26 November interim metrics](../results/interim-2026-11-
 and [what to quote in the report](REPORT_METRICS.md). This dated snapshot does not
 replace older completed experiments or establish end-to-end clinical quality.
 
+New ASR work: [numeric-safe scoring, diagnostics and balanced-data experiments](ASR_IMPROVEMENT_WORK.md).
+Published scores keep their original protocol. New inference scores identify
+`numeric_indic_v2`; historical trainer configs remain reproducible under v1.
+
 The user reviewed the completed ASR work and authorized publication on
 15 November 2026. Publish only code, portable setup and aggregate results;
 preserve local artifacts and teammate updates. Future user-requested publication
