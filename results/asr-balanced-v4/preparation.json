@@ -1,0 +1,41 @@
+{
+  "status": "complete",
+  "validation_identities_text_boundaries_audio_unchanged": true,
+  "prepared_source_archive_sha256": "557032a4ec5e5da010dcd703487d5db9d8160cf2d2d7454d19c94318fbecd698",
+  "train_sha256": "da5b796e71160940643dc43ce87b40e10ec36be8b75d9fc942393456b61b4974",
+  "validation_sha256": "12f98e55e06b93e4a0dec0009b36c603123945a7f5073150375af7dc488e9eb8",
+  "audit": {
+    "train_segments": 7465,
+    "validation_segments": 239,
+    "train_encounters": 5440,
+    "validation_encounters": 68,
+    "shared_segment_texts": 0,
+    "train_audio_seconds": 80728.89,
+    "validation_audio_seconds": 1925.5924687499999
+  },
+  "languages": {
+    "en": {
+      "segments": 2096,
+      "hours": 4.012425,
+      "distinct_texts": 2096
+    },
+    "hi": {
+      "segments": 2115,
+      "hours": 6.61065,
+      "distinct_texts": 1309
+    },
+    "mr": {
+      "segments": 3254,
+      "hours": 11.801616666666666,
+      "distinct_texts": 1489
+    }
+  },
+  "rejected": {
+    "audio_contract": 20
+  },
+  "training_started": false,
+  "limitations": [
+    "FLEURS is general read speech, not clinical-domain validation",
+    "Native human review pending"
+  ]
+}

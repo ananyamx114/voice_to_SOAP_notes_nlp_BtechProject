@@ -1,5 +1,10 @@
 # ASR experiment results
 
+Improvement work after the report cutoff: [versioned numeric-safe scoring](../asr-scoring-v2/README.md)
+and [expanded-cohort preparation](../asr-balanced-v4/README.md). Scoring changes
+and additional accepted data are not model-quality gains; new training remains
+separate from the paused run3 continuation and older completed tests.
+
 ## Latest interim continuation — 26 November 2026
 
 The [report snapshot](../interim-2026-11-26/README.md) adds the separate 12.03-hour,
