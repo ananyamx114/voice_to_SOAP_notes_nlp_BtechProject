@@ -6,6 +6,10 @@ still under development; use the status below to distinguish completed work
 from remaining integration. Everyone uses their own accounts and local clone,
 and the team has explicitly chosen to collaborate on `main`.
 
+Latest report handoff: [26 November interim metrics](../results/interim-2026-11-26/README.md)
+and [what to quote in the report](REPORT_METRICS.md). This dated snapshot does not
+replace older completed experiments or establish end-to-end clinical quality.
+
 The user reviewed the completed ASR work and authorized publication on
 15 November 2026. Publish only code, portable setup and aggregate results;
 preserve local artifacts and teammate updates. Future user-requested publication

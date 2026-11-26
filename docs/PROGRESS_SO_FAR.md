@@ -1,5 +1,28 @@
 # Voice-to-SOAP: Progress So Far
 
+## Interim ASR continuation and Qwen7B report handoff (26 November 2026)
+
+The [dated snapshot](../results/interim-2026-11-26/README.md) is the latest report
+entry point. The SOAP export cutoff was 14:42 IST; ASR progress was observed at
+14:42 IST. Jobs continued during export. Nothing in this snapshot stops jobs.
+
+Qwen2.5-7B-Instruct DIRECT completed 4,800 updates / three epochs; selected
+validation loss was 0.736586. The pretrained baseline completed 200 internal-test
+encounters, with 196 valid outputs and four invalid; failure-aware mean
+section ROUGE-L was 0.229839. DIRECT generation was partial (186/200;
+173 valid, 13 invalid; subset ROUGE-L 0.426978), so no completed paired score
+improvement is claimed. HYBRID training was at saved update 1200 / epoch 0.75,
+best validation loss 0.779724; HYBRID generation had not started.
+
+The 12.03-hour ASR continuation was observed at update 3384, with the last fully
+verified local archive at 3330. Epoch 10 remained selected: English/Hindi/Marathi
+validation WER 1.49%/23.99%/44.83%. Epoch 11 regressed in macro-language WER;
+all 11 available epoch tables are included. These are not new held-out tests.
+
+Use [REPORT_METRICS.md](REPORT_METRICS.md) for distinctions, limitations and refresh
+commands. Earlier sections below are historical; their completed test results
+and experiment provenance remain unchanged.
+
 ## Expanded ASR final evaluation and report ready (15 November 2026)
 
 The complete base and validation-selected epoch-5 adapter finished matched CUDA

@@ -1,0 +1,4 @@
+model,status,examples,valid_outputs,invalid_outputs,valid_output_rate,mean_section_rougeL_all_examples,invalid_outputs_scored_as_zero
+base,complete,200,196,4,0.98,0.22983920546284167,True
+direct,partial,186,173,13,0.9301075268817204,0.4269782358852148,True
+hybrid,not_started,0,0,0,,,True

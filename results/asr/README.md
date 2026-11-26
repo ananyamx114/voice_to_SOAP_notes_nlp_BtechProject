@@ -1,5 +1,18 @@
 # ASR experiment results
 
+## Latest interim continuation — 26 November 2026
+
+The [report snapshot](../interim-2026-11-26/README.md) adds the separate 12.03-hour,
+4,501-segment Whisper Large-v3 LoRA continuation. Selected epoch-10 validation
+WER is English **1.49%**, Hindi **23.99%**, Marathi **44.83%** (macro **23.44%**).
+Validation CER is **0.57% / 9.77% / 11.62%**, respectively, on 239 segments from
+68 encounters. Live progress was update 3384; locally verified archive: 3330.
+
+These are validation results, not a new paired independent test. Epoch 11
+regressed in macro-language WER; see [all available epochs](../interim-2026-11-26/asr-validation.csv)
+and [exact aggregate/provenance](../interim-2026-11-26/asr-snapshot.json).
+The completed run2 paired test below remains unchanged.
+
 This is the ASR entry point alongside the team's `results/hybrid/` and
 `results/baseline/` directories. It links measured summaries and report files;
 source audio, datasets, private predictions, checkpoints and credentials are

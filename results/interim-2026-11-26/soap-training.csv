@@ -1,0 +1,3 @@
+approach,status,saved_updates,planned_updates,saved_epoch,best_validation_loss,selected_checkpoint_step
+direct,complete,4800,4800,3.0,0.7365856766700745,4800
+hybrid,incomplete_checkpoint_snapshot,1200,4800,0.75,0.7797236442565918,1200

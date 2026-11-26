@@ -1,0 +1,391 @@
+{
+  "snapshot_utc": "2026-11-26T09:14:20.437963+00:00",
+  "progress_observed_utc": "2026-11-26T09:12:44.477709+00:00",
+  "status": "interim_training_validation_only",
+  "model_id": "openai/whisper-large-v3",
+  "revision": "06f233fe06e710322aca913c1bc4249a0d71fce1",
+  "configuration": {
+    "model_id": "openai/whisper-large-v3",
+    "revision": "06f233fe06e710322aca913c1bc4249a0d71fce1",
+    "seed": 42,
+    "lora": {
+      "rank": 16,
+      "alpha": 32,
+      "dropout": 0.05,
+      "scope": "encoder_decoder"
+    },
+    "training": {
+      "epochs": 20,
+      "learning_rate": 2e-05,
+      "weight_decay": 0.01,
+      "gradient_accumulation": 16,
+      "warmup_ratio": 0.05,
+      "max_grad_norm": 1.0,
+      "early_stopping_patience": 3,
+      "checkpoint_every_updates": 10,
+      "selection_metric": "macro_language_wer"
+    }
+  },
+  "training_segments": 4501,
+  "training_hours": 12.034125,
+  "validation_segments": 239,
+  "validation_encounters": 68,
+  "latest_live_update": 3384,
+  "latest_cloud_checkpoint_update": 3384,
+  "latest_locally_verified_update": 3330,
+  "locally_verified_checkpoint_sha256": "8f2f2b281f45480225114666e277fc43af04bb70536c80a2a15fbadd768d4c33",
+  "selected_validation_epoch": 10,
+  "selected_validation_metrics": {
+    "overall": {
+      "examples": 239,
+      "wer": 0.09867172675521822,
+      "cer": 0.03507204722880335
+    },
+    "by_language": {
+      "en": {
+        "examples": 175,
+        "wer": 0.014942528735632184,
+        "cer": 0.005687722176647526
+      },
+      "hi": {
+        "examples": 32,
+        "wer": 0.23994452149791956,
+        "cer": 0.09768707482993197
+      },
+      "mr": {
+        "examples": 32,
+        "wer": 0.4483394833948339,
+        "cer": 0.11618695537364669
+      }
+    },
+    "segments": 239,
+    "encounters": 68
+  },
+  "completed_validation_epochs": [
+    {
+      "epoch": 1,
+      "overall": {
+        "examples": 239,
+        "wer": 0.11300864431794223,
+        "cer": 0.04054841340738727
+      },
+      "by_language": {
+        "en": {
+          "examples": 175,
+          "wer": 0.014080459770114942,
+          "cer": 0.00552365326770577
+        },
+        "hi": {
+          "examples": 32,
+          "wer": 0.24271844660194175,
+          "cer": 0.09850340136054422
+        },
+        "mr": {
+          "examples": 32,
+          "wer": 0.5756457564575646,
+          "cer": 0.1534195933456562
+        }
+      },
+      "segments": 239,
+      "encounters": 68,
+      "macro_language_wer": 0.2774815542765404
+    },
+    {
+      "epoch": 2,
+      "overall": {
+        "examples": 239,
+        "wer": 0.10773771874341134,
+        "cer": 0.03798500796209267
+      },
+      "by_language": {
+        "en": {
+          "examples": 175,
+          "wer": 0.01264367816091954,
+          "cer": 0.004867377631938748
+        },
+        "hi": {
+          "examples": 32,
+          "wer": 0.23578363384188628,
+          "cer": 0.09578231292517007
+        },
+        "mr": {
+          "examples": 32,
+          "wer": 0.5479704797047971,
+          "cer": 0.14180089780829153
+        }
+      },
+      "segments": 239,
+      "encounters": 68,
+      "macro_language_wer": 0.2654659305692009
+    },
+    {
+      "epoch": 3,
+      "overall": {
+        "examples": 239,
+        "wer": 0.1062618595825427,
+        "cer": 0.038373402726531246
+      },
+      "by_language": {
+        "en": {
+          "examples": 175,
+          "wer": 0.01264367816091954,
+          "cer": 0.005195515449822259
+        },
+        "hi": {
+          "examples": 32,
+          "wer": 0.23578363384188628,
+          "cer": 0.09741496598639456
+        },
+        "mr": {
+          "examples": 32,
+          "wer": 0.5350553505535055,
+          "cer": 0.14127277528386586
+        }
+      },
+      "segments": 239,
+      "encounters": 68,
+      "macro_language_wer": 0.2611608875187704
+    },
+    {
+      "epoch": 4,
+      "overall": {
+        "examples": 239,
+        "wer": 0.10225595614589922,
+        "cer": 0.03701402105099623
+      },
+      "by_language": {
+        "en": {
+          "examples": 175,
+          "wer": 0.013505747126436781,
+          "cer": 0.005359584358764014
+        },
+        "hi": {
+          "examples": 32,
+          "wer": 0.231622746185853,
+          "cer": 0.09741496598639456
+        },
+        "mr": {
+          "examples": 32,
+          "wer": 0.5,
+          "cer": 0.13123844731977818
+        }
+      },
+      "segments": 239,
+      "encounters": 68,
+      "macro_language_wer": 0.24837616443742994
+    },
+    {
+      "epoch": 5,
+      "overall": {
+        "examples": 239,
+        "wer": 0.10373181530676787,
+        "cer": 0.0368586631452208
+      },
+      "by_language": {
+        "en": {
+          "examples": 175,
+          "wer": 0.014942528735632184,
+          "cer": 0.006070549630844955
+        },
+        "hi": {
+          "examples": 32,
+          "wer": 0.23855755894590847,
+          "cer": 0.09496598639455782
+        },
+        "mr": {
+          "examples": 32,
+          "wer": 0.4944649446494465,
+          "cer": 0.1291259572220755
+        }
+      },
+      "segments": 239,
+      "encounters": 68,
+      "macro_language_wer": 0.2493216774436624
+    },
+    {
+      "epoch": 6,
+      "overall": {
+        "examples": 239,
+        "wer": 0.10225595614589922,
+        "cer": 0.03650910785722609
+      },
+      "by_language": {
+        "en": {
+          "examples": 175,
+          "wer": 0.014942528735632184,
+          "cer": 0.006125239267158873
+        },
+        "hi": {
+          "examples": 32,
+          "wer": 0.24410540915395285,
+          "cer": 0.09850340136054422
+        },
+        "mr": {
+          "examples": 32,
+          "wer": 0.474169741697417,
+          "cer": 0.12305254819118035
+        }
+      },
+      "segments": 239,
+      "encounters": 68,
+      "macro_language_wer": 0.24440589319566733
+    },
+    {
+      "epoch": 7,
+      "overall": {
+        "examples": 239,
+        "wer": 0.09888256377819946,
+        "cer": 0.0365867868101138
+      },
+      "by_language": {
+        "en": {
+          "examples": 175,
+          "wer": 0.013505747126436781,
+          "cer": 0.006015859994531037
+        },
+        "hi": {
+          "examples": 32,
+          "wer": 0.24133148404993066,
+          "cer": 0.10068027210884353
+        },
+        "mr": {
+          "examples": 32,
+          "wer": 0.4575645756457565,
+          "cer": 0.12199630314232902
+        }
+      },
+      "segments": 239,
+      "encounters": 68,
+      "macro_language_wer": 0.237467268940708
+    },
+    {
+      "epoch": 8,
+      "overall": {
+        "examples": 239,
+        "wer": 0.09888256377819946,
+        "cer": 0.035848836757680504
+      },
+      "by_language": {
+        "en": {
+          "examples": 175,
+          "wer": 0.013505747126436781,
+          "cer": 0.005578342904019688
+        },
+        "hi": {
+          "examples": 32,
+          "wer": 0.23855755894590847,
+          "cer": 0.09850340136054422
+        },
+        "mr": {
+          "examples": 32,
+          "wer": 0.4612546125461255,
+          "cer": 0.12120411935569052
+        }
+      },
+      "segments": 239,
+      "encounters": 68,
+      "macro_language_wer": 0.23777263953949024
+    },
+    {
+      "epoch": 9,
+      "overall": {
+        "examples": 239,
+        "wer": 0.09909340080118069,
+        "cer": 0.03643142890433837
+      },
+      "by_language": {
+        "en": {
+          "examples": 175,
+          "wer": 0.014942528735632184,
+          "cer": 0.006343997812414548
+        },
+        "hi": {
+          "examples": 32,
+          "wer": 0.23855755894590847,
+          "cer": 0.0982312925170068
+        },
+        "mr": {
+          "examples": 32,
+          "wer": 0.45387453874538747,
+          "cer": 0.1217322418801162
+        }
+      },
+      "segments": 239,
+      "encounters": 68,
+      "macro_language_wer": 0.23579154214230938
+    },
+    {
+      "epoch": 10,
+      "overall": {
+        "examples": 239,
+        "wer": 0.09867172675521822,
+        "cer": 0.03507204722880335
+      },
+      "by_language": {
+        "en": {
+          "examples": 175,
+          "wer": 0.014942528735632184,
+          "cer": 0.005687722176647526
+        },
+        "hi": {
+          "examples": 32,
+          "wer": 0.23994452149791956,
+          "cer": 0.09768707482993197
+        },
+        "mr": {
+          "examples": 32,
+          "wer": 0.4483394833948339,
+          "cer": 0.11618695537364669
+        }
+      },
+      "segments": 239,
+      "encounters": 68,
+      "macro_language_wer": 0.23440884454279523
+    },
+    {
+      "epoch": 11,
+      "overall": {
+        "examples": 239,
+        "wer": 0.10141260805397428,
+        "cer": 0.0365867868101138
+      },
+      "by_language": {
+        "en": {
+          "examples": 175,
+          "wer": 0.017241379310344827,
+          "cer": 0.006836204539239814
+        },
+        "hi": {
+          "examples": 32,
+          "wer": 0.23717059639389737,
+          "cer": 0.09687074829931973
+        },
+        "mr": {
+          "examples": 32,
+          "wer": 0.4612546125461255,
+          "cer": 0.1217322418801162
+        }
+      },
+      "segments": 239,
+      "encounters": 68,
+      "macro_language_wer": 0.23855552941678923
+    }
+  ],
+  "provenance": [
+    {
+      "archive_sha256": "557032a4ec5e5da010dcd703487d5db9d8160cf2d2d7454d19c94318fbecd698",
+      "inventory_files": 7674
+    },
+    {
+      "archive_sha256": "85076601b0b76939da47716fa777206595f01c409b4e270f9fb1c5d5f332d12b",
+      "inventory_files": 35
+    }
+  ],
+  "new_independent_test_evaluation": "not_completed",
+  "limitations": [
+    "Validation uses greedy short-segment decoding; it is not the older paired full-recording test.",
+    "The selected checkpoint differs from the latest optimizer checkpoint.",
+    "The 5% WER target is not achieved for Hindi or Marathi.",
+    "Older run2 paired test metrics remain a separate completed experiment."
+  ]
+}

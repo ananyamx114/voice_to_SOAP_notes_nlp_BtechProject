@@ -1,5 +1,11 @@
 # ASR results and SOAP-stage handoff
 
+Latest report addition: [26 November continuation snapshot](../results/interim-2026-11-26/README.md)
+and [report metric guidance](REPORT_METRICS.md). The 12-hour continuation has
+validation results only; the completed paired-test scores and adapter setup
+below refer to the older run2 experiment. Do not substitute the new validation
+scores into that test table or assume the old run2 adapter is the run3 adapter.
+
 The shared entry point is [`results/asr`](../results/asr/README.md).
 The expanded ASR experiment finished five epochs / 515 optimizer updates.
 Publishable aggregates and the report section are under
