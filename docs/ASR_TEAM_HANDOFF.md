@@ -1,5 +1,8 @@
 # ASR results and SOAP-stage handoff
 
+Latest handoff: [27 November results](LATEST_RESULTS.md), [decoder comparison](../results/asr-diagnostics-2026-11-26/README.md) and [14-epoch history](../results/asr/run3-validation.csv). These later validation results do not replace the older completed run2 independent-test claims below.
+
+
 Latest report addition: [26 November continuation snapshot](../results/interim-2026-11-26/README.md)
 and [report metric guidance](REPORT_METRICS.md). The 12-hour continuation has
 validation results only; the completed paired-test scores and adapter setup

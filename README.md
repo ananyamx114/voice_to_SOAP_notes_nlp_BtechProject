@@ -1,5 +1,8 @@
 # Voice-to-SOAP
 
+Latest team/report handoff: [verified results and reproduction code, 27 November](docs/LATEST_RESULTS.md).
+
+
 **Teammates and Codex sessions: start with [TEAM_SETUP.md](docs/TEAM_SETUP.md)**
 for installation, individual Hugging Face login, model-access verification,
 dataset download commands, and the shared-main workflow.

@@ -1,0 +1,652 @@
+{
+  "test_encounters": 200,
+  "matching_dialogues_and_references": true,
+  "base_mean": 0.22983920546284164,
+  "direct_mean": 0.4294535755646936,
+  "mean_delta": 0.199614370101852,
+  "relative_increase_percent": 86.84957368342619,
+  "paired_bootstrap_95_interval": [
+    0.17881244110190575,
+    0.21989345640021976
+  ],
+  "bootstrap_resamples": 10000,
+  "bootstrap_seed": 42,
+  "direct_wins": 185,
+  "direct_losses": 14,
+  "ties": 1,
+  "validity_pairs": {
+    "base_True_direct_True": 183,
+    "base_True_direct_False": 13,
+    "base_False_direct_True": 3,
+    "base_False_direct_False": 1
+  },
+  "invalid": {
+    "base": {
+      "errors": {
+        "Model returned invalid JSON": 4
+      },
+      "raw_character_lengths": [
+        1046,
+        1381,
+        1580,
+        1668
+      ],
+      "endings_closed": 4,
+      "token_and_parse_diagnostics": [
+        {
+          "tokens": 227,
+          "error": "Expecting property name enclosed in double quotes",
+          "ends_with_closing_brace": true
+        },
+        {
+          "tokens": 270,
+          "error": "Expecting ',' delimiter",
+          "ends_with_closing_brace": true
+        },
+        {
+          "tokens": 301,
+          "error": "Expecting ',' delimiter",
+          "ends_with_closing_brace": true
+        },
+        {
+          "tokens": 316,
+          "error": "Expecting ',' delimiter",
+          "ends_with_closing_brace": true
+        }
+      ]
+    },
+    "direct": {
+      "errors": {
+        "Model returned invalid JSON": 14
+      },
+      "raw_character_lengths": [
+        5130,
+        3427,
+        4828,
+        6767,
+        4745,
+        5471,
+        4159,
+        5517,
+        1694,
+        4203,
+        5274,
+        5082,
+        3845,
+        3907
+      ],
+      "endings_closed": 1,
+      "token_and_parse_diagnostics": [
+        {
+          "tokens": 1024,
+          "error": "Unterminated string starting at",
+          "ends_with_closing_brace": false
+        },
+        {
+          "tokens": 1024,
+          "error": "Unterminated string starting at",
+          "ends_with_closing_brace": false
+        },
+        {
+          "tokens": 1024,
+          "error": "Unterminated string starting at",
+          "ends_with_closing_brace": false
+        },
+        {
+          "tokens": 1024,
+          "error": "Unterminated string starting at",
+          "ends_with_closing_brace": false
+        },
+        {
+          "tokens": 1024,
+          "error": "Unterminated string starting at",
+          "ends_with_closing_brace": false
+        },
+        {
+          "tokens": 1024,
+          "error": "Unterminated string starting at",
+          "ends_with_closing_brace": false
+        },
+        {
+          "tokens": 1024,
+          "error": "Unterminated string starting at",
+          "ends_with_closing_brace": false
+        },
+        {
+          "tokens": 1024,
+          "error": "Unterminated string starting at",
+          "ends_with_closing_brace": false
+        },
+        {
+          "tokens": 411,
+          "error": "Expecting ',' delimiter",
+          "ends_with_closing_brace": true
+        },
+        {
+          "tokens": 1024,
+          "error": "Unterminated string starting at",
+          "ends_with_closing_brace": false
+        },
+        {
+          "tokens": 1024,
+          "error": "Unterminated string starting at",
+          "ends_with_closing_brace": false
+        },
+        {
+          "tokens": 1024,
+          "error": "Unterminated string starting at",
+          "ends_with_closing_brace": false
+        },
+        {
+          "tokens": 1024,
+          "error": "Unterminated string starting at",
+          "ends_with_closing_brace": false
+        },
+        {
+          "tokens": 1024,
+          "error": "Unterminated string starting at",
+          "ends_with_closing_brace": false
+        }
+      ]
+    }
+  },
+  "common_valid": {
+    "examples": 183,
+    "base_mean_rougeL": 0.23436395394840367,
+    "base_median_output_words": 165,
+    "direct_mean_rougeL": 0.4628326868231198,
+    "direct_median_output_words": 214
+  },
+  "base_seconds_per_encounter": 12.64002323128283,
+  "direct_seconds_per_encounter": 32.68600323637948,
+  "inference_time_ratio": 2.585913224865346,
+  "validation": {
+    "direct": [
+      {
+        "step": 100,
+        "epoch": 0.0625,
+        "eval_loss": 0.9445977210998535
+      },
+      {
+        "step": 200,
+        "epoch": 0.125,
+        "eval_loss": 0.8837406635284424
+      },
+      {
+        "step": 300,
+        "epoch": 0.1875,
+        "eval_loss": 0.855357825756073
+      },
+      {
+        "step": 400,
+        "epoch": 0.25,
+        "eval_loss": 0.8332127332687378
+      },
+      {
+        "step": 500,
+        "epoch": 0.3125,
+        "eval_loss": 0.822664201259613
+      },
+      {
+        "step": 600,
+        "epoch": 0.375,
+        "eval_loss": 0.8145633935928345
+      },
+      {
+        "step": 700,
+        "epoch": 0.4375,
+        "eval_loss": 0.805655837059021
+      },
+      {
+        "step": 800,
+        "epoch": 0.5,
+        "eval_loss": 0.7982883453369141
+      },
+      {
+        "step": 900,
+        "epoch": 0.5625,
+        "eval_loss": 0.7926999926567078
+      },
+      {
+        "step": 1000,
+        "epoch": 0.625,
+        "eval_loss": 0.7906973361968994
+      },
+      {
+        "step": 1100,
+        "epoch": 0.6875,
+        "eval_loss": 0.7847597599029541
+      },
+      {
+        "step": 1200,
+        "epoch": 0.75,
+        "eval_loss": 0.7775298953056335
+      },
+      {
+        "step": 1300,
+        "epoch": 0.8125,
+        "eval_loss": 0.7739486694335938
+      },
+      {
+        "step": 1400,
+        "epoch": 0.875,
+        "eval_loss": 0.7725527286529541
+      },
+      {
+        "step": 1500,
+        "epoch": 0.9375,
+        "eval_loss": 0.7698179483413696
+      },
+      {
+        "step": 1600,
+        "epoch": 1.0,
+        "eval_loss": 0.7651985287666321
+      },
+      {
+        "step": 1700,
+        "epoch": 1.0625,
+        "eval_loss": 0.7623715400695801
+      },
+      {
+        "step": 1800,
+        "epoch": 1.125,
+        "eval_loss": 0.7605295777320862
+      },
+      {
+        "step": 1900,
+        "epoch": 1.1875,
+        "eval_loss": 0.7586370706558228
+      },
+      {
+        "step": 2000,
+        "epoch": 1.25,
+        "eval_loss": 0.7576546669006348
+      },
+      {
+        "step": 2100,
+        "epoch": 1.3125,
+        "eval_loss": 0.7563157677650452
+      },
+      {
+        "step": 2200,
+        "epoch": 1.375,
+        "eval_loss": 0.7530664205551147
+      },
+      {
+        "step": 2300,
+        "epoch": 1.4375,
+        "eval_loss": 0.7523921728134155
+      },
+      {
+        "step": 2400,
+        "epoch": 1.5,
+        "eval_loss": 0.7498605847358704
+      },
+      {
+        "step": 2500,
+        "epoch": 1.5625,
+        "eval_loss": 0.7499037981033325
+      },
+      {
+        "step": 2600,
+        "epoch": 1.625,
+        "eval_loss": 0.7480795979499817
+      },
+      {
+        "step": 2700,
+        "epoch": 1.6875,
+        "eval_loss": 0.7477977871894836
+      },
+      {
+        "step": 2800,
+        "epoch": 1.75,
+        "eval_loss": 0.7462649345397949
+      },
+      {
+        "step": 2900,
+        "epoch": 1.8125,
+        "eval_loss": 0.7431610226631165
+      },
+      {
+        "step": 3000,
+        "epoch": 1.875,
+        "eval_loss": 0.7443392872810364
+      },
+      {
+        "step": 3100,
+        "epoch": 1.9375,
+        "eval_loss": 0.742347776889801
+      },
+      {
+        "step": 3200,
+        "epoch": 2.0,
+        "eval_loss": 0.7398619055747986
+      },
+      {
+        "step": 3300,
+        "epoch": 2.0625,
+        "eval_loss": 0.7423907518386841
+      },
+      {
+        "step": 3400,
+        "epoch": 2.125,
+        "eval_loss": 0.7448822259902954
+      },
+      {
+        "step": 3500,
+        "epoch": 2.1875,
+        "eval_loss": 0.744971752166748
+      },
+      {
+        "step": 3600,
+        "epoch": 2.25,
+        "eval_loss": 0.742666482925415
+      },
+      {
+        "step": 3700,
+        "epoch": 2.3125,
+        "eval_loss": 0.7408820390701294
+      },
+      {
+        "step": 3800,
+        "epoch": 2.375,
+        "eval_loss": 0.7420472502708435
+      },
+      {
+        "step": 3900,
+        "epoch": 2.4375,
+        "eval_loss": 0.740876317024231
+      },
+      {
+        "step": 4000,
+        "epoch": 2.5,
+        "eval_loss": 0.7396765351295471
+      },
+      {
+        "step": 4100,
+        "epoch": 2.5625,
+        "eval_loss": 0.7416345477104187
+      },
+      {
+        "step": 4200,
+        "epoch": 2.625,
+        "eval_loss": 0.7385531663894653
+      },
+      {
+        "step": 4300,
+        "epoch": 2.6875,
+        "eval_loss": 0.7392077445983887
+      },
+      {
+        "step": 4400,
+        "epoch": 2.75,
+        "eval_loss": 0.7372747659683228
+      },
+      {
+        "step": 4500,
+        "epoch": 2.8125,
+        "eval_loss": 0.7380949258804321
+      },
+      {
+        "step": 4600,
+        "epoch": 2.875,
+        "eval_loss": 0.7372068762779236
+      },
+      {
+        "step": 4700,
+        "epoch": 2.9375,
+        "eval_loss": 0.7367563843727112
+      },
+      {
+        "step": 4800,
+        "epoch": 3.0,
+        "eval_loss": 0.7365856766700745
+      }
+    ],
+    "hybrid": [
+      {
+        "step": 100,
+        "epoch": 0.0625,
+        "eval_loss": 0.9441890120506287
+      },
+      {
+        "step": 200,
+        "epoch": 0.125,
+        "eval_loss": 0.8865058422088623
+      },
+      {
+        "step": 300,
+        "epoch": 0.1875,
+        "eval_loss": 0.8595559597015381
+      },
+      {
+        "step": 400,
+        "epoch": 0.25,
+        "eval_loss": 0.8357552886009216
+      },
+      {
+        "step": 500,
+        "epoch": 0.3125,
+        "eval_loss": 0.8237162828445435
+      },
+      {
+        "step": 600,
+        "epoch": 0.375,
+        "eval_loss": 0.8159441947937012
+      },
+      {
+        "step": 700,
+        "epoch": 0.4375,
+        "eval_loss": 0.8053717017173767
+      },
+      {
+        "step": 800,
+        "epoch": 0.5,
+        "eval_loss": 0.7984691858291626
+      },
+      {
+        "step": 900,
+        "epoch": 0.5625,
+        "eval_loss": 0.7925328016281128
+      },
+      {
+        "step": 1000,
+        "epoch": 0.625,
+        "eval_loss": 0.7907100915908813
+      },
+      {
+        "step": 1100,
+        "epoch": 0.6875,
+        "eval_loss": 0.7863990664482117
+      },
+      {
+        "step": 1200,
+        "epoch": 0.75,
+        "eval_loss": 0.7797236442565918
+      },
+      {
+        "step": 1300,
+        "epoch": 0.8125,
+        "eval_loss": 0.7755149602890015
+      },
+      {
+        "step": 1400,
+        "epoch": 0.875,
+        "eval_loss": 0.7730024456977844
+      },
+      {
+        "step": 1500,
+        "epoch": 0.9375,
+        "eval_loss": 0.7704889178276062
+      },
+      {
+        "step": 1600,
+        "epoch": 1.0,
+        "eval_loss": 0.765937864780426
+      },
+      {
+        "step": 1700,
+        "epoch": 1.0625,
+        "eval_loss": 0.7624024152755737
+      },
+      {
+        "step": 1800,
+        "epoch": 1.125,
+        "eval_loss": 0.7605681419372559
+      },
+      {
+        "step": 1900,
+        "epoch": 1.1875,
+        "eval_loss": 0.7589021325111389
+      },
+      {
+        "step": 2000,
+        "epoch": 1.25,
+        "eval_loss": 0.7578867077827454
+      },
+      {
+        "step": 2100,
+        "epoch": 1.3125,
+        "eval_loss": 0.7564365863800049
+      },
+      {
+        "step": 2200,
+        "epoch": 1.375,
+        "eval_loss": 0.7529932260513306
+      },
+      {
+        "step": 2300,
+        "epoch": 1.4375,
+        "eval_loss": 0.7525843977928162
+      },
+      {
+        "step": 2400,
+        "epoch": 1.5,
+        "eval_loss": 0.7503929138183594
+      },
+      {
+        "step": 2500,
+        "epoch": 1.5625,
+        "eval_loss": 0.749774158000946
+      },
+      {
+        "step": 2600,
+        "epoch": 1.625,
+        "eval_loss": 0.7470596432685852
+      },
+      {
+        "step": 2700,
+        "epoch": 1.6875,
+        "eval_loss": 0.7470171451568604
+      },
+      {
+        "step": 2800,
+        "epoch": 1.75,
+        "eval_loss": 0.7461870312690735
+      },
+      {
+        "step": 2900,
+        "epoch": 1.8125,
+        "eval_loss": 0.7432387471199036
+      },
+      {
+        "step": 3000,
+        "epoch": 1.875,
+        "eval_loss": 0.7435054183006287
+      },
+      {
+        "step": 3100,
+        "epoch": 1.9375,
+        "eval_loss": 0.742055356502533
+      },
+      {
+        "step": 3200,
+        "epoch": 2.0,
+        "eval_loss": 0.7392776012420654
+      },
+      {
+        "step": 3300,
+        "epoch": 2.0625,
+        "eval_loss": 0.7415710687637329
+      },
+      {
+        "step": 3400,
+        "epoch": 2.125,
+        "eval_loss": 0.7445077300071716
+      },
+      {
+        "step": 3500,
+        "epoch": 2.1875,
+        "eval_loss": 0.7440345287322998
+      },
+      {
+        "step": 3600,
+        "epoch": 2.25,
+        "eval_loss": 0.7422719597816467
+      },
+      {
+        "step": 3700,
+        "epoch": 2.3125,
+        "eval_loss": 0.741316020488739
+      },
+      {
+        "step": 3800,
+        "epoch": 2.375,
+        "eval_loss": 0.7413987517356873
+      },
+      {
+        "step": 3900,
+        "epoch": 2.4375,
+        "eval_loss": 0.7398318648338318
+      },
+      {
+        "step": 4000,
+        "epoch": 2.5,
+        "eval_loss": 0.7381845116615295
+      },
+      {
+        "step": 4100,
+        "epoch": 2.5625,
+        "eval_loss": 0.740714967250824
+      },
+      {
+        "step": 4200,
+        "epoch": 2.625,
+        "eval_loss": 0.7387223839759827
+      },
+      {
+        "step": 4300,
+        "epoch": 2.6875,
+        "eval_loss": 0.7389705777168274
+      },
+      {
+        "step": 4400,
+        "epoch": 2.75,
+        "eval_loss": 0.7370855212211609
+      },
+      {
+        "step": 4500,
+        "epoch": 2.8125,
+        "eval_loss": 0.7371975779533386
+      },
+      {
+        "step": 4600,
+        "epoch": 2.875,
+        "eval_loss": 0.7366730570793152
+      },
+      {
+        "step": 4700,
+        "epoch": 2.9375,
+        "eval_loss": 0.7364457845687866
+      },
+      {
+        "step": 4800,
+        "epoch": 3.0,
+        "eval_loss": 0.7362419962882996
+      }
+    ]
+  },
+  "direct_adapter_hash_verified": true,
+  "hybrid_minus_direct_final_validation_loss": -0.00034368038177490234,
+  "paired_validity_exact_two_sided_p": 0.021270751953125
+}

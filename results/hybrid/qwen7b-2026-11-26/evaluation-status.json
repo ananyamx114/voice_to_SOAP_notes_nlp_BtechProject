@@ -1,0 +1,9 @@
+{
+  "status": "not_started",
+  "examples": 0,
+  "planned_examples": 200,
+  "valid_predictions": 0,
+  "invalid_predictions": 0,
+  "overall_mean_section_rougeL_all_examples": null,
+  "invalid_outputs_scored_as_zero": true
+}

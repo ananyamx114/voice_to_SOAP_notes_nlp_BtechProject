@@ -1,5 +1,8 @@
 # Report metric handoff — 26 November 2026
 
+Latest available results supersede this older cutoff: [27 November handoff](LATEST_RESULTS.md). Preserve the dated interim snapshot below as historical evidence.
+
+
 Use [the dated interim report](../results/interim-2026-11-26/README.md) for tables,
 ready-to-adapt prose, complete validation curves and exact JSON evidence. This is
 an interim draft update while jobs continue, not a claim of a finished pipeline.

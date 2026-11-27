@@ -1,5 +1,8 @@
 # Team setup: start here
 
+Latest verified handoff: [27 November report-ready results](LATEST_RESULTS.md), including completed Qwen training/tests and Whisper decoder diagnostics.
+
+
 This is the reproducible handoff for teammates and their Codex sessions. The
 deliverable is the complete local Voice-to-SOAP pipeline. The repository is
 still under development; use the status below to distinguish completed work

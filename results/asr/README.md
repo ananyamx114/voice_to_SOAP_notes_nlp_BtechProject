@@ -1,5 +1,8 @@
 # ASR experiment results
 
+Latest verified continuation and decoder diagnostics: [completed beam comparison](../asr-diagnostics-2026-11-26/README.md), [run3 selected epoch12](run3-2026-11-26.json), [all 14 validation epochs](run3-validation.csv). Training is paused at update4100. V1 selected-epoch WER is 1.67% / 23.72% / 44.65% (EN/HI/MR). Numeric-safe beam5 validation WER is 1.34% / 21.66% / 42.60%; this is a separate validation decoding comparison, not new training or an independent test.
+
+
 Improvement work after the report cutoff: [versioned numeric-safe scoring](../asr-scoring-v2/README.md)
 and [expanded-cohort preparation](../asr-balanced-v4/README.md). Scoring changes
 and additional accepted data are not model-quality gains; new training remains

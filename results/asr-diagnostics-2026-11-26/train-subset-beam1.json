@@ -1,0 +1,101 @@
+{
+  "examples": 96,
+  "num_beams": 1,
+  "protocols": {
+    "punctuation_delete_v1": {
+      "by_language": {
+        "en": {
+          "examples": 32,
+          "wer": 0.015748031496062992,
+          "cer": 0.007416563658838072,
+          "scoring_protocol": "punctuation_delete_v1",
+          "word_errors": {
+            "substitutions": 6,
+            "deletions": 3,
+            "insertions": 1
+          },
+          "numeric_inventory_mismatch_examples": 2,
+          "negation_marker_mismatch_examples": 0,
+          "safety_flags_scope": "Lexical inventories only; no assertion, dose or clinical correctness validation"
+        },
+        "hi": {
+          "examples": 32,
+          "wer": 0.15466666666666667,
+          "cer": 0.054307116104868915,
+          "scoring_protocol": "punctuation_delete_v1",
+          "word_errors": {
+            "substitutions": 107,
+            "deletions": 3,
+            "insertions": 6
+          },
+          "numeric_inventory_mismatch_examples": 5,
+          "negation_marker_mismatch_examples": 0,
+          "safety_flags_scope": "Lexical inventories only; no assertion, dose or clinical correctness validation"
+        },
+        "mr": {
+          "examples": 32,
+          "wer": 0.3339805825242718,
+          "cer": 0.07741374311394607,
+          "scoring_protocol": "punctuation_delete_v1",
+          "word_errors": {
+            "substitutions": 151,
+            "deletions": 6,
+            "insertions": 15
+          },
+          "numeric_inventory_mismatch_examples": 5,
+          "negation_marker_mismatch_examples": 0,
+          "safety_flags_scope": "Lexical inventories only; no assertion, dose or clinical correctness validation"
+        }
+      },
+      "macro_language_wer": 0.16813176022900048
+    },
+    "numeric_indic_v2": {
+      "by_language": {
+        "en": {
+          "examples": 32,
+          "wer": 0.014106583072100314,
+          "cer": 0.007640586797066014,
+          "scoring_protocol": "numeric_indic_v2",
+          "word_errors": {
+            "substitutions": 5,
+            "deletions": 3,
+            "insertions": 1
+          },
+          "numeric_inventory_mismatch_examples": 2,
+          "negation_marker_mismatch_examples": 0,
+          "safety_flags_scope": "Lexical inventories only; no assertion, dose or clinical correctness validation"
+        },
+        "hi": {
+          "examples": 32,
+          "wer": 0.14814814814814814,
+          "cer": 0.05005324813631523,
+          "scoring_protocol": "numeric_indic_v2",
+          "word_errors": {
+            "substitutions": 103,
+            "deletions": 4,
+            "insertions": 5
+          },
+          "numeric_inventory_mismatch_examples": 5,
+          "negation_marker_mismatch_examples": 0,
+          "safety_flags_scope": "Lexical inventories only; no assertion, dose or clinical correctness validation"
+        },
+        "mr": {
+          "examples": 32,
+          "wer": 0.3372093023255814,
+          "cer": 0.07705677867902665,
+          "scoring_protocol": "numeric_indic_v2",
+          "word_errors": {
+            "substitutions": 152,
+            "deletions": 7,
+            "insertions": 15
+          },
+          "numeric_inventory_mismatch_examples": 5,
+          "negation_marker_mismatch_examples": 0,
+          "safety_flags_scope": "Lexical inventories only; no assertion, dose or clinical correctness validation"
+        }
+      },
+      "macro_language_wer": 0.16648801118194329
+    }
+  },
+  "seconds": 452.76915464499973
+}

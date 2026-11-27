@@ -1,0 +1,51 @@
+{
+  "status": "paused",
+  "resume_update": 4100,
+  "selected_epoch": 12,
+  "selected_validation_metrics": {
+    "epoch": 12,
+    "overall": {
+      "examples": 239,
+      "wer": 0.09930423782416192,
+      "cer": 0.036392589427894514
+    },
+    "by_language": {
+      "en": {
+        "examples": 175,
+        "wer": 0.016666666666666666,
+        "cer": 0.0073284112660650805
+      },
+      "hi": {
+        "examples": 32,
+        "wer": 0.23717059639389737,
+        "cer": 0.0982312925170068
+      },
+      "mr": {
+        "examples": 32,
+        "wer": 0.44649446494464945,
+        "cer": 0.11671507789807235
+      }
+    },
+    "segments": 239,
+    "encounters": 68,
+    "macro_language_wer": 0.23344390933507117
+  },
+  "completed_validation_epochs": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14
+  ],
+  "early_stopping_nonimproving_epochs": 2,
+  "validation_not_independent_test": true
+}

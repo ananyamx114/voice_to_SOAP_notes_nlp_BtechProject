@@ -1,5 +1,8 @@
 # HYBRID SOAP results
 
+Latest full 7B experiment: [completed HYBRID training](qwen7b-2026-11-26/training.json) and [shared report](../qwen7b-2026-11-26/README.md). HYBRID test evaluation remains not started. Older experiments below remain separate.
+
+
 Latest: [26 November Qwen7B interim report](../interim-2026-11-26/README.md),
 [training CSV](../interim-2026-11-26/soap-training.csv),
 [validation curve](../interim-2026-11-26/soap-validation.csv),

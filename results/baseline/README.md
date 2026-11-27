@@ -1,5 +1,8 @@
 # DIRECT / baseline SOAP results
 
+Latest full 7B experiment: [completed DIRECT/base 200-example tests](../qwen7b-2026-11-26/README.md), [stage metrics](qwen7b-2026-11-26/). Older experiments below remain separate.
+
+
 Latest: [26 November Qwen7B interim report](../interim-2026-11-26/README.md),
 [training CSV](../interim-2026-11-26/soap-training.csv),
 [evaluation CSV](../interim-2026-11-26/soap-evaluation.csv),

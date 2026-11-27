@@ -1,0 +1,11 @@
+{
+  "model": "openai/whisper-large-v3",
+  "revision": "06f233fe06e710322aca913c1bc4249a0d71fce1",
+  "selected_epoch": 12,
+  "adapter_sha256": "0be58d5beb9c0f70f781cede004a7213abcf472c4313f1b9666293b35a397dbb",
+  "archive_sha256": "a3e1a58d94068f4e0bbaa9d2dd7b56ee6aa8453d8f60edf83c7e6103d7f52d2a",
+  "training_performed": false,
+  "greedy_legacy_matches_archived_epoch12": true,
+  "native_review": "pending; no reviewer available",
+  "gpu_session": "released after verified backup"
+}
