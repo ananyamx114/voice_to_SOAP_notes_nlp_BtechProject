@@ -1,5 +1,8 @@
 # HYBRID SOAP results
 
+**HYBRID test evaluation is now complete:** [27 November metrics](qwen7b-2026-11-27/metrics.json) and [full three-model comparison](../qwen7b-2026-11-27/README.md). Valid JSON167/200 (83.5%); failure-aware mean section ROUGE-L0.378346, below DIRECT 0.429454. Pending/partial statuses below describe older snapshots only.
+
+
 Latest full 7B experiment: [completed HYBRID training](qwen7b-2026-11-26/training.json) and [shared report](../qwen7b-2026-11-26/README.md). HYBRID test evaluation remains not started. Older experiments below remain separate.
 
 

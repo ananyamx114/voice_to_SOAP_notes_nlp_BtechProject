@@ -1,0 +1,22 @@
+{
+  "returned_archive_sha256": "58b596905db35ae237a94f5d9f40640599ec83b655cc23582a15e8d7238a7b85",
+  "previous_soap_archive_sha256": "dc3a79797b835a0970a6978933a9d861ed1674b87e667b05a5fe80470178e89c",
+  "verification": "Archive checksum, matching 200 dialogues/references across SOAP stages, all600 per-example ROUGE-L scores, all71 paired ASR sources and all8 saved comparisons rechecked locally",
+  "raw_artifacts": "Retained privately; no audio, transcripts, predictions, weights or credentials exported",
+  "server_workspace": "Removed by user after verified local backup",
+  "model": "openai/whisper-large-v3",
+  "revision": "06f233fe06e710322aca913c1bc4249a0d71fce1",
+  "adapter_sha256": "0be58d5beb9c0f70f781cede004a7213abcf472c4313f1b9666293b35a397dbb",
+  "selected_epoch": 12,
+  "source_continuation_paused_at_update": 4100,
+  "paired_recordings": 71,
+  "scope": "Repeated selected benchmark; previously inspected recordings, including non-test original splits. Not untouched independent final evaluation.",
+  "precision": "float16",
+  "quantization": "none",
+  "device": "CUDA V10032GB",
+  "num_beams": 1,
+  "decoding": "sequential, word timestamps, fixed full-model protocol identical within each base/adapter pair",
+  "torch": "2.11.0+cu126",
+  "transformers": "4.57.6",
+  "training_performed_in_this_session": false
+}

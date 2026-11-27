@@ -1,5 +1,8 @@
 # ASR results and SOAP-stage handoff
 
+Completed follow-up: [27 November epoch 12 paired benchmark](../results/asr-run3-test-2026-11-27/README.md), with four WER gains and two regressions. Preserve the older run2 report below.
+
+
 Latest handoff: [27 November results](LATEST_RESULTS.md), [decoder comparison](../results/asr-diagnostics-2026-11-26/README.md) and [14-epoch history](../results/asr/run3-validation.csv). These later validation results do not replace the older completed run2 independent-test claims below.
 
 

@@ -1,0 +1,92 @@
+{
+  "status": "complete_all_three_test_stages",
+  "model": "Qwen/Qwen2.5-7B-Instruct",
+  "revision": "a09a35458c702b33eeacc393d103063234e8bc28",
+  "dataset": "Synthetic BeTraC-2000 internal split:1600train/200validation/200test",
+  "same_200_dialogues_and_references_verified": true,
+  "models": {
+    "base": {
+      "examples": 200,
+      "valid_predictions": 196,
+      "invalid_predictions": 4,
+      "valid_rate": 0.98,
+      "by_section_rougeL_all_examples": {
+        "subjective": 0.19978476690518412,
+        "objective": 0.24979180879103033,
+        "assessment": 0.19878668379318323,
+        "plan": 0.2709935623619689
+      },
+      "overall_mean_section_rougeL_all_examples": 0.22983920546284164,
+      "overall_mean_section_rougeL_valid_only": 0.23452980149269556,
+      "generation_seconds": 2528.004646256566,
+      "invalid_outputs_scored_as_zero": true,
+      "clinical_factuality_measured": false,
+      "adapter_sha256": null,
+      "test_sha256": "8ab01589da4c448350f1fcca5c95a9d517d6a36fa228e08ccc0628337aa65668",
+      "max_new_tokens": 1024,
+      "do_sample": false,
+      "seed": 42,
+      "precision": "float16_base"
+    },
+    "direct": {
+      "examples": 200,
+      "valid_predictions": 186,
+      "invalid_predictions": 14,
+      "valid_rate": 0.93,
+      "by_section_rougeL_all_examples": {
+        "subjective": 0.3543665429326517,
+        "objective": 0.5817476642858592,
+        "assessment": 0.42003437686565,
+        "plan": 0.36166571817461374
+      },
+      "overall_mean_section_rougeL_all_examples": 0.42945357556469366,
+      "overall_mean_section_rougeL_valid_only": 0.4617780382416061,
+      "generation_seconds": 6537.200647275895,
+      "invalid_outputs_scored_as_zero": true,
+      "clinical_factuality_measured": false,
+      "adapter_sha256": "b5208b88340a21477675373e32cce075b6f9f308634a31fb38471bcd54b38922",
+      "test_sha256": "8ab01589da4c448350f1fcca5c95a9d517d6a36fa228e08ccc0628337aa65668",
+      "max_new_tokens": 1024,
+      "do_sample": false,
+      "seed": 42,
+      "precision": "float16_base"
+    },
+    "hybrid": {
+      "examples": 200,
+      "valid_predictions": 167,
+      "invalid_predictions": 33,
+      "valid_rate": 0.835,
+      "by_section_rougeL_all_examples": {
+        "subjective": 0.30941640291835554,
+        "objective": 0.5221862449537725,
+        "assessment": 0.3579319566045144,
+        "plan": 0.3238482346086936
+      },
+      "overall_mean_section_rougeL_all_examples": 0.378345709771334,
+      "overall_mean_section_rougeL_valid_only": 0.4531086344566875,
+      "generation_seconds": 8143.454713683575,
+      "invalid_outputs_scored_as_zero": true,
+      "clinical_factuality_measured": false,
+      "adapter_sha256": "8a54cadc098465a067206cae10db19cbc9cf41c43c342bd0d9732968ebee8d2b",
+      "test_sha256": "8ab01589da4c448350f1fcca5c95a9d517d6a36fa228e08ccc0628337aa65668",
+      "max_new_tokens": 1024,
+      "do_sample": false,
+      "seed": 42,
+      "precision": "float16_base"
+    }
+  },
+  "provenance": {
+    "returned_archive_sha256": "58b596905db35ae237a94f5d9f40640599ec83b655cc23582a15e8d7238a7b85",
+    "previous_soap_archive_sha256": "dc3a79797b835a0970a6978933a9d861ed1674b87e667b05a5fe80470178e89c",
+    "verification": "Archive checksum, matching 200 dialogues/references across SOAP stages, all600 per-example ROUGE-L scores, all71 paired ASR sources and all8 saved comparisons rechecked locally",
+    "raw_artifacts": "Retained privately; no audio, transcripts, predictions, weights or credentials exported",
+    "server_workspace": "Removed by user after verified local backup"
+  },
+  "limitations": [
+    "ROUGE-L measures lexical overlap, not clinical accuracy.",
+    "Synthetic heuristic targets; no clinician adjudication.",
+    "Two SOAP test encounters occur in ASR training; text-only tests do not establish independent end-to-end audio-to-SOAP performance.",
+    "Single seed; conditional bootstrap intervals do not measure variation over training seeds.",
+    "HYBRID adds rule-extracted candidate facts; extractor correctness is unmeasured."
+  ]
+}

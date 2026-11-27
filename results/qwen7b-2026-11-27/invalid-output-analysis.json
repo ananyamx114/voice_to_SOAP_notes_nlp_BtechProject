@@ -1,0 +1,259 @@
+{
+  "direct": {
+    "examples": 14,
+    "error_counts": {
+      "Model returned invalid JSON": 14
+    },
+    "retokenized_1024_token_outputs": 13,
+    "unterminated_string_errors": 13,
+    "diagnostics": [
+      {
+        "retokenized_output_tokens": 1024,
+        "parse_error": "Unterminated string starting at",
+        "ends_with_closing_brace": false
+      },
+      {
+        "retokenized_output_tokens": 1024,
+        "parse_error": "Unterminated string starting at",
+        "ends_with_closing_brace": false
+      },
+      {
+        "retokenized_output_tokens": 1024,
+        "parse_error": "Unterminated string starting at",
+        "ends_with_closing_brace": false
+      },
+      {
+        "retokenized_output_tokens": 1024,
+        "parse_error": "Unterminated string starting at",
+        "ends_with_closing_brace": false
+      },
+      {
+        "retokenized_output_tokens": 1024,
+        "parse_error": "Unterminated string starting at",
+        "ends_with_closing_brace": false
+      },
+      {
+        "retokenized_output_tokens": 1024,
+        "parse_error": "Unterminated string starting at",
+        "ends_with_closing_brace": false
+      },
+      {
+        "retokenized_output_tokens": 1024,
+        "parse_error": "Unterminated string starting at",
+        "ends_with_closing_brace": false
+      },
+      {
+        "retokenized_output_tokens": 1024,
+        "parse_error": "Unterminated string starting at",
+        "ends_with_closing_brace": false
+      },
+      {
+        "retokenized_output_tokens": 411,
+        "parse_error": "Expecting ',' delimiter",
+        "ends_with_closing_brace": true
+      },
+      {
+        "retokenized_output_tokens": 1024,
+        "parse_error": "Unterminated string starting at",
+        "ends_with_closing_brace": false
+      },
+      {
+        "retokenized_output_tokens": 1024,
+        "parse_error": "Unterminated string starting at",
+        "ends_with_closing_brace": false
+      },
+      {
+        "retokenized_output_tokens": 1024,
+        "parse_error": "Unterminated string starting at",
+        "ends_with_closing_brace": false
+      },
+      {
+        "retokenized_output_tokens": 1024,
+        "parse_error": "Unterminated string starting at",
+        "ends_with_closing_brace": false
+      },
+      {
+        "retokenized_output_tokens": 1024,
+        "parse_error": "Unterminated string starting at",
+        "ends_with_closing_brace": false
+      }
+    ],
+    "scope": "Saved decoded output retokenization and JSON parsing; no automatic repair or clinical assessment"
+  },
+  "hybrid": {
+    "examples": 33,
+    "error_counts": {
+      "Model returned invalid JSON": 33
+    },
+    "retokenized_1024_token_outputs": 28,
+    "unterminated_string_errors": 32,
+    "diagnostics": [
+      {
+        "retokenized_output_tokens": 1024,
+        "parse_error": "Unterminated string starting at",
+        "ends_with_closing_brace": false
+      },
+      {
+        "retokenized_output_tokens": 1024,
+        "parse_error": "Unterminated string starting at",
+        "ends_with_closing_brace": false
+      },
+      {
+        "retokenized_output_tokens": 1024,
+        "parse_error": "Unterminated string starting at",
+        "ends_with_closing_brace": false
+      },
+      {
+        "retokenized_output_tokens": 1024,
+        "parse_error": "Unterminated string starting at",
+        "ends_with_closing_brace": false
+      },
+      {
+        "retokenized_output_tokens": 1024,
+        "parse_error": "Unterminated string starting at",
+        "ends_with_closing_brace": false
+      },
+      {
+        "retokenized_output_tokens": 1024,
+        "parse_error": "Unterminated string starting at",
+        "ends_with_closing_brace": false
+      },
+      {
+        "retokenized_output_tokens": 1024,
+        "parse_error": "Unterminated string starting at",
+        "ends_with_closing_brace": false
+      },
+      {
+        "retokenized_output_tokens": 1024,
+        "parse_error": "Unterminated string starting at",
+        "ends_with_closing_brace": false
+      },
+      {
+        "retokenized_output_tokens": 1024,
+        "parse_error": "Unterminated string starting at",
+        "ends_with_closing_brace": false
+      },
+      {
+        "retokenized_output_tokens": 1024,
+        "parse_error": "Unterminated string starting at",
+        "ends_with_closing_brace": false
+      },
+      {
+        "retokenized_output_tokens": 1024,
+        "parse_error": "Unterminated string starting at",
+        "ends_with_closing_brace": false
+      },
+      {
+        "retokenized_output_tokens": 1024,
+        "parse_error": "Unterminated string starting at",
+        "ends_with_closing_brace": false
+      },
+      {
+        "retokenized_output_tokens": 1024,
+        "parse_error": "Unterminated string starting at",
+        "ends_with_closing_brace": false
+      },
+      {
+        "retokenized_output_tokens": 1023,
+        "parse_error": "Unterminated string starting at",
+        "ends_with_closing_brace": false
+      },
+      {
+        "retokenized_output_tokens": 1024,
+        "parse_error": "Unterminated string starting at",
+        "ends_with_closing_brace": false
+      },
+      {
+        "retokenized_output_tokens": 1024,
+        "parse_error": "Unterminated string starting at",
+        "ends_with_closing_brace": false
+      },
+      {
+        "retokenized_output_tokens": 1024,
+        "parse_error": "Unterminated string starting at",
+        "ends_with_closing_brace": false
+      },
+      {
+        "retokenized_output_tokens": 1023,
+        "parse_error": "Unterminated string starting at",
+        "ends_with_closing_brace": false
+      },
+      {
+        "retokenized_output_tokens": 403,
+        "parse_error": "Expecting ',' delimiter",
+        "ends_with_closing_brace": true
+      },
+      {
+        "retokenized_output_tokens": 1024,
+        "parse_error": "Unterminated string starting at",
+        "ends_with_closing_brace": false
+      },
+      {
+        "retokenized_output_tokens": 1024,
+        "parse_error": "Unterminated string starting at",
+        "ends_with_closing_brace": false
+      },
+      {
+        "retokenized_output_tokens": 1024,
+        "parse_error": "Unterminated string starting at",
+        "ends_with_closing_brace": false
+      },
+      {
+        "retokenized_output_tokens": 1024,
+        "parse_error": "Unterminated string starting at",
+        "ends_with_closing_brace": false
+      },
+      {
+        "retokenized_output_tokens": 1024,
+        "parse_error": "Unterminated string starting at",
+        "ends_with_closing_brace": false
+      },
+      {
+        "retokenized_output_tokens": 1024,
+        "parse_error": "Unterminated string starting at",
+        "ends_with_closing_brace": false
+      },
+      {
+        "retokenized_output_tokens": 1024,
+        "parse_error": "Unterminated string starting at",
+        "ends_with_closing_brace": false
+      },
+      {
+        "retokenized_output_tokens": 1023,
+        "parse_error": "Unterminated string starting at",
+        "ends_with_closing_brace": false
+      },
+      {
+        "retokenized_output_tokens": 1024,
+        "parse_error": "Unterminated string starting at",
+        "ends_with_closing_brace": false
+      },
+      {
+        "retokenized_output_tokens": 1024,
+        "parse_error": "Unterminated string starting at",
+        "ends_with_closing_brace": false
+      },
+      {
+        "retokenized_output_tokens": 1024,
+        "parse_error": "Unterminated string starting at",
+        "ends_with_closing_brace": false
+      },
+      {
+        "retokenized_output_tokens": 1024,
+        "parse_error": "Unterminated string starting at",
+        "ends_with_closing_brace": false
+      },
+      {
+        "retokenized_output_tokens": 1024,
+        "parse_error": "Unterminated string starting at",
+        "ends_with_closing_brace": false
+      },
+      {
+        "retokenized_output_tokens": 1023,
+        "parse_error": "Unterminated string starting at",
+        "ends_with_closing_brace": false
+      }
+    ],
+    "scope": "Saved decoded output retokenization and JSON parsing; no automatic repair or clinical assessment"
+  }
+}

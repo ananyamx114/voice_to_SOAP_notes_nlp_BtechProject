@@ -1,0 +1,7 @@
+{
+  "returned_archive_sha256": "58b596905db35ae237a94f5d9f40640599ec83b655cc23582a15e8d7238a7b85",
+  "previous_soap_archive_sha256": "dc3a79797b835a0970a6978933a9d861ed1674b87e667b05a5fe80470178e89c",
+  "verification": "Archive checksum, matching 200 dialogues/references across SOAP stages, all600 per-example ROUGE-L scores, all71 paired ASR sources and all8 saved comparisons rechecked locally",
+  "raw_artifacts": "Retained privately; no audio, transcripts, predictions, weights or credentials exported",
+  "server_workspace": "Removed by user after verified local backup"
+}

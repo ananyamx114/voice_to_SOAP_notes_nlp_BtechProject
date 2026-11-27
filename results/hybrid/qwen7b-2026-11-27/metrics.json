@@ -1,0 +1,24 @@
+{
+  "status": "complete",
+  "examples": 200,
+  "valid_predictions": 167,
+  "invalid_predictions": 33,
+  "valid_rate": 0.835,
+  "by_section_rougeL_all_examples": {
+    "subjective": 0.30941640291835554,
+    "objective": 0.5221862449537725,
+    "assessment": 0.3579319566045144,
+    "plan": 0.3238482346086936
+  },
+  "overall_mean_section_rougeL_all_examples": 0.378345709771334,
+  "overall_mean_section_rougeL_valid_only": 0.4531086344566875,
+  "generation_seconds": 8143.454713683575,
+  "invalid_outputs_scored_as_zero": true,
+  "clinical_factuality_measured": false,
+  "adapter_sha256": "8a54cadc098465a067206cae10db19cbc9cf41c43c342bd0d9732968ebee8d2b",
+  "test_sha256": "8ab01589da4c448350f1fcca5c95a9d517d6a36fa228e08ccc0628337aa65668",
+  "max_new_tokens": 1024,
+  "do_sample": false,
+  "seed": 42,
+  "precision": "float16_base"
+}

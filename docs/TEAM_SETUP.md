@@ -1,5 +1,8 @@
 # Team setup: start here
 
+Completed testing: [27 November ASR paired benchmark](../results/asr-run3-test-2026-11-27/README.md) and [all three Qwen7B test stages](../results/qwen7b-2026-11-27/README.md). These supersede earlier pending-test statuses.
+
+
 Latest verified handoff: [27 November report-ready results](LATEST_RESULTS.md), including completed Qwen training/tests and Whisper decoder diagnostics.
 
 

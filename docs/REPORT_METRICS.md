@@ -1,74 +1,46 @@
-# Report metric handoff — 26 November 2026
+# Latest report metrics — completed testing,27 November2026
 
-Latest available results supersede this older cutoff: [27 November handoff](LATEST_RESULTS.md). Preserve the dated interim snapshot below as historical evidence.
+Use [the completed Qwen7B comparison](../results/qwen7b-2026-11-27/README.md) and [the selected epoch 12 ASR paired benchmark](../results/asr-run3-test-2026-11-27/README.md). Earlier [26 November interim snapshots](../results/interim-2026-11-26/README.md) remain historical; their pending/partial statuses no longer describe the latest tests.
 
+## Minimal report update
 
-Use [the dated interim report](../results/interim-2026-11-26/README.md) for tables,
-ready-to-adapt prose, complete validation curves and exact JSON evidence. This is
-an interim draft update while jobs continue, not a claim of a finished pipeline.
+1. Add the three-model Qwen7B table below to Chapter6 and update the conclusion. HYBRID is now evaluated; remove current-tense statements that its test is pending.
+2. Add the new71-recording ASR table as a separate experiment in Section6.9. Keep the older run2 table unchanged and clearly labelled.
+3. Keep the Qwen7B experimental setup: three epochs/4800 updates,1600/200/200 synthetic internal split, full FP16 base, rank 8 LoRA, deterministic1024-new-token test generation.
+4. State both improvements and regressions. These are component overlap/structure results, not clinical accuracy or a completed end-to-end system.
 
-| Report topic | Source | Scope |
-|---|---|---|
-| Latest ASR continuation | [ASR validation CSV](../results/interim-2026-11-26/asr-validation.csv), [JSON](../results/interim-2026-11-26/asr-snapshot.json) | 12.03-hour cohort; validation only; epoch 10 selected |
-| Completed older ASR test | [run2 paired test](../results/asr-lora-run2/paired-test-results.csv) | 71 selected recordings; different adapter/experiment |
-| Qwen7B training | [training CSV](../results/interim-2026-11-26/soap-training.csv), [validation CSV](../results/interim-2026-11-26/soap-validation.csv) | DIRECT complete; HYBRID partial |
-| Qwen7B note generation | [evaluation CSV](../results/interim-2026-11-26/soap-evaluation.csv), [JSON](../results/interim-2026-11-26/soap-snapshot.json) | Baseline 200/200; DIRECT 186/200; HYBRID not started |
-| Stage entry points | [ASR](../results/asr/README.md), [DIRECT/baseline](../results/baseline/README.md), [HYBRID](../results/hybrid/README.md) | Links and experiment identity |
+| Qwen7B model | Test examples | Valid / invalid | Validity | Failure-aware mean section ROUGE-L |
+|---|---:|---:|---:|---:|
+| Pretrained control | 200 | 196 /4 | 98.0% | 0.229839 |
+| DIRECT LoRA | 200 | 186 /14 | 93.0% | **0.429454** |
+| HYBRID LoRA | 200 | 167 /33 | 83.5% | **0.378346** |
 
-SOAP snapshot: **26 November, 14:42 IST**. The ASR observation is also 14:42 IST.
-Report these cutoff times rather than implying files describe live jobs.
+All three stages cover the exact same 200 dialogue/reference pairs. Invalid outputs count as zero. HYBRID minus DIRECT is-0.051108, paired bootstrap95% interval[-0.078376,-0.024121] over 10000 encounter resamples, seed 42. This is sample uncertainty conditional on these trained models, not repeated-seed or clinical evidence. On160 common-valid encounters, DIRECT/HYBRID scores are0.457607/0.454027. Both adapters improve overlap over the pretrained control while reducing structural validity.
 
-Use WER/CER percentages only for ASR. Token validation loss and ROUGE-L are
-different quantities; neither is clinical accuracy. The ASR below-5% target is
-not achieved for Hindi/Marathi. Keep epoch-11 regressions visible even though
-epoch 10 remains selected. The first SOAP validation measurement already follows
-100 updates; it is not an untrained loss baseline.
+> On200 synthetic BeTraC internal-test encounters, Qwen2.5-7B DIRECT and HYBRID LoRA achieved failure-aware mean section ROUGE-L of 0.4295 and0.3783, compared with 0.2298 for the pretrained control. Valid-JSON rates were93.0%,83.5% and98.0%, respectively. The rule-augmented HYBRID configuration did not outperform transcript-only DIRECT. Clinical correctness was not evaluated.
 
-Invalid generated SOAP counts as zero in the new all-example ROUGE-L metric.
-Do not mix it with older valid-only averages, hide invalid outputs or compare
-DIRECT's partial subset against the full baseline as a completed paired gain.
-The full baseline has 4/200 invalid outputs; partial DIRECT has 13/186. HYBRID
-has no generation result yet. No factuality, clinician-reviewed quality, clinical
-safety or end-to-end performance improvement has been established.
+## Latest ASR table: numeric_indic_v2
 
-BeTraC-2000 is synthetic and selected from official training data; its internal
-test split is not an official independent BeTraC test. Two test encounters occur
-in ASR training, which must be handled separately for audio-to-SOAP claims.
-Preserve [BeTraC attribution](../datasets/betrac_2000/SOURCE_DATASET_CARD.md),
-[preparation methodology](BETRAC_2000_MIGRATION.md), and older ACI-Bench attribution.
-Every generated note still requires clinician approval.
+| Dataset | Language | N | Base WER% | Selected epoch 12 WER% | Base CER% | Selected epoch 12 CER% |
+|---|---|---:|---:|---:|---:|---:|
+| Eka | English | 2 | 13.33 | 16.67 | 10.83 | 14.01 |
+| Eka | Hindi | 2 | 50.00 | 41.30 | 49.32 | 42.99 |
+| BeTraC | English | 2 | 3.88 | 4.75 | 2.61 | 2.46 |
+| Sully/PriMock57 | English | 1 | 21.97 | 19.75 | 17.09 | 14.69 |
+| FLEURS | Hindi | 32 | 34.80 | 24.54 | 18.44 | 9.63 |
+| FLEURS | Marathi | 32 | 81.44 | 50.41 | 25.73 | 14.15 |
 
-## Refresh without interrupting jobs
+> The selected epoch 12 Whisper Large-v3 adapter improved WER in four of six repeated dataset/language groups and regressed in two. Hindi and Marathi FLEURS WER decreased from 34.80% to 24.54% and81.44% to 50.41%, respectively. These previously inspected recordings include general read speech and very small English clinical groups; results do not establish independent clinical generalization. Hindi/Marathi remain above the5% objective.
 
-On the model host, with its own environment active:
+This evaluation uses sequential beam 1 decoding. The prior beam 5 Marathi42.60% figure is a validation result and must not replace the repeated-benchmark Marathi50.41%. Both legacy and numeric-safe scores are available in [CSV](../results/asr-run3-test-2026-11-27/paired-results.csv). Scoring corrections alone are not model improvements. Base predictions differ from older experiments; do not attribute cross-run differences entirely to more training data/epochs.
 
-```bash
-python scripts/export_soap_interim.py --output .local/interim-soap-results.json
-```
+The22.42-hour expanded cohort is prepared but untrained. Native reference review remains pending. Clinical extraction F1, DER, role accuracy, clinical factuality, translation preservation and end-to-end audio-to-SOAP performance remain unmeasured. Two SOAP test encounters occur in ASR training; handle those separately for any independent audio-to-SOAP claim. Every generated note requires clinician approval.
 
-Transfer that aggregate JSON privately to the report maintainer. The exporter
-reads existing saved checkpoints and per-encounter records only; it does not
-load models, send signals, change training settings or export patient text,
-prediction text, encounter identifiers, model weights or credentials. Incomplete
-checkpoints/metrics are skipped or labelled partial, not represented as complete.
+## Files for teammates
 
-ASR evidence for this snapshot was extracted from checksum-verified private
-Session005 and update-3330 continuation archives, with each selected epoch-metrics
-file verified against its inventory. Only aggregates, configuration and archive
-hashes are published. Live progress (3384) was recorded separately from the last
-fully verified local archive (3330). Controller records and connection URLs must
-never be copied into the shared repository.
+- [Complete handoff](LATEST_RESULTS.md).
+- [Qwen table CSV](../results/qwen7b-2026-11-27/metrics.csv), [aggregate JSON](../results/qwen7b-2026-11-27/summary.json), [paired analysis](../results/qwen7b-2026-11-27/paired-analysis.json), [invalid-output diagnostics](../results/qwen7b-2026-11-27/invalid-output-analysis.json).
+- [HYBRID stage metrics](../results/hybrid/qwen7b-2026-11-27/metrics.json).
+- [ASR aggregate comparisons](../results/asr-run3-test-2026-11-27/comparisons.json), [provenance](../results/asr-run3-test-2026-11-27/provenance.json), [older-run context](../results/asr-run3-test-2026-11-27/historical-context-v1.csv).
 
-To regenerate the tables from the already published aggregate inputs:
-
-```bash
-python scripts/build_interim_report.py \
-  --asr results/interim-2026-11-26/asr-snapshot.json \
-  --soap results/interim-2026-11-26/soap-snapshot.json \
-  --outdir results/interim-2026-11-26
-```
-
-Preserve dated snapshots when later results arrive. Teammates should pull `main`
-normally, preserving local changes; no model/dataset download is needed to read
-or rebuild these report tables. Weights, raw data, private predictions and
-execution artifacts remain outside Git.
+Pull shared main while preserving local edits. No datasets/models are needed to read these aggregates. Raw transcripts, predictions, audio, models, optimizer state, credentials and server logs remain private. Server resources were released after checksum verification.

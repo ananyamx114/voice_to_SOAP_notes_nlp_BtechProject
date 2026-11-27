@@ -1,0 +1,502 @@
+{
+  "eka": {
+    "numeric_indic_v2": {
+      "encounters": 4,
+      "by_language": {
+        "en": {
+          "base": {
+            "examples": 2,
+            "wer": 0.13333333333333333,
+            "cer": 0.10828025477707007,
+            "scoring_protocol": "numeric_indic_v2",
+            "word_errors": {
+              "substitutions": 0,
+              "deletions": 4,
+              "insertions": 0
+            },
+            "numeric_inventory_mismatch_examples": 0,
+            "negation_marker_mismatch_examples": 0,
+            "safety_flags_scope": "Lexical inventories only; no assertion, dose or clinical correctness validation"
+          },
+          "adapter": {
+            "examples": 2,
+            "wer": 0.16666666666666666,
+            "cer": 0.14012738853503184,
+            "scoring_protocol": "numeric_indic_v2",
+            "word_errors": {
+              "substitutions": 0,
+              "deletions": 5,
+              "insertions": 0
+            },
+            "numeric_inventory_mismatch_examples": 0,
+            "negation_marker_mismatch_examples": 0,
+            "safety_flags_scope": "Lexical inventories only; no assertion, dose or clinical correctness validation"
+          },
+          "wer_change": 0.033333333333333326,
+          "cer_change": 0.031847133757961776,
+          "improved_wer": false
+        },
+        "hi": {
+          "base": {
+            "examples": 2,
+            "wer": 0.5,
+            "cer": 0.49321266968325794,
+            "scoring_protocol": "numeric_indic_v2",
+            "word_errors": {
+              "substitutions": 15,
+              "deletions": 4,
+              "insertions": 4
+            },
+            "numeric_inventory_mismatch_examples": 1,
+            "negation_marker_mismatch_examples": 0,
+            "safety_flags_scope": "Lexical inventories only; no assertion, dose or clinical correctness validation"
+          },
+          "adapter": {
+            "examples": 2,
+            "wer": 0.41304347826086957,
+            "cer": 0.4298642533936652,
+            "scoring_protocol": "numeric_indic_v2",
+            "word_errors": {
+              "substitutions": 15,
+              "deletions": 3,
+              "insertions": 1
+            },
+            "numeric_inventory_mismatch_examples": 0,
+            "negation_marker_mismatch_examples": 0,
+            "safety_flags_scope": "Lexical inventories only; no assertion, dose or clinical correctness validation"
+          },
+          "wer_change": -0.08695652173913043,
+          "cer_change": -0.06334841628959276,
+          "improved_wer": true
+        }
+      },
+      "scoring_protocol": "numeric_indic_v2",
+      "limitations": [
+        "WER/CER are lexical overlap, not clinical accuracy.",
+        "Previously inspected Eka samples are diagnostic, not an untouched final test.",
+        "A gain on synthetic English does not establish Hindi/Marathi improvement.",
+        "Review medication/dose, negation, omissions and timestamps separately."
+      ]
+    },
+    "punctuation_delete_v1": {
+      "encounters": 4,
+      "by_language": {
+        "en": {
+          "base": {
+            "examples": 2,
+            "wer": 0.13333333333333333,
+            "cer": 0.10828025477707007,
+            "scoring_protocol": "punctuation_delete_v1",
+            "word_errors": {
+              "substitutions": 0,
+              "deletions": 4,
+              "insertions": 0
+            },
+            "numeric_inventory_mismatch_examples": 0,
+            "negation_marker_mismatch_examples": 0,
+            "safety_flags_scope": "Lexical inventories only; no assertion, dose or clinical correctness validation"
+          },
+          "adapter": {
+            "examples": 2,
+            "wer": 0.16666666666666666,
+            "cer": 0.14012738853503184,
+            "scoring_protocol": "punctuation_delete_v1",
+            "word_errors": {
+              "substitutions": 0,
+              "deletions": 5,
+              "insertions": 0
+            },
+            "numeric_inventory_mismatch_examples": 0,
+            "negation_marker_mismatch_examples": 0,
+            "safety_flags_scope": "Lexical inventories only; no assertion, dose or clinical correctness validation"
+          },
+          "wer_change": 0.033333333333333326,
+          "cer_change": 0.031847133757961776,
+          "improved_wer": false
+        },
+        "hi": {
+          "base": {
+            "examples": 2,
+            "wer": 0.5,
+            "cer": 0.49321266968325794,
+            "scoring_protocol": "punctuation_delete_v1",
+            "word_errors": {
+              "substitutions": 15,
+              "deletions": 4,
+              "insertions": 4
+            },
+            "numeric_inventory_mismatch_examples": 1,
+            "negation_marker_mismatch_examples": 0,
+            "safety_flags_scope": "Lexical inventories only; no assertion, dose or clinical correctness validation"
+          },
+          "adapter": {
+            "examples": 2,
+            "wer": 0.41304347826086957,
+            "cer": 0.4298642533936652,
+            "scoring_protocol": "punctuation_delete_v1",
+            "word_errors": {
+              "substitutions": 15,
+              "deletions": 3,
+              "insertions": 1
+            },
+            "numeric_inventory_mismatch_examples": 0,
+            "negation_marker_mismatch_examples": 0,
+            "safety_flags_scope": "Lexical inventories only; no assertion, dose or clinical correctness validation"
+          },
+          "wer_change": -0.08695652173913043,
+          "cer_change": -0.06334841628959276,
+          "improved_wer": true
+        }
+      },
+      "scoring_protocol": "punctuation_delete_v1",
+      "limitations": [
+        "WER/CER are lexical overlap, not clinical accuracy.",
+        "Previously inspected Eka samples are diagnostic, not an untouched final test.",
+        "A gain on synthetic English does not establish Hindi/Marathi improvement.",
+        "Review medication/dose, negation, omissions and timestamps separately."
+      ]
+    }
+  },
+  "betrac": {
+    "numeric_indic_v2": {
+      "encounters": 2,
+      "by_language": {
+        "en": {
+          "base": {
+            "examples": 2,
+            "wer": 0.0388180764774044,
+            "cer": 0.02609727164887307,
+            "scoring_protocol": "numeric_indic_v2",
+            "word_errors": {
+              "substitutions": 30,
+              "deletions": 30,
+              "insertions": 7
+            },
+            "numeric_inventory_mismatch_examples": 0,
+            "negation_marker_mismatch_examples": 0,
+            "safety_flags_scope": "Lexical inventories only; no assertion, dose or clinical correctness validation"
+          },
+          "adapter": {
+            "examples": 2,
+            "wer": 0.047508690614136734,
+            "cer": 0.024587512131996118,
+            "scoring_protocol": "numeric_indic_v2",
+            "word_errors": {
+              "substitutions": 35,
+              "deletions": 44,
+              "insertions": 3
+            },
+            "numeric_inventory_mismatch_examples": 0,
+            "negation_marker_mismatch_examples": 1,
+            "safety_flags_scope": "Lexical inventories only; no assertion, dose or clinical correctness validation"
+          },
+          "wer_change": 0.008690614136732333,
+          "cer_change": -0.0015097595168769538,
+          "improved_wer": false
+        }
+      },
+      "scoring_protocol": "numeric_indic_v2",
+      "limitations": [
+        "WER/CER are lexical overlap, not clinical accuracy.",
+        "Previously inspected Eka samples are diagnostic, not an untouched final test.",
+        "A gain on synthetic English does not establish Hindi/Marathi improvement.",
+        "Review medication/dose, negation, omissions and timestamps separately."
+      ]
+    },
+    "punctuation_delete_v1": {
+      "encounters": 2,
+      "by_language": {
+        "en": {
+          "base": {
+            "examples": 2,
+            "wer": 0.029256875365710942,
+            "cer": 0.02478165938864629,
+            "scoring_protocol": "punctuation_delete_v1",
+            "word_errors": {
+              "substitutions": 28,
+              "deletions": 15,
+              "insertions": 7
+            },
+            "numeric_inventory_mismatch_examples": 0,
+            "negation_marker_mismatch_examples": 0,
+            "safety_flags_scope": "Lexical inventories only; no assertion, dose or clinical correctness validation"
+          },
+          "adapter": {
+            "examples": 2,
+            "wer": 0.04505558806319485,
+            "cer": 0.02368995633187773,
+            "scoring_protocol": "punctuation_delete_v1",
+            "word_errors": {
+              "substitutions": 40,
+              "deletions": 36,
+              "insertions": 1
+            },
+            "numeric_inventory_mismatch_examples": 0,
+            "negation_marker_mismatch_examples": 1,
+            "safety_flags_scope": "Lexical inventories only; no assertion, dose or clinical correctness validation"
+          },
+          "wer_change": 0.01579871269748391,
+          "cer_change": -0.0010917030567685615,
+          "improved_wer": false
+        }
+      },
+      "scoring_protocol": "punctuation_delete_v1",
+      "limitations": [
+        "WER/CER are lexical overlap, not clinical accuracy.",
+        "Previously inspected Eka samples are diagnostic, not an untouched final test.",
+        "A gain on synthetic English does not establish Hindi/Marathi improvement.",
+        "Review medication/dose, negation, omissions and timestamps separately."
+      ]
+    }
+  },
+  "sully": {
+    "numeric_indic_v2": {
+      "encounters": 1,
+      "by_language": {
+        "en": {
+          "base": {
+            "examples": 1,
+            "wer": 0.21968121968121967,
+            "cer": 0.1709155701754386,
+            "scoring_protocol": "numeric_indic_v2",
+            "word_errors": {
+              "substitutions": 80,
+              "deletions": 212,
+              "insertions": 25
+            },
+            "numeric_inventory_mismatch_examples": 0,
+            "negation_marker_mismatch_examples": 1,
+            "safety_flags_scope": "Lexical inventories only; no assertion, dose or clinical correctness validation"
+          },
+          "adapter": {
+            "examples": 1,
+            "wer": 0.19750519750519752,
+            "cer": 0.14692982456140352,
+            "scoring_protocol": "numeric_indic_v2",
+            "word_errors": {
+              "substitutions": 93,
+              "deletions": 167,
+              "insertions": 25
+            },
+            "numeric_inventory_mismatch_examples": 0,
+            "negation_marker_mismatch_examples": 1,
+            "safety_flags_scope": "Lexical inventories only; no assertion, dose or clinical correctness validation"
+          },
+          "wer_change": -0.02217602217602216,
+          "cer_change": -0.023985745614035076,
+          "improved_wer": true
+        }
+      },
+      "scoring_protocol": "numeric_indic_v2",
+      "limitations": [
+        "WER/CER are lexical overlap, not clinical accuracy.",
+        "Previously inspected Eka samples are diagnostic, not an untouched final test.",
+        "A gain on synthetic English does not establish Hindi/Marathi improvement.",
+        "Review medication/dose, negation, omissions and timestamps separately."
+      ]
+    },
+    "punctuation_delete_v1": {
+      "encounters": 1,
+      "by_language": {
+        "en": {
+          "base": {
+            "examples": 1,
+            "wer": 0.22214484679665739,
+            "cer": 0.17041845049026377,
+            "scoring_protocol": "punctuation_delete_v1",
+            "word_errors": {
+              "substitutions": 85,
+              "deletions": 208,
+              "insertions": 26
+            },
+            "numeric_inventory_mismatch_examples": 0,
+            "negation_marker_mismatch_examples": 1,
+            "safety_flags_scope": "Lexical inventories only; no assertion, dose or clinical correctness validation"
+          },
+          "adapter": {
+            "examples": 1,
+            "wer": 0.2075208913649025,
+            "cer": 0.14721723518850988,
+            "scoring_protocol": "punctuation_delete_v1",
+            "word_errors": {
+              "substitutions": 100,
+              "deletions": 174,
+              "insertions": 24
+            },
+            "numeric_inventory_mismatch_examples": 0,
+            "negation_marker_mismatch_examples": 1,
+            "safety_flags_scope": "Lexical inventories only; no assertion, dose or clinical correctness validation"
+          },
+          "wer_change": -0.014623955431754876,
+          "cer_change": -0.023201215301753897,
+          "improved_wer": true
+        }
+      },
+      "scoring_protocol": "punctuation_delete_v1",
+      "limitations": [
+        "WER/CER are lexical overlap, not clinical accuracy.",
+        "Previously inspected Eka samples are diagnostic, not an untouched final test.",
+        "A gain on synthetic English does not establish Hindi/Marathi improvement.",
+        "Review medication/dose, negation, omissions and timestamps separately."
+      ]
+    }
+  },
+  "fleurs": {
+    "numeric_indic_v2": {
+      "encounters": 64,
+      "by_language": {
+        "hi": {
+          "base": {
+            "examples": 32,
+            "wer": 0.34798534798534797,
+            "cer": 0.18438697318007663,
+            "scoring_protocol": "numeric_indic_v2",
+            "word_errors": {
+              "substitutions": 198,
+              "deletions": 66,
+              "insertions": 21
+            },
+            "numeric_inventory_mismatch_examples": 4,
+            "negation_marker_mismatch_examples": 1,
+            "safety_flags_scope": "Lexical inventories only; no assertion, dose or clinical correctness validation"
+          },
+          "adapter": {
+            "examples": 32,
+            "wer": 0.2454212454212454,
+            "cer": 0.09626436781609195,
+            "scoring_protocol": "numeric_indic_v2",
+            "word_errors": {
+              "substitutions": 175,
+              "deletions": 15,
+              "insertions": 11
+            },
+            "numeric_inventory_mismatch_examples": 4,
+            "negation_marker_mismatch_examples": 0,
+            "safety_flags_scope": "Lexical inventories only; no assertion, dose or clinical correctness validation"
+          },
+          "wer_change": -0.10256410256410256,
+          "cer_change": -0.08812260536398468,
+          "improved_wer": true
+        },
+        "mr": {
+          "base": {
+            "examples": 32,
+            "wer": 0.8144499178981938,
+            "cer": 0.2573440155377519,
+            "scoring_protocol": "numeric_indic_v2",
+            "word_errors": {
+              "substitutions": 398,
+              "deletions": 6,
+              "insertions": 92
+            },
+            "numeric_inventory_mismatch_examples": 7,
+            "negation_marker_mismatch_examples": 1,
+            "safety_flags_scope": "Lexical inventories only; no assertion, dose or clinical correctness validation"
+          },
+          "adapter": {
+            "examples": 32,
+            "wer": 0.5041050903119869,
+            "cer": 0.14153920854576355,
+            "scoring_protocol": "numeric_indic_v2",
+            "word_errors": {
+              "substitutions": 262,
+              "deletions": 21,
+              "insertions": 24
+            },
+            "numeric_inventory_mismatch_examples": 8,
+            "negation_marker_mismatch_examples": 1,
+            "safety_flags_scope": "Lexical inventories only; no assertion, dose or clinical correctness validation"
+          },
+          "wer_change": -0.31034482758620685,
+          "cer_change": -0.11580480699198833,
+          "improved_wer": true
+        }
+      },
+      "scoring_protocol": "numeric_indic_v2",
+      "limitations": [
+        "WER/CER are lexical overlap, not clinical accuracy.",
+        "Previously inspected Eka samples are diagnostic, not an untouched final test.",
+        "A gain on synthetic English does not establish Hindi/Marathi improvement.",
+        "Review medication/dose, negation, omissions and timestamps separately."
+      ]
+    },
+    "punctuation_delete_v1": {
+      "encounters": 64,
+      "by_language": {
+        "hi": {
+          "base": {
+            "examples": 32,
+            "wer": 0.35758323057953145,
+            "cer": 0.18544319000720635,
+            "scoring_protocol": "punctuation_delete_v1",
+            "word_errors": {
+              "substitutions": 198,
+              "deletions": 65,
+              "insertions": 27
+            },
+            "numeric_inventory_mismatch_examples": 4,
+            "negation_marker_mismatch_examples": 1,
+            "safety_flags_scope": "Lexical inventories only; no assertion, dose or clinical correctness validation"
+          },
+          "adapter": {
+            "examples": 32,
+            "wer": 0.25030826140567203,
+            "cer": 0.09704539995195773,
+            "scoring_protocol": "punctuation_delete_v1",
+            "word_errors": {
+              "substitutions": 173,
+              "deletions": 15,
+              "insertions": 15
+            },
+            "numeric_inventory_mismatch_examples": 4,
+            "negation_marker_mismatch_examples": 0,
+            "safety_flags_scope": "Lexical inventories only; no assertion, dose or clinical correctness validation"
+          },
+          "wer_change": -0.10727496917385942,
+          "cer_change": -0.08839779005524863,
+          "improved_wer": true
+        },
+        "mr": {
+          "base": {
+            "examples": 32,
+            "wer": 0.8151815181518152,
+            "cer": 0.25808805643395766,
+            "scoring_protocol": "punctuation_delete_v1",
+            "word_errors": {
+              "substitutions": 394,
+              "deletions": 6,
+              "insertions": 94
+            },
+            "numeric_inventory_mismatch_examples": 7,
+            "negation_marker_mismatch_examples": 1,
+            "safety_flags_scope": "Lexical inventories only; no assertion, dose or clinical correctness validation"
+          },
+          "adapter": {
+            "examples": 32,
+            "wer": 0.5016501650165016,
+            "cer": 0.14278764290926782,
+            "scoring_protocol": "punctuation_delete_v1",
+            "word_errors": {
+              "substitutions": 261,
+              "deletions": 20,
+              "insertions": 23
+            },
+            "numeric_inventory_mismatch_examples": 8,
+            "negation_marker_mismatch_examples": 1,
+            "safety_flags_scope": "Lexical inventories only; no assertion, dose or clinical correctness validation"
+          },
+          "wer_change": -0.31353135313531355,
+          "cer_change": -0.11530041352468984,
+          "improved_wer": true
+        }
+      },
+      "scoring_protocol": "punctuation_delete_v1",
+      "limitations": [
+        "WER/CER are lexical overlap, not clinical accuracy.",
+        "Previously inspected Eka samples are diagnostic, not an untouched final test.",
+        "A gain on synthetic English does not establish Hindi/Marathi improvement.",
+        "Review medication/dose, negation, omissions and timestamps separately."
+      ]
+    }
+  }
+}

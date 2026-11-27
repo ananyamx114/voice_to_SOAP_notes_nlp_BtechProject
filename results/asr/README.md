@@ -1,6 +1,9 @@
 # ASR experiment results
 
-Latest verified continuation and decoder diagnostics: [completed beam comparison](../asr-diagnostics-2026-11-26/README.md), [run3 selected epoch12](run3-2026-11-26.json), [all 14 validation epochs](run3-validation.csv). Training is paused at update4100. V1 selected-epoch WER is 1.67% / 23.72% / 44.65% (EN/HI/MR). Numeric-safe beam5 validation WER is 1.34% / 21.66% / 42.60%; this is a separate validation decoding comparison, not new training or an independent test.
+Latest completed repeated benchmark: [27 November epoch 12 paired results](../asr-run3-test-2026-11-27/README.md). All71 pairs completed; WER improves in four of six groups. Hindi/Marathi remain above5%. Older validation snapshots and run2 results below remain separate.
+
+
+Latest verified continuation and decoder diagnostics: [completed beam comparison](../asr-diagnostics-2026-11-26/README.md), [run3 selected epoch 12](run3-2026-11-26.json), [all 14 validation epochs](run3-validation.csv). Training is paused at update 4100. V1 selected-epoch WER is 1.67% / 23.72% / 44.65% (EN/HI/MR). Numeric-safe beam 5 validation WER is 1.34% / 21.66% / 42.60%; this is a separate validation decoding comparison, not new training or an independent test.
 
 
 Improvement work after the report cutoff: [versioned numeric-safe scoring](../asr-scoring-v2/README.md)

@@ -1,5 +1,8 @@
 # DIRECT / baseline SOAP results
 
+Latest: [completed control/DIRECT/HYBRID comparison, 27 November](../qwen7b-2026-11-27/README.md). DIRECT remains the strongest measured Qwen7B configuration; older partial status below is historical.
+
+
 Latest full 7B experiment: [completed DIRECT/base 200-example tests](../qwen7b-2026-11-26/README.md), [stage metrics](qwen7b-2026-11-26/). Older experiments below remain separate.
 
 
